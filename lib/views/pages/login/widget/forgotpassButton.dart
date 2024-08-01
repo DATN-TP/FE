@@ -1,3 +1,4 @@
+import 'package:datn/views/animations/slideTopToBottom.dart';
 import 'package:flutter/material.dart';
 
 class Forgotpassbutton extends StatelessWidget {
@@ -5,17 +6,20 @@ class Forgotpassbutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: TextButton(
-        onPressed: () {},
-        child: const Text('Forgot Password?',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
+    return SlideTopToBottom(
+      durationMs: 1500,
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child: TextButton(
+          onPressed: () {},
+          child: const Text('Forgot Password?',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              )),
+        ),
       ),
     );
   }

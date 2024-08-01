@@ -1,3 +1,4 @@
+import 'package:datn/views/animations/slideTopToBottom.dart';
 import 'package:flutter/material.dart';
 
 class Logintitle extends StatelessWidget {
@@ -5,12 +6,15 @@ class Logintitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Login',
-      style: TextStyle(
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+    return const SlideTopToBottom(
+      durationMs: 1500,
+      child: Text(
+        'Login',
+        style: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }
