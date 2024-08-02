@@ -39,6 +39,7 @@ class LoginPageModel extends ChangeNotifier{
   }
   String get getUsernameBiometric{
     final biometricData = hiveProvider.getBiometricData();
+    print("getUsernameBiometric: $biometricData");
     if(biometricData != null){
       return biometricData['username']!;
     }

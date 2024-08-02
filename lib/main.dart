@@ -7,7 +7,7 @@ import './views/pages/login/login.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-  await Hive.openBox<Map<String, String>>(HiveProvider.HIVE_BIOMETRIC_BOX);
+  await Hive.openBox<Map<dynamic, dynamic>>(HiveProvider.HIVE_BIOMETRIC_BOX);
   runApp(
     const MaterialApp(
       initialRoute: '/',

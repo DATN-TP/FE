@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:datn/data/hive/hive_provider.dart';
 import 'package:datn/services/biometric_service.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +9,8 @@ class ProfilePageModel extends ChangeNotifier {
   bool get isBiometricEnabled => _isBiometricEnabled;
 
   void switchBiometric(bool value) async {
-      _isBiometricEnabled = value;
-      if (value) {
+    _isBiometricEnabled = value;
+    if (value) {
       final isAuthenticated = await _biometricService.authenticate();
       if (isAuthenticated) {
         final Map<String, String> biometricData = {
@@ -23,12 +21,21 @@ class ProfilePageModel extends ChangeNotifier {
       } else {
         _isBiometricEnabled = false;
         notifyListeners();
-       
       }
     } else {
       // Nếu tắt sinh trắc học, xóa dữ liệu
       hiveProvider.saveBiometricData({});
     }
-      notifyListeners();
-      }
+    notifyListeners();
+  }
+
+  void checkBiometricEnable() {
+    final biometricData = hiveProvider.getBiometricData();
+    if (biometricData != null) {
+      _isBiometricEnabled = true;
+    } else {
+      _isBiometricEnabled = false;
+    }
+    notifyListeners();
+  }
 }
