@@ -1,7 +1,9 @@
+import 'package:datn/views/pages/login/login_page_model.dart';
 import 'package:datn/views/pages/login/widget/background_login.dart';
 import 'package:datn/views/pages/login/widget/dialogCustom.dart';
 import 'package:flutter/material.dart';
 import 'package:datn/views/pages/login/widget/otherMethodLogin.dart';
+import 'package:provider/provider.dart';
 import './widget/userName.dart';
 import './widget/password.dart';
 import './widget/loginTitle.dart';
@@ -41,13 +43,12 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: ChangeNotifierProvider(
+        create: (_) => LoginPageModel(),
         child: Scaffold(
           body: Stack(
             children: [
@@ -64,24 +65,36 @@ class _LoginState extends State<Login> {
               Align(
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Logintitle(),
-                        SizedBox(height: 40),
-                        Username(),
-                        Password(),
-                        SizedBox(height: 40),
-                        Loginbutton(),
-                        Forgotpassbutton(),
-                        SizedBox(height: 80),
-                        Othermethodlogin(),
-                        SizedBox(height: 30),
-                        Signupbutton(),
-                      ],
-                    ),
+                  child: Consumer<LoginPageModel>(
+                    builder: (context, loginPageModel, child) {
+                      final isBiometricEnable =
+                          loginPageModel.checkBiometricEnable;
+                      return Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Logintitle(),
+                            const SizedBox(height: 40),
+                            !isBiometricEnable
+                                ? const Column(
+                                    children: [
+                                      Username(),
+                                      Password(),
+                                      SizedBox(height: 40),
+                                      Loginbutton(),
+                                    ],
+                                  )
+                                : _buildBiometricLoginButton(loginPageModel),
+                            const Forgotpassbutton(),
+                            const SizedBox(height: 80),
+                            const Othermethodlogin(),
+                            const SizedBox(height: 30),
+                            const Signupbutton(),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -90,5 +103,39 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  _buildBiometricLoginButton(LoginPageModel loginPageModel) {
+    final username = loginPageModel.getUsernameBiometric;
+    return Container(
+        child: Column(
+      children: [
+        Text(
+          'Xin chào, $username',
+          style: const TextStyle(
+              fontSize: 25,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.italic),
+        ),
+        const SizedBox(height: 20),
+        const Password(),
+        const SizedBox(height: 20),
+        const Loginbutton(),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: InkWell(
+              onTap: () {},
+              child: const Text(
+                "Đăng nhập bằng tài khoản khác",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              )),
+        )
+      ],
+    ));
   }
 }

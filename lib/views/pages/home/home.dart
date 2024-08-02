@@ -1,3 +1,4 @@
+import 'package:datn/views/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomeState extends State<Home> {
       case 1:
         return const Business(); // Update to use the Business widget
       case 2:
-        return const School(); // Update to use the School widget
+        return const Profile(); // Update to use the School widget
       default:
         return const HomePage(); // Fallback to HomePage
     }
@@ -32,9 +33,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bottom Navigation'),
-      ),
       body: _getPage(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
@@ -49,8 +47,8 @@ class _HomeState extends State<Home> {
             label: 'Business',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
           ),
         ],
       ),
@@ -80,13 +78,13 @@ class Business extends StatelessWidget {
   }
 }
 
-class School extends StatelessWidget {
-  const School({super.key});
+class Profile extends StatelessWidget {
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('School Page'),
+      child: ProfilePage(),
     );
   }
 }
