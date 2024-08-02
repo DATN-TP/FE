@@ -31,17 +31,15 @@ class LoginPageModel extends ChangeNotifier{
   }
   bool get checkBiometricEnable{
     final biometricData = hiveProvider.getBiometricData();
-    print("checkbio: $biometricData");
-    if(biometricData!.isNotEmpty){
+    if(biometricData?['username'] != null && biometricData?['token'] != null){
       return true;
     }
     return false;
   }
   String get getUsernameBiometric{
     final biometricData = hiveProvider.getBiometricData();
-    print("getUsernameBiometric: $biometricData");
-    if(biometricData != null){
-      return biometricData['username']??'';
+    if(biometricData?['username'] != null && biometricData?['token'] != null){
+      return biometricData?['username']??'';
     }
     return '';
   }
@@ -49,9 +47,9 @@ class LoginPageModel extends ChangeNotifier{
     final isAuthenticated = await _biometricService.authenticate();
     if (isAuthenticated) {
       final biometricData = hiveProvider.getBiometricData();
-    if(biometricData != null){
-      _username = biometricData['username']!;
-      _password = biometricData['token']!;
+    if(biometricData?['username'] != null && biometricData?['token'] != null){
+      _username = biometricData?['username']??'';
+      _password = biometricData?['token']??'';
     }
     Navigator.pushNamed(context, Routes.home);
     notifyListeners();
