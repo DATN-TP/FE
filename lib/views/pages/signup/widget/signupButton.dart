@@ -30,12 +30,14 @@ class _SignupButtonState extends State<SignupButton>
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.fromLTRB(
           size.width * 0.05,
-          size.height * 0.25,
+          size.height * 0.10,
           size.width * 0.05,
           size.height * 0.02,
         ),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/getotp');
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color(0xFF6f24fd),
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
@@ -48,6 +50,7 @@ class _SignupButtonState extends State<SignupButton>
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

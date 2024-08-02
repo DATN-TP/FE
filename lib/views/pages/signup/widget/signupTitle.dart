@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Signuptitle extends StatelessWidget {
   const Signuptitle({super.key});
@@ -6,7 +7,7 @@ class Signuptitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 70),
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
       child: const Text(
         'Sign Up',
         style: TextStyle(

@@ -1,4 +1,6 @@
-import 'package:datn/views/pages/login/widget/background.dart';
+import 'package:datn/views/animations/slideBottomToTop.dart';
+import 'package:datn/views/animations/slideTopToBottom.dart';
+import 'package:datn/views/pages/signup/widget/background_signup.dart';
 import 'package:datn/views/pages/signup/widget/confirmpass.dart';
 import 'package:datn/views/pages/signup/widget/loginbutton.dart';
 import 'package:datn/views/pages/signup/widget/password.dart';
@@ -24,31 +26,51 @@ class _SignupState extends State<Signup> {
       child: Scaffold(
         body: Stack(
           children: [
-            const Background(
-              point: 0.75,
-              color: Color.fromARGB(255, 179, 159, 176),
-              timer: 1300,
+            SlideTopToBottom(
+              durationMs: 1000,
+              child: BackgroundSignup(
+                color: Color(0xFF5f1dfb),
+                position: Alignment.bottomRight,
+                opacity: 0.1,
+              ),
             ),
-            const Background(
-              point: 0.73,
-              color: Color(0xFFac3bff),
-              timer: 1500,
+            const Align(
+              alignment: Alignment.topCenter,
+              child: SlideTopToBottom(
+                durationMs: 1000,
+                child: Signuptitle(),
+              ),
             ),
             Align(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomCenter,
               child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Signuptitle(),
-                      Username(),
-                      Password(),
-                      Confirmpass(),
-                      SignupButton(),
-                      Loginbutton(),
-                    ],
+                child: SlideBottomToTop(
+                  durationMs: 1000,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    decoration: BoxDecoration(
+                      backgroundBlendMode: BlendMode.overlay,
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
+                      ),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 9,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Username(),
+                        Password(),
+                        Confirmpass(),
+                        SignupButton(),
+                        Loginbutton(),
+                      ],
+                    ),
                   ),
                 ),
               ),
