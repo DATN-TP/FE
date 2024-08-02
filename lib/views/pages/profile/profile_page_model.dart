@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:datn/data/hive/hive_provider.dart';
 import 'package:datn/services/biometric_service.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,6 @@ class ProfilePageModel extends ChangeNotifier {
   ProfilePageModel() {
     checkBiometricEnable();
   }
-  
 
   void switchBiometric(bool value) async {
     _isBiometricEnabled = value;
@@ -38,12 +35,11 @@ class ProfilePageModel extends ChangeNotifier {
   void checkBiometricEnable() {
     final biometricData = hiveProvider.getBiometricData();
     print("biometricData: $biometricData");
-    if (biometricData!.isNotEmpty) {
+    if (biometricData != null) {
       _isBiometricEnabled = true;
     } else {
       _isBiometricEnabled = false;
     }
     notifyListeners();
   }
-  
 }

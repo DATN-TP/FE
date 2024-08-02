@@ -21,52 +21,53 @@ class Password extends StatelessWidget {
           screenWidth * 0.05,
           10,
         ),
-        child:  isBiometricEnabled?
-         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              width: screenWidth * 0.7,
-              child: TextField(
-                decoration: InputDecoration(
-                  suffix: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+        child: isBiometricEnabled
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: screenWidth * 0.6,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        suffix: const Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelText: 'Password',
+                      ),
+                    ),
                   ),
-                  labelText: 'Password',
+                  InkWell(
+                    onTap: () {
+                      LoginPageModel().biometricLogin(context);
+                    },
+                    child: const Icon(
+                      Icons.fingerprint,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      size: 50,
+                    ),
+                  ),
+                ],
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    suffix: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    labelText: 'Password',
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                LoginPageModel().biometricLogin(context);
-              },
-              child: const Icon(
-                Icons.fingerprint,
-                color:  Color.fromARGB(255, 255, 255, 255),
-                size: 50,
-              ),
-            ),
-          ],
-        ):Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              suffix: const Icon(Icons.lock),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              labelText: 'Password',
-            ),
-          ),
-        ),
       ),
     );
   }

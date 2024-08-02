@@ -1,4 +1,3 @@
-import 'package:datn/services/biometric_service.dart';
 import 'package:datn/views/pages/profile/profile_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

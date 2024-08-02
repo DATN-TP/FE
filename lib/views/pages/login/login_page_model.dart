@@ -3,7 +3,7 @@ import 'package:datn/services/biometric_service.dart';
 import 'package:datn/views/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-class LoginPageModel extends ChangeNotifier{
+class LoginPageModel extends ChangeNotifier {
   final hiveProvider = HiveProvider();
   final BiometricService _biometricService = BiometricService();
   String _username = '';
@@ -14,47 +14,49 @@ class LoginPageModel extends ChangeNotifier{
   String get password => _password;
   bool get isRemember => _isRemember;
 
-  void setUsername(String value){
+  void setUsername(String value) {
     _username = value;
     notifyListeners();
   }
 
-  void setPassword(String value){
+  void setPassword(String value) {
     _password = value;
     notifyListeners();
   }
 
-
-  void setIsRemember(bool value){
+  void setIsRemember(bool value) {
     _isRemember = value;
     notifyListeners();
   }
-  bool get checkBiometricEnable{
+
+  bool get checkBiometricEnable {
     final biometricData = hiveProvider.getBiometricData();
     print("checkbio: $biometricData");
-    if(biometricData!.isNotEmpty){
+    if (biometricData != null) {
       return true;
     }
     return false;
   }
-  String get getUsernameBiometric{
+
+  String get getUsernameBiometric {
     final biometricData = hiveProvider.getBiometricData();
     print("getUsernameBiometric: $biometricData");
-    if(biometricData != null){
-      return biometricData['username']??'';
+    if (biometricData != null) {
+      return biometricData['username'] ?? '';
     }
     return '';
   }
+
   Future<void> biometricLogin(context) async {
     final isAuthenticated = await _biometricService.authenticate();
     if (isAuthenticated) {
       final biometricData = hiveProvider.getBiometricData();
-    if(biometricData != null){
-      _username = biometricData['username']!;
-      _password = biometricData['token']!;
+      if (biometricData != null) {
+        _username = biometricData['username'] ?? '';
+        _password = biometricData['token'] ?? '';
+      }
+      Navigator.pushNamed(context, Routes.home);
+      notifyListeners();
     }
-    Navigator.pushNamed(context, Routes.home);
-    notifyListeners();
-    } 
   }
 }
