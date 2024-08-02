@@ -32,7 +32,7 @@ class LoginPageModel extends ChangeNotifier{
   bool get checkBiometricEnable{
     final biometricData = hiveProvider.getBiometricData();
     print("checkbio: $biometricData");
-    if(biometricData != null){
+    if(biometricData!.isNotEmpty){
       return true;
     }
     return false;
@@ -41,7 +41,7 @@ class LoginPageModel extends ChangeNotifier{
     final biometricData = hiveProvider.getBiometricData();
     print("getUsernameBiometric: $biometricData");
     if(biometricData != null){
-      return biometricData['username']!;
+      return biometricData['username']??'';
     }
     return '';
   }

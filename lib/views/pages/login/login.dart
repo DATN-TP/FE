@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:datn/views/pages/login/login_page_model.dart';
 import 'package:datn/views/pages/login/widget/background.dart';
 import 'package:flutter/material.dart';
@@ -108,27 +106,26 @@ class _LoginState extends State<Login> {
         Text(
           'Xin chào, $username',
           style: const TextStyle(
-              fontSize: 30,
+              fontSize: 25,
               color: Colors.white,
               fontWeight: FontWeight.w700,
               fontStyle: FontStyle.italic),
         ),
-        const SizedBox(height: 40),
-        InkWell(
-          onTap: () {
-            loginPageModel.biometricLogin(context);
-          },
-          child: const CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.fingerprint,
-              size: 50,
-              color: Colors.black,
-            ),
+        const SizedBox(height: 20),
+        const Password(),
+        const SizedBox(height: 20),
+        const Loginbutton(),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: InkWell(
+            onTap: () {
+              
+            },
+            child: 
+            const Text("Đăng nhập bằng tài khoản khác", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),)
           ),
-        ),
-        const SizedBox(height: 40),
+        )
       ],
     ));
   }

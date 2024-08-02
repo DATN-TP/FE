@@ -1,5 +1,6 @@
 import 'package:datn/views/animations/slideTopToBottom.dart';
 import 'package:datn/views/routes/routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Loginbutton extends StatelessWidget {
@@ -8,7 +9,6 @@ class Loginbutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
     return SlideTopToBottom(
       durationMs: 1500,
       child: Container(
@@ -27,9 +27,9 @@ class Loginbutton extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, Routes.home);
           },
-          child: const Text(
-            'Login',
-            style: TextStyle(
+          child: Text(
+            'txt_login'.tr(),
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.white,

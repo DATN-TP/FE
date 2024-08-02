@@ -38,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildBiometricSwitch(ProfilePageModel profilePageModel) {
-    profilePageModel.checkBiometricEnable();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Container(
