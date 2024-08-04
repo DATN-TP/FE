@@ -15,10 +15,17 @@ class BackgroundSignup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          color.withOpacity(opacity),
-          color,
-        ], begin: position),
+        //tâm top left
+
+        gradient: RadialGradient(
+          colors: [
+            Color(0xffac3bff),
+            color,
+          ],
+          center: Alignment.topRight,
+          radius: 1.5,
+          focalRadius: 0.5,
+        ),
       ),
     );
   }

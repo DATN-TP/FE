@@ -1,9 +1,9 @@
-import 'package:datn/views/pages/profile/profile_page_model.dart';
+import 'package:datn/views/pages/profile/widget/buttonLogOut.dart';
+import 'package:datn/views/pages/profile/widget/profile_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
-  
   const ProfilePage({super.key});
 
   @override
@@ -18,7 +18,12 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         appBar: AppBar(title: const Text('Profile Page')),
         body: Center(
-          child: _buildMainView(),
+          child: Column(
+            children: [
+              _buildMainView(),
+              const Buttonlogout(),
+            ],
+          ),
         ),
       ),
     );

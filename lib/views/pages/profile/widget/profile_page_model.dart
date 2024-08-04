@@ -33,9 +33,8 @@ class ProfilePageModel extends ChangeNotifier {
   }
 
   void checkBiometricEnable() {
-    final biometricData = hiveProvider.getBiometricData();
-    print("biometricData: $biometricData");
-    if (biometricData != null) {
+    Map<String, String>? biometricData = hiveProvider.getBiometricData();
+    if (biometricData?['username'] != null && biometricData?['token'] != null) {
       _isBiometricEnabled = true;
     } else {
       _isBiometricEnabled = false;
