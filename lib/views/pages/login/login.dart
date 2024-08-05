@@ -1,3 +1,6 @@
+import 'package:datn/repositories/auth_repository.dart';
+import 'package:datn/services/api_service.dart';
+import 'package:datn/services/auth_service.dart';
 import 'package:datn/views/pages/login/login_page_model.dart';
 import 'package:datn/views/pages/login/widget/background_login.dart';
 import 'package:datn/views/pages/login/widget/dialogCustom.dart';
@@ -19,6 +22,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final AuthRepository _authRepository = AuthRepository(AuthService(ApiService()));
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+    Future<void> _login(LoginPageModel loginPageModel) async {
+    final username = _usernameController.text;
+    final password = _passwordController.text;
+    final user_res = await _authRepository.login(username, password); 
+    Navigator.pushNamed(context, '/home'); 
+  }
   @override
   void initState() {
     super.initState();
@@ -77,12 +89,12 @@ class _LoginState extends State<Login> {
                             const Logintitle(),
                             const SizedBox(height: 40),
                             !isBiometricEnable
-                                ? const Column(
+                                ?  Column(
                                     children: [
-                                      Username(),
-                                      Password(),
-                                      SizedBox(height: 40),
-                                      Loginbutton(),
+                                      Username(controller: _usernameController,),
+                                      Password(controller: _passwordController,),
+                                      const SizedBox(height: 40),
+                                      Loginbutton(onPressed: () => _login(loginPageModel)),
                                     ],
                                   )
                                 : _buildBiometricLoginButton(loginPageModel),
@@ -119,9 +131,9 @@ class _LoginState extends State<Login> {
               fontStyle: FontStyle.italic),
         ),
         const SizedBox(height: 20),
-        const Password(),
+        Password(controller: _passwordController,),
         const SizedBox(height: 20),
-        const Loginbutton(),
+        Loginbutton(onPressed: () => _login(loginPageModel)),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(15.0),

@@ -1,8 +1,11 @@
+import 'package:datn/models/user_model.dart';
+import 'package:datn/views/pages/home/home_page_model.dart';
 import 'package:datn/views/pages/home/widget/menu.dart';
 import 'package:datn/views/pages/home/widget/news.dart';
 import 'package:datn/views/pages/home/widget/summary.dart';
 import 'package:datn/views/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -64,24 +67,34 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        extendBody: true,
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Stack(
+  User? user = HomePageModel().hiveProvider.getUser();
+  print("user::: ${user?.id}");
+
+    return ChangeNotifierProvider(
+      create: (_) => HomePageModel(),
+      child: Scaffold(
+          extendBody: true,
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Consumer<HomePageModel>(
+              builder: (context, loginPageModel, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _renderImageBackGround(context),
-                  const Summary(),
+                  Stack(
+                    children: [
+                      _renderImageBackGround(context),
+                      const Summary(),
+                    ],
+                  ),
+                  const Menu(),
+                  const News(),
                 ],
-              ),
-              const Menu(),
-              const News(),
-            ],
-          ),
-        ));
+              );
+              },
+            ),
+          )),
+    );
   }
 
   Widget _renderImageBackGround(BuildContext context) {

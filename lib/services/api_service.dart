@@ -1,10 +1,11 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
   final String baseUrl;
 
-  ApiService(this.baseUrl);
+  ApiService(): baseUrl = dotenv.env['BASE_URL']?? '';
   Future<Map<String, dynamic>> _request(
     String method,
     String endpoint, {

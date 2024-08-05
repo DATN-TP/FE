@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Loginbutton extends StatelessWidget {
-  const Loginbutton({super.key});
+  
+  final VoidCallback onPressed;
+  const Loginbutton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,7 @@ class Loginbutton extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.home);
-          },
+          onPressed: onPressed,
           child: Text(
             'txt_login'.tr(),
             style: const TextStyle(

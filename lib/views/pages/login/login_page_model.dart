@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:datn/data/hive/hive_provider.dart';
+import 'package:datn/services/api_service.dart';
+import 'package:datn/services/auth_service.dart';
 import 'package:datn/services/biometric_service.dart';
 import 'package:datn/views/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +13,7 @@ class LoginPageModel extends ChangeNotifier {
   String _username = '';
   String _password = '';
   bool _isRemember = false;
+  final AuthService authService = AuthService(ApiService());
 
   String get username => _username;
   String get password => _password;
@@ -59,5 +64,7 @@ class LoginPageModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-  }
+    
+  } 
+
 }
