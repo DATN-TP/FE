@@ -1,3 +1,6 @@
+import 'package:datn/views/pages/home/widget/menu.dart';
+import 'package:datn/views/pages/home/widget/news.dart';
+import 'package:datn/views/pages/home/widget/summary.dart';
 import 'package:datn/views/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -61,9 +64,35 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home Page'),
-    );
+    return Scaffold(
+        extendBody: true,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  _renderImageBackGround(context),
+                  const Summary(),
+                ],
+              ),
+              const Menu(),
+              const News(),
+            ],
+          ),
+        ));
+  }
+
+  Widget _renderImageBackGround(BuildContext context) {
+    return SizedBox(
+        height: 300,
+        width: MediaQuery.of(context).size.width,
+        child: Image.asset(
+          'assets/images/city.png',
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.topCenter,
+        ));
   }
 }
 
