@@ -2,7 +2,8 @@ import 'package:datn/views/animations/slideTopToBottom.dart';
 import 'package:flutter/material.dart';
 
 class Username extends StatelessWidget {
-  const Username({super.key});
+  final TextEditingController controller;
+  const Username({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,9 @@ class Username extends StatelessWidget {
           screenWidth * 0.05,
           10,
         ),
-        child: const TextField(
-          decoration: InputDecoration(
+        child: TextField(
+          controller: controller,
+          decoration:const InputDecoration(
             suffix: Icon(Icons.person),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),

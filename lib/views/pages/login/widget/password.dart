@@ -3,7 +3,8 @@ import 'package:datn/views/pages/login/login_page_model.dart';
 import 'package:flutter/material.dart';
 
 class Password extends StatelessWidget {
-  const Password({super.key});
+  final TextEditingController controller;
+  const Password({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class Password extends StatelessWidget {
                     ),
                     width: screenWidth * 0.6,
                     child: TextField(
+                      controller: controller,
                       decoration: InputDecoration(
                         suffix: const Icon(Icons.lock),
                         border: OutlineInputBorder(
@@ -59,6 +61,7 @@ class Password extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextField(
+                  controller: controller,
                   decoration: InputDecoration(
                     suffix: const Icon(Icons.lock),
                     border: OutlineInputBorder(
