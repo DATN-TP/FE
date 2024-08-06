@@ -1,90 +1,59 @@
+import 'package:datn/views/pages/pay/paid/paid_page.dart';
+import 'package:datn/views/pages/pay/paid/detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BillsPay extends StatelessWidget {
   const BillsPay({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: DefaultTabController(
-        length: 4,
+        length: 2,
         child: Scaffold(
-          appBar: TabBar(
-            tabAlignment: TabAlignment.fill,
-            dividerColor: Color(0xff712BBC),
-            labelColor: Color(0xff712BBC),
-            unselectedLabelColor: Colors.black,
-            labelStyle: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
-            indicatorColor: Color(0xff712BBC),
-            tabs: [
-              Tab(
-                icon: Icon(Icons.home_rounded),
-                text: 'Rent',
-              ),
-              Tab(
-                icon: Icon(Icons.electrical_services),
-                text: 'Electricity',
-              ),
-              Tab(
-                icon: Icon(Icons.water),
-                text: 'Water',
-              ),
-              Tab(
-                icon: Icon(Icons.sign_language),
-                text: 'Service',
-              ),
-            ],
-          ),
-          body: const TabBarView(
+          body: Column(
             children: [
-              Rent(),
-              Electricity(),
-              Water(),
-              Service(),
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xff712BBC), Color(0xff7AA0D5)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: const TabBar(
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  labelStyle: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  indicatorColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home_rounded),
+                      text: 'Bills',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.info_rounded),
+                      text: 'Detail',
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    const RentPage(),
+                    DetailPage(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class Rent extends StatelessWidget {
-  const Rent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
-
-class Electricity extends StatelessWidget {
-  const Electricity({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
-
-class Water extends StatelessWidget {
-  const Water({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
-
-class Service extends StatelessWidget {
-  const Service({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }

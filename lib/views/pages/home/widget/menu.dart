@@ -25,7 +25,7 @@ class _MenuState extends State<Menu> {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         width: MediaQuery.of(context).size.width * 0.95,
-        height: 190,
+        height: 200,
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
