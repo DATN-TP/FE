@@ -5,7 +5,7 @@ class User {
   final String phone;
   final String role;
   final String address;
-  final String apartmentNumber;
+  // final String apartmentNumber;
   final String position;
   // final String avatar;
 
@@ -17,7 +17,7 @@ class User {
     required this.phone,
     required this.role,
     required this.address,
-    required this.apartmentNumber,
+    // required this.apartmentNumber,
     required this.position,
     // required this.avatar,
   });
@@ -30,7 +30,7 @@ class User {
       phone: json['phone'],
       role: json['role'],
       address: json['address'],
-      apartmentNumber: json['apartmentNumber'],
+      // apartmentNumber: json['apartmentNumber'],
       position: json['position'],
       // avatar: json['avatar'],
     );
@@ -44,7 +44,7 @@ class User {
       'phone': phone,
       'role': role,
       'address': address,
-      'apartmentNumber': apartmentNumber,
+      // 'apartmentNumber': apartmentNumber,
       'position': position,
       // 'avatar': avatar,
     };

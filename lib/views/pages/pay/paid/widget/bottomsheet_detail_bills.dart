@@ -1,3 +1,4 @@
+import 'package:datn/views/pages/pay/paid/widget/detail_bill_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -35,9 +36,8 @@ class BottomsheetDetailBills extends StatelessWidget {
       content = content.toStringAsFixed(0).replaceAllMapped(
           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.');
     }
-    return Container(
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.only(left: 10),
+    return Expanded(
+      flex: 1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,13 +53,17 @@ class BottomsheetDetailBills extends StatelessWidget {
             width: 5,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               icon,
-              Text(
-                content.toString(),
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  content.toString(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -104,9 +108,13 @@ class BottomsheetDetailBills extends StatelessWidget {
       height: 300,
       width: MediaQuery.of(context).size.width * 0.95,
       decoration: BoxDecoration(
-        color: Colors.blue[100],
+        color: Colors.white,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
+        ),
+        border: Border.all(
+          color: Colors.black,
+          width: 2,
         ),
       ),
       child: BarChart(
@@ -198,56 +206,59 @@ class BottomsheetDetailBills extends StatelessWidget {
 
   Widget _renderButtonBar(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.4,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.blue[900],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.blue[900],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
               ),
-            ),
-            child: Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  'Pay',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    'Pay',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.4,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.red[900],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.red[900],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
               ),
-            ),
-            child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -265,57 +276,149 @@ class BottomsheetDetailBills extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _renderChart(context),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: 200,
-                  child: GridView.count(
-                    childAspectRatio: 2,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    children: [
-                      _renderItemDetail(
-                        content: apartment,
-                        price: 10000000,
-                        previousPrice: 0,
-                        icon: const Icon(
-                          Icons.home,
-                          size: 30,
+                Flexible(
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Column(
+                            children: [
+                              DetailBillItemCard(
+                                row: [
+                                  Row(
+                                    children: [
+                                      _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.home,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Apartment',
+                                    price: 0,
+                                    previousPrice: 0,
+                                    content: apartment,
+                                  ),
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.person,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Owner',
+                                    price: 0,
+                                    previousPrice: 0,
+                                    content: owner,
+                                  )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              DetailBillItemCard(
+                                row: [
+                                  Row(
+                                    children: [
+                                      _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.electrical_services,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Electricity',
+                                    price: electricity,
+                                    previousPrice: previousPriceElectricity,
+                                    content: electricity,
+                                  ),
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.water,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Water',
+                                    price: water,
+                                    previousPrice: previousPriceWater,
+                                    content: water,
+                                  ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.car_crash,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Gửi xe',
+                                    price: electricity,
+                                    previousPrice: previousPriceElectricity,
+                                    content: electricity,
+                                  ),
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.water,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Internet',
+                                    price: water,
+                                    previousPrice: previousPriceWater,
+                                    content: water,
+                                  )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.car_crash,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Gửi xe',
+                                    price: electricity,
+                                    previousPrice: previousPriceElectricity,
+                                    content: electricity,
+                                  ),
+                                  _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.water,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Internet',
+                                    price: water,
+                                    previousPrice: previousPriceWater,
+                                    content: water,
+                                  )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              DetailBillItemCard(row: 
+                                [
+                                  Row(
+                                    children: [
+                                      _renderItemDetail(
+                                    icon: const Icon(
+                                      Icons.electrical_services,
+                                      color: Colors.black,
+                                    ),
+                                    title: 'Tổng hóa đơn',
+                                    price: electricity,
+                                    previousPrice: previousPriceElectricity,
+                                    content: electricity,
+                                  )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                               _renderChart(context),
+                            ],
+                          ),
                         ),
-                        title: 'Home bills',
                       ),
-                      _renderItemDetail(
-                        content: electricity,
-                        price: electricity,
-                        previousPrice: previousPriceElectricity,
-                        icon: const Icon(
-                          Icons.electrical_services,
-                          size: 30,
-                        ),
-                        title: 'Electricity',
-                      ),
-                      _renderItemDetail(
-                        content: owner,
-                        price: price,
-                        previousPrice: 0,
-                        icon: const Icon(
-                          Icons.person,
-                          size: 30,
-                        ),
-                        title: 'Owner',
-                      ),
-                      _renderItemDetail(
-                        content: water,
-                        price: water,
-                        previousPrice: previousPriceWater,
-                        icon: const Icon(
-                          Icons.water_drop_sharp,
-                          size: 30,
-                        ),
-                        title: 'Water',
-                      ),
-                    ],
-                  ),
+                    ),
                 ),
                 _renderButtonBar(context),
               ],

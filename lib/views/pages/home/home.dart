@@ -68,8 +68,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   User? user = HomePageModel().hiveProvider.getUser();
-  print("user::: ${user?.id}");
-
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
       child: Scaffold(
