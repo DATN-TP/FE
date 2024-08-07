@@ -1,5 +1,6 @@
 import 'package:datn/views/animations/slideTopToBottom.dart';
 import 'package:datn/views/pages/login/login_page_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Password extends StatelessWidget {
@@ -39,7 +40,7 @@ class Password extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        labelText: 'Password',
+                        labelText: 'txt_Password'.tr(),
                       ),
                     ),
                   ),
@@ -67,7 +68,7 @@ class Password extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    labelText: 'Password',
+                    labelText: 'txt_Password'.tr(),
                   ),
                 ),
               ),

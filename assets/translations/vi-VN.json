@@ -1,4 +1,9 @@
 {
     "txt_login": "Đăng nhập",
-    "txt_register": "Đăng ký"
+    "txt_register": "Đăng ký",
+    "txt_Login": "Đăng nhập",
+    "txt_Username" : "Tên đăng nhập",
+    "txt_Password": "Mật khẩu",
+    "txt_ForgotPassword": "Quên mật khẩu",
+    "txt_Signup": "Đăng ký"
 }

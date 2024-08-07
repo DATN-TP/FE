@@ -1,4 +1,9 @@
 {
     "txt_login": "Login",
-    "txt_register": "Register"
+    "txt_register": "Register",
+    "txt_Login": "Login",
+    "txt_Username" : "Username",
+    "txt_Password": "Password",
+    "txt_ForgotPassword": "Forgot Password",
+    "txt_Signup": "Sign up"
 }

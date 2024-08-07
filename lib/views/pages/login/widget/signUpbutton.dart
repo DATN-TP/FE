@@ -1,4 +1,5 @@
 import 'package:datn/views/animations/slideBottomToTop.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../routes/routes.dart';
 
@@ -33,9 +34,9 @@ class Signupbutton extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, Routes.signup);
           },
-          child: const Text(
-            'Sign Up',
-            style: TextStyle(
+          child: Text(
+            'txt_Signup'.tr(),
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.white,

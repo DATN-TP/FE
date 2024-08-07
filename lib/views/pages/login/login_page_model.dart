@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:datn/data/hive/hive_provider.dart';
 import 'package:datn/services/api_service.dart';
 import 'package:datn/services/auth_service.dart';
@@ -64,7 +62,5 @@ class LoginPageModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-    
-  } 
-
+  }
 }

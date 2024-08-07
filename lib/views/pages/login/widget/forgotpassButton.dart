@@ -1,4 +1,5 @@
 import 'package:datn/views/animations/slideTopToBottom.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Forgotpassbutton extends StatelessWidget {
@@ -13,8 +14,8 @@ class Forgotpassbutton extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: TextButton(
           onPressed: () {},
-          child: const Text('Forgot Password?',
-              style: TextStyle(
+          child: Text('${'txt_ForgotPassword'.tr()}?',
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

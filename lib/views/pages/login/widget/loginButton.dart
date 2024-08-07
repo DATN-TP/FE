@@ -1,10 +1,8 @@
 import 'package:datn/views/animations/slideTopToBottom.dart';
-import 'package:datn/views/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Loginbutton extends StatelessWidget {
-  
   final VoidCallback onPressed;
   const Loginbutton({super.key, required this.onPressed});
 

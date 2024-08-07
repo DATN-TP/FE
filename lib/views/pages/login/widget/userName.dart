@@ -1,4 +1,5 @@
 import 'package:datn/views/animations/slideTopToBottom.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Username extends StatelessWidget {
@@ -24,12 +25,12 @@ class Username extends StatelessWidget {
         ),
         child: TextField(
           controller: controller,
-          decoration:const InputDecoration(
-            suffix: Icon(Icons.person),
-            border: OutlineInputBorder(
+          decoration: InputDecoration(
+            suffix: const Icon(Icons.person),
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
-            labelText: 'Username',
+            labelText: 'txt_Username'.tr(),
           ),
         ),
       ),

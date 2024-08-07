@@ -1,5 +1,6 @@
 import 'package:datn/views/pages/pay/paid/widget/custom_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'bottomsheet_detail_bills.dart';
 
 // ignore: must_be_immutable
 class BillItem extends StatelessWidget {
@@ -11,6 +12,12 @@ class BillItem extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final price;
   String expired;
+  String apartment;
+  String owner;
+  final double electricity;
+  final double water;
+  double previousPriceWater;
+  double previousPriceElectricity;
 
   BillItem({
     super.key,
@@ -19,11 +26,17 @@ class BillItem extends StatelessWidget {
     required this.title,
     required this.price,
     required this.expired,
+    required this.apartment,
+    required this.owner,
+    required this.electricity,
+    required this.water,
+    required this.previousPriceWater,
+    required this.previousPriceElectricity,
   });
 
   Future<void> _loadData() async {
     // Giả lập quá trình tải dữ liệu
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -116,7 +129,7 @@ class BillItem extends StatelessWidget {
                   children: [
                     Text(
                       // ignore: prefer_interpolation_to_compose_strings
-                      'Tổng: ' + price + ' VNĐ',
+                      'Tổng: ' + price.toString() + ' VNĐ',
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -124,7 +137,22 @@ class BillItem extends StatelessWidget {
                     ),
                     status
                         ? InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return BottomsheetDetailBills(
+                                      previousPriceWater:previousPriceWater ,
+                                      previousPriceElectricity: previousPriceElectricity,
+                                      water: water,
+                                      electricity: electricity,
+                                      apartment: apartment,
+                                      price: price,
+                                      owner: owner,
+                                    );
+                                  });
+                            },
                             child: const Text(
                               'Chi tiết >',
                               style: TextStyle(
