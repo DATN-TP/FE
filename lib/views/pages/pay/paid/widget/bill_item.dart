@@ -45,7 +45,7 @@ class BillItem extends StatelessWidget {
       future: _loadData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CustomShimmer();
+          return const CustomShimmer();
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
