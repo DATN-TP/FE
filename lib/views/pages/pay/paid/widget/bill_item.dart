@@ -143,8 +143,10 @@ class BillItem extends StatelessWidget {
                                   context: context,
                                   builder: (context) {
                                     return BottomsheetDetailBills(
-                                      previousPriceWater:previousPriceWater ,
-                                      previousPriceElectricity: previousPriceElectricity,
+                                      status: status,
+                                      previousPriceWater: previousPriceWater,
+                                      previousPriceElectricity:
+                                          previousPriceElectricity,
                                       water: water,
                                       electricity: electricity,
                                       apartment: apartment,
@@ -162,7 +164,24 @@ class BillItem extends StatelessWidget {
                             ),
                           )
                         : InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return BottomsheetDetailBills(
+                                      status: status,
+                                      previousPriceWater: previousPriceWater,
+                                      previousPriceElectricity:
+                                          previousPriceElectricity,
+                                      water: water,
+                                      electricity: electricity,
+                                      apartment: apartment,
+                                      price: price,
+                                      owner: owner,
+                                    );
+                                  });
+                            },
                             child: const Text(
                               'Thanh toán >',
                               style: TextStyle(

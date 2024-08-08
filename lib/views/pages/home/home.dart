@@ -67,6 +67,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  // ignore: unused_local_variable
   User? user = HomePageModel().hiveProvider.getUser();
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
