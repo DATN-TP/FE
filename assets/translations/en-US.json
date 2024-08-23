@@ -5,5 +5,9 @@
     "txt_Username" : "Username",
     "txt_Password": "Password",
     "txt_ForgotPassword": "Forgot Password",
-    "txt_Signup": "Sign up"
+    "txt_Signup": "Sign up",
+    "txt_hello": "Hello",
+    "txt_home": "Home",
+    "txt_apartment": "Apartment",
+    "txt_profile": "Profile"  
 }

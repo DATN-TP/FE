@@ -1,9 +1,9 @@
-import 'package:datn/views/pages/home/home.dart';
-import 'package:datn/views/pages/otp/getOTP.dart';
-import 'package:datn/views/pages/pay/bills_pay.dart';
+import 'package:ResiEasy/views/pages/home/home.dart';
+import 'package:ResiEasy/views/pages/otp/getOTP.dart';
+import 'package:ResiEasy/views/pages/pay/bills_pay.dart';
 import 'package:flutter/material.dart';
-import 'package:datn/views/pages/login/login.dart';
-import 'package:datn/views/pages/signup/signup.dart';
+import 'package:ResiEasy/views/pages/login/login.dart';
+import 'package:ResiEasy/views/pages/signup/signup.dart';
 
 class Routes {
   static const String signup = '/signup';

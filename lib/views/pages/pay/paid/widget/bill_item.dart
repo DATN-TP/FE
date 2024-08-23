@@ -1,4 +1,4 @@
-import 'package:datn/views/pages/pay/paid/widget/custom_shimmer.dart';
+import 'package:ResiEasy/views/pages/pay/paid/widget/custom_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'bottomsheet_detail_bills.dart';
 

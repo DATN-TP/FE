@@ -1,7 +1,7 @@
-import 'package:datn/views/pages/otp/widget/background_otp.dart';
-import 'package:datn/views/pages/otp/widget/imageSendOtp.dart';
-import 'package:datn/views/pages/otp/widget/textFieldotp.dart';
-import 'package:datn/views/pages/otp/widget/verifyButton.dart';
+import 'package:ResiEasy/views/pages/otp/widget/background_otp.dart';
+import 'package:ResiEasy/views/pages/otp/widget/imageSendOtp.dart';
+import 'package:ResiEasy/views/pages/otp/widget/textFieldotp.dart';
+import 'package:ResiEasy/views/pages/otp/widget/verifyButton.dart';
 import 'package:flutter/material.dart';
 
 class Getotp extends StatelessWidget {

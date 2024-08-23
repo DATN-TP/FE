@@ -1,4 +1,4 @@
-import 'package:datn/views/animations/slideBottomToTop.dart';
+import 'package:ResiEasy/views/animations/slideBottomToTop.dart';
 import 'package:flutter/material.dart';
 
 class Loginbutton extends StatelessWidget {

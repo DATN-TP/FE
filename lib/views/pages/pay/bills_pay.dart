@@ -1,5 +1,5 @@
-import 'package:datn/views/pages/pay/paid/paid_page.dart';
-import 'package:datn/views/pages/pay/paid/detail_page.dart';
+import 'package:ResiEasy/views/pages/pay/paid/paid_page.dart';
+import 'package:ResiEasy/views/pages/pay/paid/detail_page.dart';
 import 'package:flutter/material.dart';
 
 class BillsPay extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:datn/views/pages/otp/widget/dialogSucessfull.dart';
+import 'package:ResiEasy/views/pages/otp/widget/dialogSucessfull.dart';
 import 'package:flutter/material.dart';
 
 class Verifybutton extends StatelessWidget {

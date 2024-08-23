@@ -1,13 +1,19 @@
-import 'package:datn/views/pages/home/widget/pay_now_button.dart';
+import 'dart:math';
+
+import 'package:ResiEasy/models/user_model.dart';
+import 'package:ResiEasy/views/pages/home/home_page_model.dart';
+import 'package:ResiEasy/views/pages/home/widget/pay_now_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Summary extends StatelessWidget {
   const Summary({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+    User? user = HomePageModel().hiveProvider.getUser();
     return Positioned(
-      bottom: 15,
+      bottom: 0,
       left: 10,
       right: 10,
       child: Container(
@@ -36,16 +42,17 @@ class Summary extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
+            SizedBox(
               height: 40,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Hello ${'Nguyen Van A'}',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                  '${'txt_hello'.tr()} ${user?.username ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

@@ -1,11 +1,11 @@
-import 'package:datn/repositories/auth_repository.dart';
-import 'package:datn/services/api_service.dart';
-import 'package:datn/services/auth_service.dart';
-import 'package:datn/views/pages/login/login_page_model.dart';
-import 'package:datn/views/pages/login/widget/background_login.dart';
-import 'package:datn/views/pages/login/widget/dialogCustom.dart';
+
+import 'package:ResiEasy/services/api_service.dart';
+import 'package:ResiEasy/services/auth_service.dart';
+import 'package:ResiEasy/views/pages/login/login_page_model.dart';
+import 'package:ResiEasy/views/pages/login/widget/background_login.dart';
+import 'package:ResiEasy/views/pages/login/widget/dialogCustom.dart';
 import 'package:flutter/material.dart';
-import 'package:datn/views/pages/login/widget/otherMethodLogin.dart';
+import 'package:ResiEasy/views/pages/login/widget/otherMethodLogin.dart';
 import 'package:provider/provider.dart';
 import './widget/userName.dart';
 import './widget/password.dart';
@@ -22,16 +22,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final AuthRepository _authRepository =
-      AuthRepository(AuthService(ApiService()));
+  final AuthService _authService =
+AuthService(ApiService());
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   Future<void> _login(LoginPageModel loginPageModel) async {
-    final username = _usernameController.text;
-    final password = _passwordController.text;
-    // ignore: unused_local_variable, non_constant_identifier_names
-    final user_res = await _authRepository.login(username, password);
-    // ignore: use_build_context_synchronously
+    // final username = _usernameController.text;
+    // final password = _passwordController.text;
+
+    const username = "huuphuoc.2632@gmail.com";
+    const password = "12345";
+
+    final user_res = await _authService.login(username, password);
     Navigator.pushNamed(context, '/home');
   }
 

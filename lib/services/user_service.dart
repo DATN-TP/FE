@@ -1,16 +1,15 @@
-import 'package:datn/models/user_model.dart';
+import 'package:ResiEasy/models/user_model.dart';
 import 'api_service.dart';
-
 
 class UserService {
   final ApiService apiService;
 
   UserService(this.apiService);
 
-  Future<User> getUser(int userId) async {
-    final response = await apiService.get('/users/$userId');
-    return User.fromJson(response);
-  }
+  // Future<User> getUser(int userId) async {
+  //   final response = await apiService.get('/users/$userId');
+  //   return User.fromJson(response);
+  // }
 
   Future<User> createUser(User user) async {
     final response = await apiService.post('/users', user.toJson());

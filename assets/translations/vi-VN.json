@@ -5,5 +5,9 @@
     "txt_Username" : "Tên đăng nhập",
     "txt_Password": "Mật khẩu",
     "txt_ForgotPassword": "Quên mật khẩu",
-    "txt_Signup": "Đăng ký"
+    "txt_Signup": "Đăng ký",
+    "txt_hello": "Xin chào",
+    "txt_home": "Trang chủ",
+    "txt_apartment": "Căn hộ",
+    "txt_profile": "Hồ sơ"
 }

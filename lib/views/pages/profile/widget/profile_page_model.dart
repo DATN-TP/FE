@@ -1,5 +1,5 @@
-import 'package:datn/data/hive/hive_provider.dart';
-import 'package:datn/services/biometric_service.dart';
+import 'package:ResiEasy/data/hive/hive_provider.dart';
+import 'package:ResiEasy/services/biometric_service.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePageModel extends ChangeNotifier {
