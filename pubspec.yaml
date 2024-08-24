@@ -93,6 +93,9 @@ flutter:
     - assets/images/city.png
     - assets/images/background.png
     - assets/icon/Logo.png
+    - assets/icon/england.png
+    - assets/icon/vietnam.png
+    
 
   # To add assets to your application, add an assets section, like this:
   # assets:

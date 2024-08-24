@@ -41,6 +41,10 @@
     "txt_approved": "Approved",
     "txt_rejected": "Rejected",
     "txt_received": "Received",
-    "txt_sent": "Sent"
+    "txt_sent": "Sent",
+    "txt_account": "Account",
+    "ttx_verify": "Verify",
+    "txt_applications": "Applications"
+    
 
 }

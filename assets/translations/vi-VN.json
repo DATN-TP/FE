@@ -38,8 +38,12 @@
     "txt_cancel": "Hủy",
     "txt_confirm": "Xác nhận",
     "txt_pending": "Yêu cầu chờ xử lý",
-    "txt_approved": "Yêu cầu đã duyệt",
-    "txt_rejected": "Yêu cầu đã từ chối",
-    "txt_received": "Yêu cầu đã nhận",
-    "txt_sent": "Yêu cầu đã gửi"
+    "txt_approved": "Yêu cầu đã được duyệt",
+    "txt_rejected": "Yêu cầu đã bị từ chối",
+    "txt_received": "Yêu cầu đã được nhận",
+    "txt_sent": "Yêu cầu đã gửi",
+    "txt_account": "Tài khoản",
+    "txt_verify": "Xác thực",
+    "txt_applications": "Ứng dụng"
+
 }

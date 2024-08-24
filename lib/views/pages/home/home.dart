@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
@@ -49,27 +50,27 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFFac3bff), // Color for selected label
+        selectedItemColor:  ColorApp().cl1, // Color for selected label
         unselectedItemColor: Colors.black,
         items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.home, color: Colors.grey,),
-            activeIcon: const Icon(Icons.home, color: Color(0xFFac3bff)),
+            activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
             label: 'txt_home'.tr(),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.apartment, color: Colors.grey,),
-            activeIcon: const Icon(Icons.apartment, color: Color(0xFFac3bff)),
+            activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
             label: 'txt_apartment'.tr(),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.notifications, color: Colors.grey,),
-            activeIcon: const Icon(Icons.notifications, color: Color(0xFFac3bff)),
+            activeIcon:  Icon(Icons.notifications, color: ColorApp().cl1),
             label: 'txt_notifications'.tr(),  
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.account_circle, color: Colors.grey,),
-            activeIcon: const Icon(Icons.account_circle, color: Color(0xFFac3bff)),
+            activeIcon:  Icon(Icons.account_circle, color: ColorApp().cl1),
             label: 'txt_profile'.tr(),  
           ),
         ],

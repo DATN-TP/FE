@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Buttonlogout extends StatelessWidget {
@@ -24,9 +25,9 @@ class Buttonlogout extends StatelessWidget {
           Navigator.pushNamedAndRemoveUntil(
               context, '/login', (route) => false);
         },
-        child: const Text(
-          'Log out',
-          style: TextStyle(
+        child:  Text(
+          'txt_logout'.tr(),
+          style:const TextStyle(
             fontSize: 20,
             color: Colors.red,
             fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_bills.dart';
 import 'package:ResiEasy/views/pages/bill/bill_view_model.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_line_chart.dart';
@@ -30,7 +31,7 @@ class _BillPageState extends State<BillPage> {
             'txt_listBill'.tr(),
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          backgroundColor: const Color(0xFFac3bff),
+          backgroundColor: ColorApp().cl1,
           titleSpacing: 0,
         ),
         body: SafeArea(

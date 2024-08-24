@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
@@ -47,6 +48,12 @@ class _ApartmentPageState extends State<ApartmentPage> {
 
           final apartment = viewModel.apartment;
           return Scaffold(
+            appBar: AppBar(
+              title: Text('txt_apartment'.tr(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              automaticallyImplyLeading: false,
+              backgroundColor: ColorApp().cl1,
+              centerTitle: true,
+            ),
             body: Container(
               margin: const EdgeInsets.only(top: 10),
               color: Colors.grey.shade200,
@@ -100,7 +107,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
             ),
           ),
           CommonActionCard(
-              icon: const Icon(Icons.assignment, color: Colors.amber),
+              icon:  Icon(Icons.assignment, color: ColorApp().cl1),
               title:  Text('txt_feedbackAction'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
@@ -112,7 +119,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     )
               }),
           CommonActionCard(
-              icon: const Icon(Icons.payment, color: Colors.green),
+              icon:  Icon(Icons.payment, color: ColorApp().cl1),
               title:  Text('txt_listBill'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
@@ -124,21 +131,21 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     )
               }),
               CommonActionCard(
-              icon: const Icon(Icons.payment, color: Colors.green),
+              icon:  Icon(Icons.cleaning_services, color: ColorApp().cl1),
               title:  Text('txt_listService'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
                       fontStyle: FontStyle.italic)),
               onPressed: () => {}),
           CommonActionCard(
-              icon: const Icon(Icons.group_outlined, color: Colors.blue),
+              icon:  Icon(Icons.group_outlined, color: ColorApp().cl1),
               title:  Text('txt_listMember'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
                       fontStyle: FontStyle.italic)),
               onPressed: () => {}),
           CommonActionCard(
-              icon: const Icon(Icons.directions_car_filled, color: Colors.red),
+              icon:  Icon(Icons.directions_car_filled, color:ColorApp().cl1),
               title:  Text('txt_listVehicle'.tr(),
                   style: const TextStyle(
                       fontSize: 17,

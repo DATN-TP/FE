@@ -17,7 +17,6 @@ class Vnpayservice {
       final url = Uri.parse(response); // Assuming the response contains a 'url' field
       if (await canLaunchUrl(url)) {
         await launchUrl(url);
-        print("hihi có quay lại nè");
       } else {
         throw Exception('Could not launch $url');
       }

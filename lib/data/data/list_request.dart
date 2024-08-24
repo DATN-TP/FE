@@ -3,7 +3,7 @@ import 'package:ResiEasy/models/request_model.dart';
 class ListRequest {
   static List<Request> request = [
     Request(
-      title: 'Yêu cầu sửa chữa',
+      title: 'Yêu cầu sửa bóng đèn',
       description: 'Cần sửa chữa ống nước tại căn hộ 101',
       status: -1,
       createAt: DateTime.parse('2022-01-01'),

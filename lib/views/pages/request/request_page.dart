@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_request.dart';
 import 'package:ResiEasy/views/pages/request/widget/request_item.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -25,7 +26,7 @@ class _RequestPageState extends State<RequestPage> {
           'txt_feedbackAction'.tr(),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFFac3bff),
+        backgroundColor: ColorApp().cl1,
         titleSpacing: 0,
       ),
       body: SafeArea(
