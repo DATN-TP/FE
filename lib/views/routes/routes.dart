@@ -1,6 +1,8 @@
+import 'package:ResiEasy/views/pages/bill/bill_page.dart';
 import 'package:ResiEasy/views/pages/home/home.dart';
 import 'package:ResiEasy/views/pages/otp/getOTP.dart';
 import 'package:ResiEasy/views/pages/pay/bills_pay.dart';
+import 'package:ResiEasy/views/pages/request/request_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ResiEasy/views/pages/login/login.dart';
 import 'package:ResiEasy/views/pages/signup/signup.dart';
@@ -11,6 +13,8 @@ class Routes {
   static const String home = '/home';
   static const String getotp = '/getotp';
   static const String billsPay = '/billsPay';
+  static const String requestPage = '/requestPage';
+  static const String billPage = '/billPage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -24,6 +28,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const Getotp());
       case billsPay:
         return MaterialPageRoute(builder: (_) => const BillsPay());
+      case requestPage:
+        return MaterialPageRoute(builder: (_) => const RequestPage());
+      case billPage:
+        return MaterialPageRoute(builder: (_) => const BillPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

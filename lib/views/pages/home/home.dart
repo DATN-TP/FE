@@ -4,6 +4,7 @@ import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/home/widget/menu.dart';
 import 'package:ResiEasy/views/pages/home/widget/news.dart';
 import 'package:ResiEasy/views/pages/home/widget/summary.dart';
+import 'package:ResiEasy/views/pages/notifications/notification_page.dart';
 import 'package:ResiEasy/views/pages/profile/profile_page.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_page.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,11 +30,13 @@ class _HomeState extends State<Home> {
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return const HomePage(); // Use a separate widget for the home page
+        return const HomePage(); 
       case 1:
-        return const ApartmentPage(); // Update to use the Business widget
+        return const ApartmentPage(); 
       case 2:
-        return const Profile(); // Update to use the School widget
+        return const NotificationPage();
+      case 3:
+        return const Profile(); 
       default:
         return const HomePage(); // Fallback to HomePage
     }
@@ -46,17 +49,27 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
+        selectedItemColor: const Color(0xFFac3bff), // Color for selected label
+        unselectedItemColor: Colors.black,
         items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
+            icon: const Icon(Icons.home, color: Colors.grey,),
+            activeIcon: const Icon(Icons.home, color: Color(0xFFac3bff)),
             label: 'txt_home'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.apartment),
+            icon: const Icon(Icons.apartment, color: Colors.grey,),
+            activeIcon: const Icon(Icons.apartment, color: Color(0xFFac3bff)),
             label: 'txt_apartment'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.account_circle),
+            icon: const Icon(Icons.notifications, color: Colors.grey,),
+            activeIcon: const Icon(Icons.notifications, color: Color(0xFFac3bff)),
+            label: 'txt_notifications'.tr(),  
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.account_circle, color: Colors.grey,),
+            activeIcon: const Icon(Icons.account_circle, color: Color(0xFFac3bff)),
             label: 'txt_profile'.tr(),  
           ),
         ],
@@ -80,19 +93,22 @@ class HomePage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Consumer<HomePageModel>(
               builder: (context, loginPageModel, child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      _renderImageBackGround(context),
-                      const Summary(),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  const Menu(),
-                  const News(),
-                ],
+              return Container(
+                color: Colors.grey.shade100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        _renderImageBackGround(context),
+                        const Summary(),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    const Menu(),
+                    const News(),
+                  ],
+                ),
               );
               },
             ),

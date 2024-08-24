@@ -25,7 +25,7 @@ class _MenuState extends State<Menu> {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         width: MediaQuery.of(context).size.width * 0.95,
-        height: 200,
+        height: 220,
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -48,43 +48,50 @@ class _MenuState extends State<Menu> {
             Radius.circular(20),
           ),
         ),
-        child: Align(
-            alignment: Alignment.topCenter,
-            child: GridView.count(
-              controller: _scrollController,
-              shrinkWrap: true,
-              crossAxisCount: 4,
-              children: ListServices.services.map((service) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color:
-                            (service as Map<String, dynamic>)['background'] ??
-                                Colors.transparent,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: IconButton(
-                        icon: (service as Map<String, dynamic>)['icon'],
-                        onPressed: () {},
-                        iconSize: 30,
-                        color: service['color'],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      service['name'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                );
-              }).toList(),
-            )));
+       child: Align(
+  alignment: Alignment.topCenter,
+  child: GridView.count(
+    controller: _scrollController,
+    shrinkWrap: true,
+    padding: const EdgeInsets.all(10),
+    crossAxisCount: 4,
+    crossAxisSpacing: 10,
+    mainAxisSpacing: 20,
+    
+    children: ListServices.services.map((service) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: (service as Map<String, dynamic>)['background'] ??
+                    Colors.transparent,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+              ),
+              child: IconButton(
+                icon: (service as Map<String, dynamic>)['icon'],
+                onPressed: () {},
+                iconSize: 30,
+                color: service['color'],
+              ),
+            ),
+            Text(
+              service['name'],
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList(),
+  ),
+)
+
+            );
   }
 }

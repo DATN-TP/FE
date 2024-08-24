@@ -32,7 +32,7 @@ class Summary extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.3),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(0, 3),
@@ -47,9 +47,9 @@ class Summary extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '${'txt_hello'.tr()} ${user?.username ?? ''}',
+                  '${'txt_hello'.tr()},  ${user?.username ?? ''}',
                   style: const TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -57,11 +57,11 @@ class Summary extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 30,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Payable: 1.000.000 VND',
+                  'Căn hộ: A1-L1-1',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -69,25 +69,39 @@ class Summary extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
+            Column(
               children: [
-                PayNowButton(),
                 SizedBox(
                   height: 40,
-                  width: MediaQuery.of(context).size.width / 2 - 20,
+                  width: MediaQuery.of(context).size.width,
                   child: const Center(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.calendar_month_outlined, color: Colors.blue),
+                        Icon(Icons.directions_car, color: Colors.orange),
                         SizedBox(width: 5),
-                        Text('Hạn cuối: 20/10/2024'),
+                        Text('Tổng số phương tiện cá nhân: 1', style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),),
                       ],
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width,
+                  child: const Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.calendar_month_outlined, color: Colors.blue),
+                        SizedBox(width: 5),
+                        Text('Ngày gia nhập: 20/6/2024', style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             )
+              
           ],
         ),
       ),
