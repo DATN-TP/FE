@@ -7,9 +7,7 @@ part of 'bill_model.dart';
 // **************************************************************************
 
 Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
-      apartment: json['apartment'] == null
-          ? null
-          : Apartment.fromJson(json['apartment'] as Map<String, dynamic>),
+      apartment: json['apartment'] as String?,
       service: (json['service'] as List<dynamic>?)
           ?.map((e) => Service.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,6 +27,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       deleteAt: json['deleteAt'] == null
           ? null
           : DateTime.parse(json['deleteAt'] as String),
+      paid: json['paid'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$BillToJson(Bill instance) => <String, dynamic>{
@@ -44,4 +43,5 @@ Map<String, dynamic> _$BillToJson(Bill instance) => <String, dynamic>{
       'createAt': instance.createAt.toIso8601String(),
       'updateAt': instance.updateAt.toIso8601String(),
       'deleteAt': instance.deleteAt?.toIso8601String(),
+      'paid': instance.paid,
     };

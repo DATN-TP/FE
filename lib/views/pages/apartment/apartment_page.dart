@@ -117,7 +117,12 @@ class _ApartmentPageState extends State<ApartmentPage> {
                   style: const TextStyle(
                       fontSize: 17,
                       fontStyle: FontStyle.italic)),
-              onPressed: () => {}),
+              onPressed: () => {
+                Navigator.pushNamed(
+                      context,
+                     "/billPage",
+                    )
+              }),
               CommonActionCard(
               icon: const Icon(Icons.payment, color: Colors.green),
               title:  Text('txt_listService'.tr(),

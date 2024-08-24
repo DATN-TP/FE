@@ -43,35 +43,36 @@ class _RentPageState extends State<RentPage> {
                   },
                 ),
                 const Text('Unpaid'),
-              ],
+              ], // Add an identifier here
             ),
-            for (var bill in ListBills.bills)
-              if ((_selectedValue == 1 &&
-                      (bill as Map<String, dynamic>)['status'] == true) ||
-                  (_selectedValue == 2 &&
-                      (bill as Map<String, dynamic>)['status'] == false))
-                BillItem(
-                  water: (bill)['water'],
-                  // previousPriceWater bằng giá trị tiền nước của phần tử có index - 1 nếu index < 0 thì bằng 0
-                  previousPriceWater: ListBills.bills.indexOf(bill) - 1 < 0
-                      ? 0
-                      : (ListBills.bills[ListBills.bills.indexOf(bill) - 1]
-                          as Map<String, dynamic>)['water'],
-                  previousPriceElectricity:
-                      ListBills.bills.indexOf(bill) - 1 < 0
-                          ? 0
-                          : (ListBills.bills[ListBills.bills.indexOf(bill) - 1]
-                              as Map<String, dynamic>)['electricity'],
-                  electricity: (bill)['electricity'],
-                  owner: (bill)['owner'],
-                  expired: (bill)['expired'],
-                  price: (bill)['price'],
-                  title: (bill)['title'],
-                  status: (bill)['status'],
-                  id: (bill)['id'],
-                  apartment: (bill)['apartment'],
-                ),
+            // for (var bill in ListBills.bills)
+            //   if ((_selectedValue == 1 &&
+            //           (bill as Map<String, dynamic>)['status'] == true) ||
+            //       (_selectedValue == 2 &&
+            //           (bill as Map<String, dynamic>)['status'] == false))
+                // BillItem(
+                //   // water: (bill)['water'],
+                //   // previousPriceWater bằng giá trị tiền nước của phần tử có index - 1 nếu index < 0 thì bằng 0
+                //   previousPriceWater: ListBills.bills.indexOf(bill) - 1 < 0
+                //       ? 0
+                //       : (ListBills.bills[ListBills.bills.indexOf(bill) - 1]
+                //           as Map<String, dynamic>)['water'],
+                //   previousPriceElectricity:
+                //       ListBills.bills.indexOf(bill) - 1 < 0
+                //           ? 0
+                //           : (ListBills.bills[ListBills.bills.indexOf(bill) - 1]
+                //               as Map<String, dynamic>)['electricity'],
+                  // electricity: (bill)['electricity'],
+                  // owner: (bill)['owner'],
+                  // expired: (bill)['expired'],
+                  // price: (bill)['price'],
+                  // title: (bill)['title'],
+                  // status: (bill)['status'],
+                  // id: (bill)['id'],
+                  // apartment: (bill)['apartment'],
+                // ),
           ],
+
         ),
       ),
     ));

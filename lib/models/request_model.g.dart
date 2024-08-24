@@ -9,7 +9,7 @@ part of 'request_model.dart';
 Request _$RequestFromJson(Map<String, dynamic> json) => Request(
       title: json['title'] as String,
       description: json['description'] as String,
-      status: json['status'] as int,
+      status: (json['status'] as num).toInt(),
       createAt: DateTime.parse(json['createAt'] as String),
       updateAt: json['updateAt'] == null
           ? null
