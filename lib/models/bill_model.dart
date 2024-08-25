@@ -15,7 +15,7 @@ class Bill {
   final DateTime date;
   final String paymentMethod;
   final DateTime? paymentDate;
-  final User? paymentBy;
+  final String? paymentBy;
   final String? note;
   final DateTime createAt;
   final DateTime updateAt;

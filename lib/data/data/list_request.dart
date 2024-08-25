@@ -8,7 +8,9 @@ class ListRequest {
       status: -1,
       createAt: DateTime.parse('2022-01-01'),
       updateAt: DateTime.parse('2022-01-01'),
-      image: ['assets/images/repair.jpg'],
+      image: ["https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg"],
     ),
     Request(
       title: 'Yêu cầu sửa chữa',
@@ -16,7 +18,9 @@ class ListRequest {
       status: 3,
       createAt: DateTime.parse('2022-01-01'),
       updateAt: DateTime.parse('2022-01-01'),
-      image: ['assets/images/repair.jpg'],
+      image: ["https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg"],
     ),
     Request(
       title: 'Yêu cầu sửa chữa',
@@ -24,7 +28,9 @@ class ListRequest {
       status: 2,
       createAt: DateTime.parse('2022-01-01'),
       updateAt: DateTime.parse('2022-01-01'),
-      image: ['assets/images/repair.jpg'],
+      image: ["https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg"],
     ),
     Request(
       title: 'Yêu cầu sửa chữa',
@@ -32,7 +38,9 @@ class ListRequest {
       status: 1,
       createAt: DateTime.parse('2022-01-01'),
       updateAt: DateTime.parse('2022-01-01'),
-      image: ['assets/images/repair.jpg'],
+      image: ["https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg",
+      "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724516192/avatar-anh-meo-cute-5_f0prpf.jpg"],
     ),
   ];
 }

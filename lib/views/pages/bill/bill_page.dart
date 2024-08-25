@@ -1,6 +1,7 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_bills.dart';
 import 'package:ResiEasy/views/pages/bill/bill_view_model.dart';
+import 'package:ResiEasy/views/pages/bill/detail/bill_detail_page.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_line_chart.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_item.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -76,9 +77,18 @@ class _BillPageState extends State<BillPage> {
               return BillItem(
                 bill: ListBills.bills[index],
                 onTap: () => {
-                  billViewModel.createPayment()
+                  
+                  Navigator.of(
+                    context
+                  ).push(
+                    MaterialPageRoute(
+                      builder: (context) => BillDetailPage(),
+                      settings:
+                      RouteSettings(arguments: ListBills.bills[index]),
+                    ),
+                  ),
                 },
-              );
+              );  
             },
           ),
         );

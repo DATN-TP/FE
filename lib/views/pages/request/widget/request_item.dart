@@ -6,77 +6,81 @@ import 'package:intl/intl.dart';
 
 class RequestItem extends StatelessWidget {
   final Request request;
-  const RequestItem({super.key, required this.request});
+  final VoidCallback onTap;
+  const RequestItem({super.key, required this.request, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-             Row(
-              children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Image.asset(
-                          'assets/icon/Logo.png',
-                          width: 44,
-                          height: 34,
-                        ),
-                      ),
-                const SizedBox(width: 10),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Text(
-                      request.title,
-                      style:const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Icon(Icons.calendar_today, size: 15, color: Colors.grey,),
-                        SizedBox(width: 5),
-                        Text(
-                          _formatDate(request.createAt.toString()),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    _buildStatusRequest(),
-                  ],
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(Icons.arrow_forward_ios, color: Colors.grey[300],),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 3),
             ),
           ],
         ),
+        child: 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Row(
+                children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Image.asset(
+                            'assets/icon/Logo.png',
+                            width: 44,
+                            height: 34,
+                          ),
+                        ),
+                  const SizedBox(width: 10),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                        request.title,
+                        style:const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Icon(Icons.calendar_today, size: 15, color: Colors.grey,),
+                          SizedBox(width: 5),
+                          Text(
+                            _formatDate(request.createAt.toString()),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      _buildStatusRequest(),
+                    ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Icon(Icons.arrow_forward_ios, color: Colors.grey[300],),
+              ),
+            ],
+          ),
+      ),
     );
   }
   

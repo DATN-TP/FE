@@ -218,7 +218,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                   Icon(Icons.home, color: Colors.blue[200]),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentArea'.tr()}: ${apartment?.area ?? 0} m2',
+                    '${'txt_apartmentArea'.tr()} ${apartment?.area ?? 0} m2',
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.black,

@@ -56,6 +56,7 @@ dependencies:
   firebase_messaging: ^14.7.10
   flutter_local_notifications: ^17.2.2
   url_launcher: ^6.3.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -92,9 +93,12 @@ flutter:
     - assets/images/sentotp.png
     - assets/images/city.png
     - assets/images/background.png
+    - assets/images/logo_text_none_background.png
+
     - assets/icon/Logo.png
     - assets/icon/england.png
     - assets/icon/vietnam.png
+
     
 
   # To add assets to your application, add an assets section, like this:

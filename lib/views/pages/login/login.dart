@@ -82,7 +82,7 @@ AuthService(ApiService());
                 timer: 1500,
               ),
               Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: SingleChildScrollView(
                   child: Consumer<LoginPageModel>(
                     builder: (context, loginPageModel, child) {
@@ -93,6 +93,13 @@ AuthService(ApiService());
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: Image.asset(
+                                'assets/images/logo_text_none_background.png',
+                                width: 600,
+                              ),
+                            ),
                             const Logintitle(),
                             const SizedBox(height: 40),
                             !isBiometricEnable
@@ -104,7 +111,7 @@ AuthService(ApiService());
                                       Password(
                                         controller: _passwordController,
                                       ),
-                                      const SizedBox(height: 40),
+                                      const SizedBox(height: 90),
                                       Loginbutton(
                                           onPressed: () =>
                                               _login(loginPageModel)),
@@ -112,10 +119,10 @@ AuthService(ApiService());
                                   )
                                 : _buildBiometricLoginButton(loginPageModel),
                             const Forgotpassbutton(),
-                            const SizedBox(height: 80),
-                            const Othermethodlogin(),
-                            const SizedBox(height: 30),
-                            const Signupbutton(),
+                            // const SizedBox(height: 80),
+                            // const Othermethodlogin(),
+                            // const SizedBox(height: 30),
+                            // const Signupbutton(),
                           ],
                         ),
                       );
@@ -148,7 +155,7 @@ AuthService(ApiService());
         Password(
           controller: _passwordController,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 110),
         Loginbutton(onPressed: () => _login(loginPageModel)),
         const SizedBox(height: 20),
         Padding(
@@ -158,7 +165,7 @@ AuthService(ApiService());
               child: const Text(
                 "Đăng nhập bằng tài khoản khác",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.blue,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
               )),

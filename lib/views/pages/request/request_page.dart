@@ -1,5 +1,7 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_request.dart';
+import 'package:ResiEasy/views/pages/request/create/create_new_request.dart';
+import 'package:ResiEasy/views/pages/request/detail/request_detail_page.dart';
 import 'package:ResiEasy/views/pages/request/widget/request_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class _RequestPageState extends State<RequestPage> {
             Navigator.of(context).pop();
           },
         ),
-        title:  Text(
+        title: Text(
           'txt_feedbackAction'.tr(),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
@@ -32,13 +34,14 @@ class _RequestPageState extends State<RequestPage> {
       body: SafeArea(
         child: Container(
           color: Colors.grey.shade300,
-            child: Column(
-              children: [
-               _buildButtonNewRequest(),
-               Align(
+          child: Column(
+            children: [
+              _buildButtonNewRequest(),
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Text(
                     'txt_listRequest'.tr(),
                     style: const TextStyle(
@@ -48,27 +51,35 @@ class _RequestPageState extends State<RequestPage> {
                   ),
                 ),
               ),
-               _buildListRequest(),
-              ],
-            ),
+              _buildListRequest(),
+            ],
           ),
+        ),
       ),
     );
   }
-  
+
   _buildButtonNewRequest() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-         color: Colors.green,
-      ),
-      child:  Padding(
-        padding:  EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          children: [
-             Align(
-              alignment: Alignment.center,
+    return InkWell(
+        onTap: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CreateNewRequest(),
+                ),
+              )
+            },
+        child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.green,
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.center,
                 child: Text(
                   'txt_createNew'.tr(),
                   style: const TextStyle(
@@ -78,20 +89,30 @@ class _RequestPageState extends State<RequestPage> {
                   ),
                 ),
               ),
-            
-          ],
+            ],
+          ),
         ),
       ),
     );
-    
   }
-  
+
   Widget _buildListRequest() {
     return Expanded(
       child: ListView.builder(
         itemCount: ListRequest.request.length,
         itemBuilder: (context, index) {
-          return RequestItem(request: ListRequest.request[index]);
+          return RequestItem(
+            request: ListRequest.request[index],
+            onTap: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => RequestDetailPage(),
+                  settings:
+                      RouteSettings(arguments: ListRequest.request[index]),
+                ),
+              )
+            },
+          );
         },
       ),
     );

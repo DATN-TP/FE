@@ -7,9 +7,9 @@ class BillViewModel extends ChangeNotifier {
 
   final Vnpayservice vnpayservice = Vnpayservice(ApiService());
 
-  Future<void> createPayment() async {
+  Future<void> createPayment(int amount) async {
     try {
-      await vnpayservice.createPaymentUrl();
+      await vnpayservice.createPaymentUrl(amount);
       notifyListeners();
     } catch (e) {
       print('Error creating payment URL: $e');
