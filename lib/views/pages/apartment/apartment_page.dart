@@ -3,6 +3,7 @@ import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
+import 'package:ResiEasy/views/pages/member/member_page.dart';
 import 'package:ResiEasy/views/pages/request/request_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                       child: _buildSummary(apartment),
                     ),
                     const SizedBox(height: 20),
-                    _buildActionCard()
+                    _buildActionCard(apartment)
                   ],
                 ),
               ),
@@ -89,7 +90,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
     );
   }
 
-  SingleChildScrollView _buildActionCard() {
+  SingleChildScrollView _buildActionCard(Apartment? apartment) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -143,7 +144,17 @@ class _ApartmentPageState extends State<ApartmentPage> {
                   style: const TextStyle(
                       fontSize: 17,
                       fontStyle: FontStyle.italic)),
-              onPressed: () => {}),
+              onPressed: () => {
+                Navigator.of(
+                    context
+                  ).push(
+                    MaterialPageRoute(
+                      builder: (context) => MemberPage(),
+                      settings:
+                      RouteSettings(arguments: apartment?.id),
+                    ),
+                  ),
+              }),
           CommonActionCard(
               icon:  Icon(Icons.directions_car_filled, color:ColorApp().cl1),
               title:  Text('txt_listVehicle'.tr(),

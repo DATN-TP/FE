@@ -5,6 +5,7 @@ part 'apartment_model.g.dart';
 
 @JsonSerializable()
 class Apartment {
+  final String id;
   final String name;
   final String? floor;
   final String? block;
@@ -23,6 +24,7 @@ class Apartment {
   final List<String>? image;
 
   Apartment({
+    required this.id,
     required this.name,
     this.floor,
     this.block,

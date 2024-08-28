@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:developer' as dev;
+
 import 'package:ResiEasy/models/user_model.dart';
 import 'api_service.dart';
 
@@ -6,22 +9,14 @@ class UserService {
 
   UserService(this.apiService);
 
-  // Future<User> getUser(int userId) async {
-  //   final response = await apiService.get('/users/$userId');
-  //   return User.fromJson(response);
-  // }
+  //get user by apartment
+Future<List<User>> getListUserByApartment(String id) async {
+  final response = await apiService.get('/user/get-list-user-by-apartment/$id');
 
-  Future<User> createUser(User user) async {
-    final response = await apiService.post('/users', user.toJson());
-    return User.fromJson(response);
-  }
-
-  Future<User> updateUser(int userId, User user) async {
-    final response = await apiService.put('/users/$userId', user.toJson());
-    return User.fromJson(response);
-  }
-
-  Future<void> deleteUser(int userId) async {
-    await apiService.delete('/users/$userId');
-  }
+  if (response != null) {
+      return response['data'].map<User>((json) => User.fromJson(json)).toList();
+    } else {
+      throw Exception('Unexpected response format');
+    }
+  } 
 }

@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 15),
-                    const Menu(),
+                    // const Menu(),
                     const News(),
                   ],
                 ),

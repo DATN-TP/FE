@@ -5,6 +5,7 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class User {
+  final String id;
   final String username;
   final String email;
   final String? phone;
@@ -22,6 +23,7 @@ class User {
   final DateTime? deleteAt;
 
   User({
+    required this.id,
     required this.username,
     required this.email,
     this.phone,

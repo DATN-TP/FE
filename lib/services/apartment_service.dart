@@ -12,7 +12,6 @@ class ApartmentService {
     final response = await apiService.get('/apartment/get-detail-apartment/$id');
 
     if (response != null) {
-      dev.log('responseaaa: ${Apartment.fromJson(response)}');
       return Apartment.fromJson(response);
     } else {
       throw Exception('Failed to get detail apartment');
