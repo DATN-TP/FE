@@ -1,52 +1,47 @@
+import 'package:ResiEasy/models/apartment_model.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class User {
   final String id;
-  final String name;
+  final String username;
   final String email;
-  final String phone;
+  final String? phone;
+  final DateTime dob;
   final String role;
   final String address;
-  // final String apartmentNumber;
+  final List<String>? apartments;
+  final bool houseHoldHead;
+  final String relationship;
   final String position;
-  // final String avatar;
-
+  final String avatar;
+  final String refreshToken;
+  final DateTime createAt;
+  final DateTime updateAt;
+  final DateTime? deleteAt;
 
   User({
     required this.id,
-    required this.name,
+    required this.username,
     required this.email,
-    required this.phone,
+    this.phone,
+    required this.dob,
     required this.role,
-    required this.address,
-    // required this.apartmentNumber,
-    required this.position,
-    // required this.avatar,
+    this.address = '',
+    this.apartments,
+    this.houseHoldHead = false,
+    this.relationship = 'Người thân',
+    this.position = '',
+    this.avatar = '',
+    this.refreshToken = '',
+    required this.createAt,
+    required this.updateAt,
+    this.deleteAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['_id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      role: json['role'],
-      address: json['address'],
-      // apartmentNumber: json['apartmentNumber'],
-      position: json['position'],
-      // avatar: json['avatar'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'role': role,
-      'address': address,
-      // 'apartmentNumber': apartmentNumber,
-      'position': position,
-      // 'avatar': avatar,
-    };
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
+

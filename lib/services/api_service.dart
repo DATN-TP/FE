@@ -1,70 +1,82 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ApiService {
-  final String baseUrl;
+  final Dio _dio;
 
-  ApiService(): baseUrl = dotenv.env['BASE_URL']?? '';
-  Future<Map<String, dynamic>> _request(
+  ApiService() : _dio = Dio(BaseOptions(
+    baseUrl: dotenv.env['BASE_URL'] ?? '',
+    contentType: 'application/json; charset=UTF-8',
+  ));
+
+  Future<dynamic> _request(
     String method,
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
   }) async {
-    final uri = Uri.parse('$baseUrl$endpoint');
-    final defaultHeaders = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    headers ??= {};
-    headers.addAll(defaultHeaders);
+    try {
+      Response response;
 
-    http.Response response;
+      // Combine default headers with provided headers
+      final defaultHeaders = <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      headers = {...defaultHeaders, ...?headers};
 
-    switch (method) {
-      case 'POST':
-        response = await http.post(
-          uri,
-          headers: headers,
-          body: json.encode(body),
+      // Configure Dio request options
+      final options = Options(
+        method: method,
+        headers: headers,
+      );
+
+      switch (method) {
+        case 'POST':
+          response = await _dio.post(endpoint, data: body, options: options);
+          break;
+        case 'PUT':
+          response = await _dio.put(endpoint, data: body, options: options);
+          break;
+        case 'DELETE':
+          response = await _dio.delete(endpoint, options: options);
+          break;
+        case 'GET':
+        default:
+          response = await _dio.get(endpoint, queryParameters: queryParameters, options: options);
+          break;
+      }
+
+      // Handle the response
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return response.data;
+      } else {
+        throw ApiException(
+          statusCode: response.statusCode ?? 0,
+          message: response.statusMessage ?? 'Unknown error',
+          body: response.data.toString(),
         );
-        break;
-      case 'PUT':
-        response = await http.put(
-          uri,
-          headers: headers,
-          body: json.encode(body),
-        );
-        break;
-      case 'DELETE':
-        response = await http.delete(uri, headers: headers);
-        break;
-      case 'GET':
-      default:
-        response = await http.get(uri, headers: headers);
-        break;
-    }
-
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return json.decode(response.body);
-    } else {
+      }
+    } on DioException catch (e) {
       throw ApiException(
-        statusCode: response.statusCode,
-        message: response.reasonPhrase ?? 'Unknown error',
-        body: response.body,
+        statusCode: e.response?.statusCode ?? 0,
+        message: e.response?.statusMessage ?? 'Unknown error',
+        body: e.response?.data.toString() ?? '',
       );
     }
   }
 
-  Future<Map<String, dynamic>> get(String endpoint, {Map<String, String>? headers}) async {
-    return _request('GET', endpoint, headers: headers);
+  Future<dynamic> get(String endpoint, {Map<String, String>? headers, Map<String, dynamic>? queryParameters}) async {
+    return _request('GET', endpoint, headers: headers, queryParameters: queryParameters);
   }
 
-  Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
+  Future<dynamic> post(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
     return _request('POST', endpoint, body: body, headers: headers);
   }
 
-  Future<Map<String, dynamic>> put(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
+  Future<dynamic> put(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
     return _request('PUT', endpoint, body: body, headers: headers);
   }
 

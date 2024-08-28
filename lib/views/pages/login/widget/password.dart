@@ -1,5 +1,5 @@
-import 'package:datn/views/animations/slideTopToBottom.dart';
-import 'package:datn/views/pages/login/login_page_model.dart';
+import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
+import 'package:ResiEasy/views/pages/login/login_page_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 

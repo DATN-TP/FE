@@ -1,6 +1,6 @@
-import 'package:datn/views/pages/home/widget/news_item.dart';
+import 'package:ResiEasy/views/pages/home/widget/news_item.dart';
 import 'package:flutter/material.dart';
-import 'package:datn/data/data/list_news.dart';
+import 'package:ResiEasy/data/data/list_news.dart';
 
 class News extends StatelessWidget {
   const News({super.key});

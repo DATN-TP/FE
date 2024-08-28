@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:datn/models/user_model.dart';
+import 'package:ResiEasy/models/user_model.dart';
 import 'package:hive/hive.dart';
 
 class HiveProvider {

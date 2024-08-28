@@ -1,11 +1,11 @@
-import 'package:datn/repositories/auth_repository.dart';
-import 'package:datn/services/api_service.dart';
-import 'package:datn/services/auth_service.dart';
-import 'package:datn/views/pages/login/login_page_model.dart';
-import 'package:datn/views/pages/login/widget/background_login.dart';
-import 'package:datn/views/pages/login/widget/dialogCustom.dart';
+
+import 'package:ResiEasy/services/api_service.dart';
+import 'package:ResiEasy/services/auth_service.dart';
+import 'package:ResiEasy/views/pages/login/login_page_model.dart';
+import 'package:ResiEasy/views/pages/login/widget/background_login.dart';
+import 'package:ResiEasy/views/pages/login/widget/dialogCustom.dart';
 import 'package:flutter/material.dart';
-import 'package:datn/views/pages/login/widget/otherMethodLogin.dart';
+import 'package:ResiEasy/views/pages/login/widget/otherMethodLogin.dart';
 import 'package:provider/provider.dart';
 import './widget/userName.dart';
 import './widget/password.dart';
@@ -22,16 +22,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final AuthRepository _authRepository =
-      AuthRepository(AuthService(ApiService()));
+  final AuthService _authService =
+AuthService(ApiService());
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   Future<void> _login(LoginPageModel loginPageModel) async {
-    final username = _usernameController.text;
-    final password = _passwordController.text;
-    // ignore: unused_local_variable, non_constant_identifier_names
-    final user_res = await _authRepository.login(username, password);
-    // ignore: use_build_context_synchronously
+    // final username = _usernameController.text;
+    // final password = _passwordController.text;
+
+    const username = "huuphuoc.2632@gmail.com";
+    const password = "12345";
+
+    final user_res = await _authService.login(username, password);
     Navigator.pushNamed(context, '/home');
   }
 
@@ -80,7 +82,7 @@ class _LoginState extends State<Login> {
                 timer: 1500,
               ),
               Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: SingleChildScrollView(
                   child: Consumer<LoginPageModel>(
                     builder: (context, loginPageModel, child) {
@@ -91,6 +93,13 @@ class _LoginState extends State<Login> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: Image.asset(
+                                'assets/images/logo_text_none_background.png',
+                                width: 600,
+                              ),
+                            ),
                             const Logintitle(),
                             const SizedBox(height: 40),
                             !isBiometricEnable
@@ -102,7 +111,7 @@ class _LoginState extends State<Login> {
                                       Password(
                                         controller: _passwordController,
                                       ),
-                                      const SizedBox(height: 40),
+                                      const SizedBox(height: 90),
                                       Loginbutton(
                                           onPressed: () =>
                                               _login(loginPageModel)),
@@ -110,10 +119,10 @@ class _LoginState extends State<Login> {
                                   )
                                 : _buildBiometricLoginButton(loginPageModel),
                             const Forgotpassbutton(),
-                            const SizedBox(height: 80),
-                            const Othermethodlogin(),
-                            const SizedBox(height: 30),
-                            const Signupbutton(),
+                            // const SizedBox(height: 80),
+                            // const Othermethodlogin(),
+                            // const SizedBox(height: 30),
+                            // const Signupbutton(),
                           ],
                         ),
                       );
@@ -146,7 +155,7 @@ class _LoginState extends State<Login> {
         Password(
           controller: _passwordController,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 110),
         Loginbutton(onPressed: () => _login(loginPageModel)),
         const SizedBox(height: 20),
         Padding(
@@ -156,7 +165,7 @@ class _LoginState extends State<Login> {
               child: const Text(
                 "Đăng nhập bằng tài khoản khác",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.blue,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
               )),
