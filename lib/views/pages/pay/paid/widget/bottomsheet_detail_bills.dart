@@ -78,8 +78,8 @@ class BottomsheetDetailBills extends StatelessWidget {
                         color: price - previousPrice >= 0
                             ? price - previousPrice == 0
                                 ? Colors.grey
-                                : Colors.green
-                            : Colors.red,
+                                : Colors.red
+                            : Colors.green,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -263,7 +263,7 @@ class BottomsheetDetailBills extends StatelessWidget {
               ),
             ),
           )
-        : Container(
+        : SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             //blue close button
             child: Padding(

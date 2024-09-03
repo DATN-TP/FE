@@ -21,25 +21,10 @@ class BillsPay extends StatelessWidget {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: const TabBar(
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-                  labelStyle: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  indicatorColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.home_rounded),
-                      text: 'Bills',
-                    ),
-                    Tab(
-                      icon: Icon(Icons.info_rounded),
-                      text: 'Detail',
-                    ),
-                  ],
+                child: AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  title: const Text('Bills'),
                 ),
               ),
               Expanded(

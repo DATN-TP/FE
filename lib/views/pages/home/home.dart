@@ -1,3 +1,4 @@
+
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/models/user_model.dart';
@@ -59,6 +60,7 @@ class _HomeState extends State<Home> {
             label: 'txt_home'.tr(),
           ),
           BottomNavigationBarItem(
+
             icon: const Icon(Icons.apartment, color: Colors.grey,),
             activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
             label: 'txt_apartment'.tr(),
@@ -84,8 +86,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  // ignore: unused_local_variable
-  User? user = HomePageModel().hiveProvider.getUser();
+    // ignore: unused_local_variable
+    User? user = HomePageModel().hiveProvider.getUser();
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
       child: Scaffold(
@@ -94,6 +96,7 @@ class HomePage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Consumer<HomePageModel>(
               builder: (context, loginPageModel, child) {
+
               return Container(
                 color: Colors.grey.shade100,
                 child: Column(
@@ -105,6 +108,7 @@ class HomePage extends StatelessWidget {
                         const Summary(),
                       ],
                     ),
+
                     const SizedBox(height: 15),
                     // const Menu(),
                     const News(),
@@ -126,17 +130,6 @@ class HomePage extends StatelessWidget {
           fit: BoxFit.fitWidth,
           alignment: Alignment.topCenter,
         ));
-  }
-}
-
-class Business extends StatelessWidget {
-  const Business({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Business Page'),
-    );
   }
 }
 
