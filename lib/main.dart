@@ -1,5 +1,5 @@
 import 'package:datn/data/hive/hive_provider.dart';
-import 'package:datn/models/user_model.dart';
+// import 'package:datn/models/user_model.dart';
 import 'package:datn/views/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

@@ -4,6 +4,8 @@ import 'package:datn/views/pages/home/widget/menu.dart';
 import 'package:datn/views/pages/home/widget/news.dart';
 import 'package:datn/views/pages/home/widget/summary.dart';
 import 'package:datn/views/pages/profile/profile_page.dart';
+import 'package:datn/views/pages/message/message_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +30,7 @@ class _HomeState extends State<Home> {
       case 0:
         return const HomePage(); // Use a separate widget for the home page
       case 1:
-        return const Business(); // Update to use the Business widget
+        return MessagePage(); // Update to use the Business widget
       case 2:
         return const Profile(); // Update to use the School widget
       default:
@@ -49,8 +51,8 @@ class _HomeState extends State<Home> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(CupertinoIcons.chat_bubble_2),
+            label: 'Messages',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
@@ -67,8 +69,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  // ignore: unused_local_variable
-  User? user = HomePageModel().hiveProvider.getUser();
+    // ignore: unused_local_variable
+    User? user = HomePageModel().hiveProvider.getUser();
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
       child: Scaffold(
@@ -77,19 +79,19 @@ class HomePage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Consumer<HomePageModel>(
               builder: (context, loginPageModel, child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      _renderImageBackGround(context),
-                      const Summary(),
-                    ],
-                  ),
-                  const Menu(),
-                  const News(),
-                ],
-              );
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        _renderImageBackGround(context),
+                        const Summary(),
+                      ],
+                    ),
+                    const Menu(),
+                    const News(),
+                  ],
+                );
               },
             ),
           )),
@@ -105,17 +107,6 @@ class HomePage extends StatelessWidget {
           fit: BoxFit.fitWidth,
           alignment: Alignment.topCenter,
         ));
-  }
-}
-
-class Business extends StatelessWidget {
-  const Business({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Business Page'),
-    );
   }
 }
 

@@ -27,10 +27,10 @@ class _LoginState extends State<Login> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   Future<void> _login(LoginPageModel loginPageModel) async {
-    final username = _usernameController.text;
-    final password = _passwordController.text;
+    // final username = _usernameController.text;
+    // final password = _passwordController.text;
     // ignore: unused_local_variable, non_constant_identifier_names
-    final user_res = await _authRepository.login(username, password);
+    // final user_res = await _authRepository.login(username, password);
     // ignore: use_build_context_synchronously
     Navigator.pushNamed(context, '/home');
   }
