@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Buttonlogout extends StatelessWidget {
@@ -6,10 +7,15 @@ class Buttonlogout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border:  Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.grey.shade200,
           padding: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -19,11 +25,11 @@ class Buttonlogout extends StatelessWidget {
           Navigator.pushNamedAndRemoveUntil(
               context, '/login', (route) => false);
         },
-        child: const Text(
-          'Log out',
-          style: TextStyle(
+        child:  Text(
+          'txt_logout'.tr(),
+          style:const TextStyle(
             fontSize: 20,
-            color: Colors.black,
+            color: Colors.red,
             fontWeight: FontWeight.bold,
           ),
         ),

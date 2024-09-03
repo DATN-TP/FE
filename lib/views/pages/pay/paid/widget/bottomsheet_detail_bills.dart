@@ -1,4 +1,4 @@
-import 'package:datn/views/pages/pay/paid/widget/detail_bill_item_card.dart';
+import 'package:ResiEasy/views/pages/pay/paid/widget/detail_bill_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 

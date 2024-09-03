@@ -1,11 +1,15 @@
-import 'package:datn/models/user_model.dart';
-import 'package:datn/views/pages/home/home_page_model.dart';
-import 'package:datn/views/pages/home/widget/menu.dart';
-import 'package:datn/views/pages/home/widget/news.dart';
-import 'package:datn/views/pages/home/widget/summary.dart';
-import 'package:datn/views/pages/profile/profile_page.dart';
-import 'package:datn/views/pages/message/message_page.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:ResiEasy/data/config/colors.dart';
+import 'package:ResiEasy/models/apartment_model.dart';
+import 'package:ResiEasy/models/user_model.dart';
+import 'package:ResiEasy/views/pages/home/home_page_model.dart';
+import 'package:ResiEasy/views/pages/home/widget/menu.dart';
+import 'package:ResiEasy/views/pages/home/widget/news.dart';
+import 'package:ResiEasy/views/pages/home/widget/summary.dart';
+import 'package:ResiEasy/views/pages/notifications/notification_page.dart';
+import 'package:ResiEasy/views/pages/profile/profile_page.dart';
+import 'package:ResiEasy/views/pages/apartment/apartment_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,11 +32,13 @@ class _HomeState extends State<Home> {
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return const HomePage(); // Use a separate widget for the home page
+        return const HomePage(); 
       case 1:
-        return MessagePage(); // Update to use the Business widget
+        return const ApartmentPage(); 
       case 2:
-        return const Profile(); // Update to use the School widget
+        return const NotificationPage();
+      case 3:
+        return const Profile(); 
       default:
         return const HomePage(); // Fallback to HomePage
     }
@@ -45,18 +51,29 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
-        items: const <BottomNavigationBarItem>[
+        selectedItemColor:  ColorApp().cl1, // Color for selected label
+        unselectedItemColor: Colors.black,
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home, color: Colors.grey,),
+            activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
+            label: 'txt_home'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.chat_bubble_2),
-            label: 'Messages',
+
+            icon: const Icon(Icons.apartment, color: Colors.grey,),
+            activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
+            label: 'txt_apartment'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
+            icon: const Icon(Icons.notifications, color: Colors.grey,),
+            activeIcon:  Icon(Icons.notifications, color: ColorApp().cl1),
+            label: 'txt_notifications'.tr(),  
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.account_circle, color: Colors.grey,),
+            activeIcon:  Icon(Icons.account_circle, color: ColorApp().cl1),
+            label: 'txt_profile'.tr(),  
           ),
         ],
       ),
@@ -79,7 +96,10 @@ class HomePage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: Consumer<HomePageModel>(
               builder: (context, loginPageModel, child) {
-                return Column(
+
+              return Container(
+                color: Colors.grey.shade100,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Stack(
@@ -88,10 +108,13 @@ class HomePage extends StatelessWidget {
                         const Summary(),
                       ],
                     ),
-                    const Menu(),
+
+                    const SizedBox(height: 15),
+                    // const Menu(),
                     const News(),
                   ],
-                );
+                ),
+              );
               },
             ),
           )),
@@ -103,7 +126,7 @@ class HomePage extends StatelessWidget {
         height: 300,
         width: MediaQuery.of(context).size.width,
         child: Image.asset(
-          'assets/images/city.png',
+          'assets/images/background.png',
           fit: BoxFit.fitWidth,
           alignment: Alignment.topCenter,
         ));

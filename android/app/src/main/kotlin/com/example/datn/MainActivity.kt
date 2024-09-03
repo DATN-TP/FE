@@ -1,4 +1,4 @@
-package com.example.datn
+package com.iuh.resieasy
 
 import io.flutter.embedding.android.FlutterFragmentActivity;
 

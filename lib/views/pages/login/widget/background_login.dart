@@ -1,6 +1,6 @@
-import 'package:datn/views/animations/slideTopToBottom.dart';
+import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:flutter/material.dart';
-import 'package:datn/views/pages/login/widget/sShapeClipper.dart';
+import 'package:ResiEasy/views/pages/login/widget/sShapeClipper.dart';
 import 'dart:ui';
 
 class Background extends StatelessWidget {

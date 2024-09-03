@@ -1,4 +1,4 @@
-# datn
+# ResiEasy
 
 A new Flutter project.
 

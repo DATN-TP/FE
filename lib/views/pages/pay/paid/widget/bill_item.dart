@@ -1,4 +1,5 @@
-import 'package:datn/views/pages/pay/paid/widget/custom_shimmer.dart';
+import 'package:ResiEasy/models/bill_model.dart';
+import 'package:ResiEasy/views/pages/pay/paid/widget/custom_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'bottomsheet_detail_bills.dart';
 
@@ -31,7 +32,7 @@ class BillItem extends StatelessWidget {
     required this.electricity,
     required this.water,
     required this.previousPriceWater,
-    required this.previousPriceElectricity,
+    required this.previousPriceElectricity, required Bill bill,
   });
 
   Future<void> _loadData() async {

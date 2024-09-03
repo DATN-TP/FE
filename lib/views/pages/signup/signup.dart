@@ -1,12 +1,12 @@
-import 'package:datn/views/animations/slideBottomToTop.dart';
-import 'package:datn/views/animations/slideTopToBottom.dart';
-import 'package:datn/views/pages/signup/widget/background_signup.dart';
-import 'package:datn/views/pages/signup/widget/confirmpass.dart';
-import 'package:datn/views/pages/signup/widget/loginbutton.dart';
-import 'package:datn/views/pages/signup/widget/password.dart';
-import 'package:datn/views/pages/signup/widget/signupButton.dart';
-import 'package:datn/views/pages/signup/widget/signupTitle.dart';
-import 'package:datn/views/pages/signup/widget/username.dart';
+import 'package:ResiEasy/views/animations/slideBottomToTop.dart';
+import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
+import 'package:ResiEasy/views/pages/signup/widget/background_signup.dart';
+import 'package:ResiEasy/views/pages/signup/widget/confirmpass.dart';
+import 'package:ResiEasy/views/pages/signup/widget/loginbutton.dart';
+import 'package:ResiEasy/views/pages/signup/widget/password.dart';
+import 'package:ResiEasy/views/pages/signup/widget/signupButton.dart';
+import 'package:ResiEasy/views/pages/signup/widget/signupTitle.dart';
+import 'package:ResiEasy/views/pages/signup/widget/username.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {

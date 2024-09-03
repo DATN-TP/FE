@@ -1,4 +1,4 @@
-import 'package:datn/views/pages/pay/paid/widget/chart_water.dart';
+import 'package:ResiEasy/views/pages/pay/paid/widget/chart_water.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {

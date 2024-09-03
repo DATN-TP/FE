@@ -1,22 +1,24 @@
 {
   "project_info": {
-    "project_number": "865494246343",
-    "firebase_url": "https://chatapp-efe5a-default-rtdb.firebaseio.com",
-    "project_id": "chatapp-efe5a",
-    "storage_bucket": "chatapp-efe5a.appspot.com"
+
+    "project_number": "583238683026",
+    "project_id": "resieasy-6ac13",
+    "storage_bucket": "resieasy-6ac13.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865494246343:android:9e967382558a2eb75fefe2",
+
+        "mobilesdk_app_id": "1:583238683026:android:3ebe8f1926fcd65eae994b",
         "android_client_info": {
-          "package_name": "com.example.datn"
+          "package_name": "com.iuh.resieasy"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBM1qjUbDYhWFo8Z-LjKEbwO73DANSlAPc"
+
+          "current_key": "AIzaSyC7ETkjGHnB_RE-QhM_01ANDjSdxPG3VmM"
         }
       ],
       "services": {

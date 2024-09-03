@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "datn" "\0"
+            VALUE "CompanyName", "com.iuh" "\0"
+            VALUE "FileDescription", "ResiEasy" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "datn" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "datn.exe" "\0"
-            VALUE "ProductName", "datn" "\0"
+            VALUE "InternalName", "ResiEasy" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.iuh. All rights reserved." "\0"
+            VALUE "OriginalFilename", "ResiEasy.exe" "\0"
+            VALUE "ProductName", "ResiEasy" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

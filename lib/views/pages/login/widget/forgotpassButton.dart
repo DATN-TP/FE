@@ -1,4 +1,4 @@
-import 'package:datn/views/animations/slideTopToBottom.dart';
+import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class Forgotpassbutton extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.blue,
               )),
         ),
       ),
