@@ -30,7 +30,7 @@ class _BillPageState extends State<BillPage> {
           ),
           title: Text(
             'txt_listBill'.tr(),
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: ColorApp().cl1,
           titleSpacing: 0,
@@ -82,7 +82,7 @@ class _BillPageState extends State<BillPage> {
                     context
                   ).push(
                     MaterialPageRoute(
-                      builder: (context) => BillDetailPage(),
+                      builder: (context) => const BillDetailPage(),
                       settings:
                       RouteSettings(arguments: ListBills.bills[index]),
                     ),

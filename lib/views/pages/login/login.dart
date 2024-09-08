@@ -1,4 +1,4 @@
-
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/services/api_service.dart';
 import 'package:ResiEasy/services/auth_service.dart';
 import 'package:ResiEasy/views/pages/login/login_page_model.dart';
@@ -22,20 +22,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final AuthService _authService =
-AuthService(ApiService());
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  Future<void> _login(LoginPageModel loginPageModel) async {
-    // final username = _usernameController.text;
-    // final password = _passwordController.text;
-
-    const username = "huuphuoc.2632@gmail.com";
-    const password = "12345";
-
-    final user_res = await _authService.login(username, password);
-    Navigator.pushNamed(context, '/home');
-  }
 
   @override
   void initState() {
@@ -69,68 +57,76 @@ AuthService(ApiService());
       child: ChangeNotifierProvider(
         create: (_) => LoginPageModel(),
         child: Scaffold(
-          body: Stack(
-            children: [
-              const Background(
-                point: 0.75,
-                color: Color.fromARGB(255, 179, 159, 176),
-                timer: 1300,
-              ),
-              const Background(
-                point: 0.73,
-                color: Color(0xFFac3bff),
-                timer: 1500,
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: SingleChildScrollView(
-                  child: Consumer<LoginPageModel>(
-                    builder: (context, loginPageModel, child) {
-                      final isBiometricEnable =
-                          loginPageModel.checkBiometricEnable;
-                      return Container(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 50),
-                              child: Image.asset(
-                                'assets/images/logo_text_none_background.png',
-                                width: 600,
-                              ),
-                            ),
-                            const Logintitle(),
-                            const SizedBox(height: 40),
-                            !isBiometricEnable
-                                ? Column(
-                                    children: [
-                                      Username(
-                                        controller: _usernameController,
-                                      ),
-                                      Password(
-                                        controller: _passwordController,
-                                      ),
-                                      const SizedBox(height: 90),
-                                      Loginbutton(
-                                          onPressed: () =>
-                                              _login(loginPageModel)),
-                                    ],
-                                  )
-                                : _buildBiometricLoginButton(loginPageModel),
-                            const Forgotpassbutton(),
-                            // const SizedBox(height: 80),
-                            // const Othermethodlogin(),
-                            // const SizedBox(height: 30),
-                            // const Signupbutton(),
-                          ],
-                        ),
-                      );
-                    },
+          body: Consumer<LoginPageModel>(
+            builder: (context, loginPageModel, child) {
+              return Stack(
+                children: [
+                   Background(
+                    point: 0.75,
+                    color: ColorApp().cl1,
+                    timer: 1500,
                   ),
-                ),
-              ),
-            ],
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: SingleChildScrollView(
+                      child: Consumer<LoginPageModel>(
+                        builder: (context, loginPageModel, child) {
+                          final isBiometricEnable =
+                              loginPageModel.checkBiometricEnable;
+                          return Container(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 50),
+                                  child: Image.asset(
+                                    'assets/images/logo_text_none_background.png',
+                                    width: 600,
+                                  ),
+                                ),
+                                const Logintitle(),
+                                const SizedBox(height: 40),
+                                !isBiometricEnable
+                                    ? Column(
+                                        children: [
+                                          Username(
+                                            controller: _usernameController,
+                                          ),
+                                          Password(
+                                            controller: _passwordController,
+                                          ),
+                                          const SizedBox(height: 90),
+                                          Loginbutton(
+                                              onPressed: () =>
+                                                  loginPageModel.login(
+                                                      context,
+                                                      _usernameController.text,
+                                                      _passwordController.text)),
+                                        ],
+                                      )
+                                    : _buildBiometricLoginButton(
+                                        loginPageModel),
+                                const Forgotpassbutton(),
+                                // const SizedBox(height: 80),
+                                // const Othermethodlogin(),
+                                // const SizedBox(height: 30),
+                                // const Signupbutton(),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  if (loginPageModel.isLoading)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -156,7 +152,9 @@ AuthService(ApiService());
           controller: _passwordController,
         ),
         const SizedBox(height: 110),
-        Loginbutton(onPressed: () => _login(loginPageModel)),
+        Loginbutton(
+            onPressed: () => loginPageModel.login(
+                context, username, _passwordController.text)),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(15.0),

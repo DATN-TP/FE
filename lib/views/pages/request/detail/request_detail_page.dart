@@ -17,7 +17,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('txt_requestDetail'.tr(),
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: ColorApp().cl1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -175,7 +175,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
       ),
       child: Text(
         request!.title,
-        style: TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 15),
       ), // Replace 'Your child widget here' with the actual child widget you want to use.
     );
   }
@@ -228,7 +228,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
       ),
       child: Text(
         request!.description,
-        style: TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 15),
       ), 
     );
   }
@@ -263,7 +263,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade400),
       ),
-      child: Text(
+      child: const Text(
         "chưa có dữ liệu nha ní ơi",
         style: TextStyle(fontSize: 15),
       ), 

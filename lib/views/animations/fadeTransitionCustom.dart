@@ -6,10 +6,10 @@ class BlurTransitionCustom extends StatefulWidget {
   final Widget child;
 
   const BlurTransitionCustom({
-    Key? key,
+    super.key,
     required this.durationMs,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _BlurTransitionCustomState createState() => _BlurTransitionCustomState();

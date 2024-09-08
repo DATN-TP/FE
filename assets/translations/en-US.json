@@ -80,10 +80,15 @@
     "txt_totalQuantity": "Total Quantity",
     "txt_totalPriceService": "Total Price Service",
     "txt_totalPriceBill": "Total Price Bill",
-    "txt_payNow": "Pay Now"
-
-    
-
-    
-
+    "txt_payNow": "Pay Now",
+    "txt_currentPassword": "Current Password",
+    "txt_newPassword": "New Password",
+    "txt_confirmNewPassword": "Confirm New Password",
+    "txt_changePasswordSuccess": "Change password successfully",
+    "txt_changePasswordFail": "Change password fail",
+    "txt_changePasswordFailMessage": "Current password is incorrect",
+    "txt_birthday": "Birthday",
+    "txt_address": "Address",
+    "txt_phone": "Phone",
+    "txt_email": "Email"
 }

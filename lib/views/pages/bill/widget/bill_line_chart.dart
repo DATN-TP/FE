@@ -6,13 +6,13 @@ import 'package:intl/intl.dart';  // Để định dạng ngày tháng
 class BillLineChart extends StatelessWidget {
   final List<Bill> bills;
 
-  BillLineChart({required this.bills});
+  const BillLineChart({super.key, required this.bills});
 
   @override
   Widget build(BuildContext context) {
     // Check if the bills list is null or empty
-    if (bills == null || bills.isEmpty) {
-      return Center(child: Text('No data available'));
+    if (bills.isEmpty) {
+      return const Center(child: Text('No data available'));
     }
 
 
@@ -41,12 +41,12 @@ class BillLineChart extends StatelessWidget {
               sideTitles: SideTitles(showTitles: false),
             ),
           ),
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           lineBarsData: [
             LineChartBarData(
               spots: bills.map((bill) {
                 // Ensure that createAt and amount are valid
-                if (bill.createAt == null || bill.amount == null) {
+                if (bill.amount == null) {
                   return const FlSpot(0, 0);
                 }
                 double x = bill.createAt.month.toDouble();

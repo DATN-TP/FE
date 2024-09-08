@@ -5,6 +5,7 @@ import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/member/member_page.dart';
 import 'package:ResiEasy/views/pages/request/request_page.dart';
+import 'package:ResiEasy/views/pages/vehicle/vehicle_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -149,7 +150,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     context
                   ).push(
                     MaterialPageRoute(
-                      builder: (context) => MemberPage(),
+                      builder: (context) => const MemberPage(),
                       settings:
                       RouteSettings(arguments: apartment?.id),
                     ),
@@ -161,7 +162,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                   style: const TextStyle(
                       fontSize: 17,
                       fontStyle: FontStyle.italic)),
-              onPressed: () => {}),
+              onPressed: () => {
+                Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const VehiclePage(),
+                ),
+              )
+            },
+              ),
         ],
       ),
     );
@@ -205,7 +213,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.key, color: Colors.red),
+                  const Icon(Icons.key, color: Colors.red),
                   const SizedBox(width: 10),
                    Text(
                     "${'txt_householdHead'.tr()} Huỳnh Hữu Phước",
@@ -268,7 +276,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.directions_car, color: Colors.orange),
+                  const Icon(Icons.directions_car, color: Colors.orange),
                   const SizedBox(width: 10),
                   Text(
                     '${'txt_apartmentTotalVehicle'.tr()} ${apartment?.totalVehicle ?? 0}',
@@ -289,7 +297,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.people, color: Colors.pink),
+                  const Icon(Icons.people, color: Colors.pink),
                   const SizedBox(width: 10),
                   Text(
                     '${'txt_apartmentTotalPeople'.tr()} ${apartment?.totalResidents ?? 0}',

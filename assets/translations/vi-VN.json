@@ -79,8 +79,16 @@
     "txt_totalPrice": "Tổng giá",
     "txt_totalQuantity": "Tổng số lượng",
     "txt_totalPriceService": "Tổng giá dịch vụ",
-    "txt_payNow": "Thanh toán ngay"
-
-
-
+    "txt_payNow": "Thanh toán ngay",
+    "txt_currentPassword": "Mật khẩu hiện tại",
+    "txt_newPassword": "Mật khẩu mới",
+    "txt_confirmNewPassword": "Xác nhận mật khẩu",
+    "txt_birthday": "Ngày sinh",
+    "txt_address": "Địa chỉ",
+    "txt_phone": "Số điện thoại",
+    "txt_email": "Email",
+    "txt_changePasswordSuccess": "Đổi mật khẩu thành công",
+    "txt_changePasswordFail": "Đổi mật khẩu thất bại",
+    "txt_changePasswordFailMessage": "Mật khẩu hiện tại không chính xác"
+    
 }

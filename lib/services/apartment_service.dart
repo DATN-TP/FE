@@ -1,7 +1,5 @@
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/services/api_service.dart';
-import 'package:flutter/material.dart';
-import 'dart:developer' as dev;
 
 class ApartmentService {
   final ApiService apiService;

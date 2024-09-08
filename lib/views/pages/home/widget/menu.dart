@@ -72,7 +72,7 @@ class _MenuState extends State<Menu> {
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
               child: IconButton(
-                icon: (service as Map<String, dynamic>)['icon'],
+                icon: (service)['icon'],
                 onPressed: () {},
                 iconSize: 30,
                 color: service['color'],

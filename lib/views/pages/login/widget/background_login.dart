@@ -9,11 +9,11 @@ class Background extends StatelessWidget {
   final double timer;
 
   const Background({
-    Key? key,
+    super.key,
     required this.point,
     required this.color,
     required this.timer,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

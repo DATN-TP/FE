@@ -1,7 +1,5 @@
 
-import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/models/service_model.dart';
-import 'package:ResiEasy/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'bill_model.g.dart';

@@ -5,10 +5,10 @@ class SlideTopToBottom extends StatefulWidget {
   final Widget child;
 
   const SlideTopToBottom({
-    Key? key,
+    super.key,
     required this.durationMs,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _SlideTopToBottomState createState() => _SlideTopToBottomState();

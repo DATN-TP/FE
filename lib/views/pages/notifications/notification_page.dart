@@ -18,7 +18,7 @@ class _NotificationPageState extends State<NotificationPage> {
         automaticallyImplyLeading: false,
         title: Text(
           'txt_notifications'.tr(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: ColorApp().cl1,
         titleSpacing: 0,

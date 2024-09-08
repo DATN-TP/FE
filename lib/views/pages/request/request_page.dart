@@ -26,7 +26,7 @@ class _RequestPageState extends State<RequestPage> {
         ),
         title: Text(
           'txt_feedbackAction'.tr(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: ColorApp().cl1,
         titleSpacing: 0,
@@ -64,7 +64,7 @@ class _RequestPageState extends State<RequestPage> {
         onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => CreateNewRequest(),
+                  builder: (context) => const CreateNewRequest(),
                 ),
               )
             },
@@ -75,7 +75,7 @@ class _RequestPageState extends State<RequestPage> {
           color: Colors.green,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: [
               Align(
@@ -106,7 +106,7 @@ class _RequestPageState extends State<RequestPage> {
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => RequestDetailPage(),
+                  builder: (context) => const RequestDetailPage(),
                   settings:
                       RouteSettings(arguments: ListRequest.request[index]),
                 ),

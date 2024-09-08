@@ -1,5 +1,3 @@
-import 'package:ResiEasy/data/data/list_bills.dart';
-import 'package:ResiEasy/views/pages/pay/paid/widget/bill_item.dart';
 import 'package:flutter/material.dart';
 
 class RentPage extends StatefulWidget {

@@ -1,11 +1,40 @@
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MemberCard extends StatelessWidget {
 
   final User? user;
 
   const MemberCard({super.key, required this.user});
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Không thể thực hiện cuộc gọi đến $phoneNumber';
+    }
+  }
+
+  Future<void> _sendEmail(String emailAddress) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: emailAddress,
+      queryParameters: {
+        'subject': 'Tiêu đề email',
+        'body': 'Nội dung email',
+      },
+    );
+    if (await canLaunch(emailUri.toString())) {
+      await launch(emailUri.toString());
+    } else {
+      throw 'Không thể mở email tới $emailAddress';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +70,26 @@ class MemberCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(Icons.phone, color: Colors.blue,),
-              const SizedBox(width: 10),
-              Text(user!.phone ?? 'Chưa cập nhật'),
-            ],
+          InkWell(
+            onTap: () => _makePhoneCall(user!.phone ?? ''),
+            child: Row(
+              children: [
+                const Icon(Icons.phone, color: Colors.blue,),
+                const SizedBox(width: 10),
+                Text(user!.phone ?? 'Chưa cập nhật'),
+              ],
+            ),
           ),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(Icons.email, color: Colors.blue,),
-              const SizedBox(width: 10),
-               Text(user!.email),
-            ],
+          InkWell(
+            onTap: () => _sendEmail(user!.email),
+            child: Row(
+              children: [
+                const Icon(Icons.email, color: Colors.blue,),
+                const SizedBox(width: 10),
+                 Text(user!.email),
+              ],
+            ),
           ),
         ],
       ),

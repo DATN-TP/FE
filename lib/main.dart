@@ -40,7 +40,9 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('FCM Token: $fcmToken');
+
+
+
 
   await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
@@ -48,11 +50,15 @@ Future<void> main() async {
   await Hive.openBox<String>(HiveProvider.HIVE_USER_BOX);
   await dotenv.load(fileName: ".env");
 
+  final hiveProvider = HiveProvider();
+  hiveProvider.saveFCMToken(fcmToken!);
+    print('FCM Token: $fcmToken');
+
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
   final InitializationSettings initializationSettings =
-      InitializationSettings(
+      const InitializationSettings(
     android: initializationSettingsAndroid,
   );
 

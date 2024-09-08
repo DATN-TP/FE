@@ -18,6 +18,7 @@ class Routes {
   static const String billPage = '/billPage';
   static const String requestDetail = '/requestDetail';
 
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case signup:

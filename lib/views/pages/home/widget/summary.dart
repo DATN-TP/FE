@@ -1,8 +1,7 @@
-import 'dart:math';
 
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
-import 'package:ResiEasy/views/pages/home/widget/pay_now_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +18,11 @@ class Summary extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          // color: Colors.blue.shade200.withOpacity(0.7),
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xff712BBC),
-              Color(0xff715BBC),
+              ColorApp().cl1,
               Color(0xffc9c9c9),
             ],
           ),
@@ -92,7 +89,7 @@ class Summary extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.calendar_month_outlined, color: Colors.blue),
+                        Icon(Icons.calendar_month_outlined, color: Colors.yellow),
                         SizedBox(width: 5),
                         Text('Ngày gia nhập: 20/6/2024', style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),),
                       ],

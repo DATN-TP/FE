@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BackgroundSignup extends StatelessWidget {
-  BackgroundSignup(
+  const BackgroundSignup(
       {super.key,
       required this.color,
       required this.position,
@@ -19,7 +19,7 @@ class BackgroundSignup extends StatelessWidget {
 
         gradient: RadialGradient(
           colors: [
-            Color(0xffac3bff),
+            const Color(0xffac3bff),
             color,
           ],
           center: Alignment.topRight,

@@ -47,4 +47,12 @@ class HiveProvider {
     return User.fromJson(json.decode(str));
   }
 
+  String getFCMToken() {
+    return userBox?.get('fcm_token') ?? '';
+  } 
+
+  void saveFCMToken(String token) {
+    userBox?.put('fcm_token', token);
+  }
+
 }

@@ -43,7 +43,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
         appBar: AppBar(
           title: Text('txt_billDetail'.tr(),
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           backgroundColor: ColorApp().cl1,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -185,7 +185,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${DateFormat('dd/MM/yyyy').format(bill.createAt)}',
+                                    DateFormat('dd/MM/yyyy').format(bill.createAt),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -208,7 +208,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${DateFormat('dd/MM/yyyy').format(bill.paymentDate ?? DateTime.now())}',
+                                    DateFormat('dd/MM/yyyy').format(bill.paymentDate ?? DateTime.now()),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -232,7 +232,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${bill.paymentMethod}',
+                                    bill.paymentMethod,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -309,13 +309,13 @@ class _BillDetailPageState extends State<BillDetailPage> {
                           final service = bill.service![index];
                           final serviceName = service.name;
                           final servicePrice = service.price;
-                          final serviceQuantity = 1;
-                          final serviceTotal = 1000000;
+                          const serviceQuantity = 1;
+                          const serviceTotal = 1000000;
 
                           return Container(
                             margin: const EdgeInsets.all(10),
                             decoration: const BoxDecoration(
-                              borderRadius: const BorderRadius.all(
+                              borderRadius: BorderRadius.all(
                                 Radius.circular(10),
                               ),
                             ),
@@ -358,7 +358,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                         ),
                                       ),
                                       Text(
-                                        '${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(servicePrice)}',
+                                        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(servicePrice),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontStyle: FontStyle.italic,
@@ -404,7 +404,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                         ),
                                       ),
                                       Text(
-                                        '${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(serviceTotal)}',
+                                        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(serviceTotal),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontStyle: FontStyle.italic,

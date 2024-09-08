@@ -18,7 +18,7 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
 
   Future<void> _pickImages() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedImages = await picker.pickMultiImage();
+    final List<XFile> pickedImages = await picker.pickMultiImage();
     setState(() {
       _images = pickedImages;
     });
@@ -42,7 +42,7 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
     return Scaffold(
       appBar: AppBar(
         title: Text('txt_createNewRequest'.tr(),
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: ColorApp().cl1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),

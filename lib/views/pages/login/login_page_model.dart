@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class LoginPageModel extends ChangeNotifier {
   final hiveProvider = HiveProvider();
   final BiometricService _biometricService = BiometricService();
+  final AuthService _authService = AuthService(ApiService());
   String _username = '';
   String _password = '';
   bool _isRemember = false;
@@ -16,6 +17,15 @@ class LoginPageModel extends ChangeNotifier {
   String get username => _username;
   String get password => _password;
   bool get isRemember => _isRemember;
+
+  //loading 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  void setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   void setUsername(String value) {
     _username = value;
@@ -62,5 +72,18 @@ class LoginPageModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+  }
+
+   void login(BuildContext context, String username, String password) async {
+   setLoading(true);
+    // final username = _usernameController.text;
+    // final password = _passwordController.text;
+
+    const username = "huuphuoc.2632@gmail.com";
+    const password = "12345";
+    
+    await _authService.login(username, password);
+    setLoading(false);
+    Navigator.pushNamed(context, Routes.home);
   }
 }

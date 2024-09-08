@@ -27,7 +27,7 @@ class Getotp extends StatelessWidget {
         extendBody: true,
         body: Stack(
           children: [
-            BackgroundOtp(),
+            const BackgroundOtp(),
             Align(
               child: SingleChildScrollView(
                 child: Column(

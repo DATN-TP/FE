@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/views/pages/home/widget/news_item.dart';
 import 'package:flutter/material.dart';
 import 'package:ResiEasy/data/data/list_news.dart';
@@ -20,13 +21,12 @@ class News extends StatelessWidget {
             offset: Offset(0, 7),
           ),
         ],
-        gradient: const LinearGradient(
+        gradient:  LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xff712BBC),
-            Color(0xff715BBC),
-            Color(0xffc9c9c9),
+            ColorApp().cl1,
+          const Color(0xffc9c9c9),
           ],
         ),
       ),

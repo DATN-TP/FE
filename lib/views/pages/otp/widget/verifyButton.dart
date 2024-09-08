@@ -29,7 +29,7 @@ class Verifybutton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Dialogsucessfull().showAnimatedDialog(context);
+          const Dialogsucessfull().showAnimatedDialog(context);
           Future.delayed(const Duration(seconds: 5), () {
             Navigator.pushNamedAndRemoveUntil(
               context,
