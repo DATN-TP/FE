@@ -1,3 +1,4 @@
+
 import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/views/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
