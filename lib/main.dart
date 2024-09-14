@@ -50,10 +50,20 @@ Future<void> main() async {
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
+      final DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+    onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+      // Handle the notification tapped logic here
+    },
+  );
 
   final InitializationSettings initializationSettings =
       InitializationSettings(
     android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS, 
+
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -94,8 +104,13 @@ Future<void> _showNotification(RemoteMessage message) async {
       showWhen: false,
       channelDescription: 'your_channel_description',
     );
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
+  const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+      DarwinNotificationDetails();
+
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
   await flutterLocalNotificationsPlugin.show(
     0,
     message.notification?.title,
