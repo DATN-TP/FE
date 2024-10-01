@@ -13,22 +13,7 @@ class News extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20, top: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 10,
-            spreadRadius: 5,
-            offset: Offset(0, 7),
-          ),
-        ],
-        gradient:  LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            ColorApp().cl1,
-          const Color(0xffc9c9c9),
-          ],
-        ),
+        color: ColorApp().grey400,
       ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),

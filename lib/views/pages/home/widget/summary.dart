@@ -18,14 +18,8 @@ class Summary extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              ColorApp().cl1,
-              Color(0xffc9c9c9),
-            ],
-          ),
+          // color: Colors.blue.shade200.withOpacity(0.7),
+          color: ColorApp().white,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -45,10 +39,10 @@ class Summary extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   '${'txt_hello'.tr()},  ${user?.username ?? ''}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: ColorApp().black,
                   ),
                 ),
               ),

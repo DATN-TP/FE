@@ -40,14 +40,14 @@ class VehicleItem extends StatelessWidget {
                 Text(
                     'Honda SH 160i',
                     style:
-                        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     softWrap: true,
                     overflow: TextOverflow.visible,
                   ),
                   Text(
                     '63P1-99999',
                     style:
-                        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     softWrap: true,
                     overflow: TextOverflow.visible,
                   ),
@@ -55,7 +55,7 @@ class VehicleItem extends StatelessWidget {
                   Text(
                     "Huỳnh Hữu Phước",
                     style:
-                        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                         softWrap: true,
                     overflow: TextOverflow.visible,
                   ),

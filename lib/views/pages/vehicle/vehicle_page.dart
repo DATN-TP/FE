@@ -72,7 +72,7 @@ class _VehiclePageState extends State<VehiclePage> {
             shrinkWrap: true,
             itemCount: 5,
             itemBuilder: (context, index) {
-              return VehicleItem();
+              return const VehicleItem();
             },
           ),
         ],

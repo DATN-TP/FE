@@ -25,6 +25,20 @@ class _LoginState extends State<Login> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+
+  final AuthService _authService = AuthService(ApiService());
+
+  Future<void> _login(LoginPageModel loginPageModel) async {
+    // final username = _usernameController.text;
+    // final password = _passwordController.text;
+
+
+    const username = "huuphuoc.2632@gmail.com";
+    const password = "12345";
+    final userRes = await _authService.login(username, password);
+    Navigator.pushNamed(context, '/home');
+  }
+
   @override
   void initState() {
     super.initState();

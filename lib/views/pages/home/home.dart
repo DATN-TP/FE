@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
@@ -82,16 +83,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  // ignore: unused_local_variable
-  User? user = HomePageModel().hiveProvider.getUser();
+    // ignore: unused_local_variable
+    User? user = HomePageModel().hiveProvider.getUser();
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
       child: Scaffold(
-          extendBody: true,
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Consumer<HomePageModel>(
-              builder: (context, loginPageModel, child) {
+        extendBody: true,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Consumer<HomePageModel>(
+            builder: (context, loginPageModel, child) {
               return Container(
                 color: Colors.grey.shade100,
                 child: Column(
@@ -104,36 +105,100 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 15),
-                    // const Menu(),
+                    const Menu(),
+                    // _buildSlide(),
                     const News(),
                   ],
                 ),
               );
-              },
-            ),
-          )),
+            },
+          ),
+        ),
+      ),
     );
   }
 
   Widget _renderImageBackGround(BuildContext context) {
     return SizedBox(
-        height: 300,
-        width: MediaQuery.of(context).size.width,
-        child: Image.asset(
-          'assets/images/background.png',
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.topCenter,
-        ));
+      height: 320,
+      width: MediaQuery.of(context).size.width,
+      child: Image.asset(
+        'assets/images/background.png',
+        fit: BoxFit.fitWidth,
+        alignment: Alignment.topCenter,
+      ),
+    );
+  }
+
+  Widget _buildSlide() {
+    return const ImageSlider();
   }
 }
 
-class Business extends StatelessWidget {
-  const Business({super.key});
+class ImageSlider extends StatefulWidget {
+  const ImageSlider({super.key});
+
+  @override
+  _ImageSliderState createState() => _ImageSliderState();
+}
+
+class _ImageSliderState extends State<ImageSlider> {
+  final PageController _pageController = PageController(initialPage: 0);
+  final List<String> _images = [
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+  ];
+  int _currentPage = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentPage < _images.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Business Page'),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: SizedBox(
+        height: 200, // Chiều cao của slider
+        child: PageView.builder(
+          controller: _pageController,
+          itemCount: _images.length,
+          itemBuilder: (context, index) {
+            return Image.network(
+              _images[index],
+              fit: BoxFit.cover,
+              width: double.infinity,
+            );
+          },
+        ),
+      ),
     );
   }
 }

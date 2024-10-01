@@ -1,3 +1,4 @@
+
 import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/views/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -56,10 +57,20 @@ Future<void> main() async {
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
+      final DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+    onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+      // Handle the notification tapped logic here
+    },
+  );
 
   final InitializationSettings initializationSettings =
       const InitializationSettings(
     android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS, 
+
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -100,8 +111,13 @@ Future<void> _showNotification(RemoteMessage message) async {
       showWhen: false,
       channelDescription: 'your_channel_description',
     );
-  const NotificationDetails platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics);
+  const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+      DarwinNotificationDetails();
+
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
   await flutterLocalNotificationsPlugin.show(
     0,
     message.notification?.title,
