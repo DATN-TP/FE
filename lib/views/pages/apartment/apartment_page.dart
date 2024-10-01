@@ -5,6 +5,7 @@ import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/member/member_page.dart';
 import 'package:ResiEasy/views/pages/request/request_page.dart';
+import 'package:ResiEasy/views/pages/vehicle/vehicle_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -112,7 +113,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
               title:  Text('txt_feedbackAction'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
-                      fontStyle: FontStyle.italic)),
+                      )),
               onPressed: () => {
                     Navigator.pushNamed(
                       context,
@@ -124,7 +125,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
               title:  Text('txt_listBill'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
-                      fontStyle: FontStyle.italic)),
+                       )),
               onPressed: () => {
                 Navigator.pushNamed(
                       context,
@@ -136,14 +137,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
               title:  Text('txt_listService'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
-                      fontStyle: FontStyle.italic)),
+                       )),
               onPressed: () => {}),
           CommonActionCard(
               icon:  Icon(Icons.group_outlined, color: ColorApp().cl1),
               title:  Text('txt_listMember'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
-                      fontStyle: FontStyle.italic)),
+                       )),
               onPressed: () => {
                 Navigator.of(
                     context
@@ -160,8 +161,18 @@ class _ApartmentPageState extends State<ApartmentPage> {
               title:  Text('txt_listVehicle'.tr(),
                   style: const TextStyle(
                       fontSize: 17,
-                      fontStyle: FontStyle.italic)),
-              onPressed: () => {}),
+                       )),
+              onPressed: () => {
+                Navigator.of(
+                    context
+                  ).push(
+                    MaterialPageRoute(
+                      builder: (context) => VehiclePage(),
+                      settings:
+                      RouteSettings(arguments: apartment?.id),
+                    ),
+                  ),
+              }),
         ],
       ),
     );
