@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
+import 'package:ResiEasy/views/pages/home/widget/menu.dart';
 import 'package:ResiEasy/views/pages/home/widget/news.dart';
 import 'package:ResiEasy/views/pages/home/widget/summary.dart';
 import 'package:ResiEasy/views/pages/notifications/notification_page.dart';

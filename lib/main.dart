@@ -67,7 +67,7 @@ Future<void> main() async {
   );
 
   final InitializationSettings initializationSettings =
-      const InitializationSettings(
+       InitializationSettings(
     android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS, 
 

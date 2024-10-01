@@ -1,4 +1,4 @@
 {
-    "dart.flutterSdkPath": ".fvm/versions/3.24.3",
+    "dart.flutterSdkPath": ".fvm/versions/3.19.5",
     "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow"
   }
