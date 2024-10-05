@@ -138,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Row(children: [
           CircleAvatar(
             radius: 30,
-            backgroundImage: Image.network(user.avatar).image,
+            backgroundImage: Image.network(user.avatar??"").image,
           ),
           const SizedBox(
             width: 10,
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.username,
+                user.username!,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),

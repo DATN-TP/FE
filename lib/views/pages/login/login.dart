@@ -1,4 +1,5 @@
 import 'package:ResiEasy/data/config/colors.dart';
+import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/services/api_service.dart';
 import 'package:ResiEasy/services/auth_service.dart';
 import 'package:ResiEasy/views/pages/login/login_page_model.dart';
@@ -35,7 +36,8 @@ class _LoginState extends State<Login> {
 
     const username = "huuphuoc.2632@gmail.com";
     const password = "12345";
-    final userRes = await _authService.login(username, password);
+    final FCMToken = HiveProvider().getFCMToken();
+    final userRes = await _authService.login(username, password, FCMToken);
     Navigator.pushNamed(context, '/home');
   }
 

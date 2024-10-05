@@ -63,8 +63,8 @@ class MemberCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
-                  Text(user!.username, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text(user!.relationship, style: const TextStyle(fontSize: 16)),
+                  Text(user!.username!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(user!.relationship??"", style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ],
@@ -82,12 +82,12 @@ class MemberCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: () => _sendEmail(user!.email),
+            onTap: () => _sendEmail(user!.email??""),
             child: Row(
               children: [
                 const Icon(Icons.email, color: Colors.blue,),
                 const SizedBox(width: 10),
-                 Text(user!.email),
+                 Text(user!.email??""),
               ],
             ),
           ),

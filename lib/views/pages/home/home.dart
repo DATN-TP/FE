@@ -30,16 +30,16 @@ class _HomeState extends State<Home> {
 
   Widget _getPage(int index) {
     switch (index) {
+      // case 0:
+      //   return const HomePage(); 
       case 0:
-        return const HomePage(); 
-      case 1:
         return const ApartmentPage(); 
-      case 2:
+      case 1:
         return const NotificationPage();
-      case 3:
+      case 2:
         return const Profile(); 
       default:
-        return const HomePage(); // Fallback to HomePage
+        return const ApartmentPage();  // Fallback to HomePage
     }
   }
 
@@ -53,11 +53,11 @@ class _HomeState extends State<Home> {
         selectedItemColor:  ColorApp().cl1, // Color for selected label
         unselectedItemColor: Colors.black,
         items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home, color: Colors.grey,),
-            activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
-            label: 'txt_home'.tr(),
-          ),
+          // BottomNavigationBarItem(
+          //   icon: const Icon(Icons.home, color: Colors.grey,),
+          //   activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
+          //   label: 'txt_home'.tr(),
+          // ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.apartment, color: Colors.grey,),
             activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
@@ -95,7 +95,7 @@ class HomePage extends StatelessWidget {
           child: Consumer<HomePageModel>(
             builder: (context, loginPageModel, child) {
               return Container(
-                color: Colors.grey.shade100,
+                color: ColorApp().grey200,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

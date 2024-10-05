@@ -12,7 +12,7 @@ class ApiService {
   Future<dynamic> _request(
     String method,
     String endpoint, {
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -23,6 +23,12 @@ class ApiService {
       final defaultHeaders = <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       };
+
+      // If body is FormData, set Content-Type to multipart/form-data
+      if (body is FormData) {
+        defaultHeaders['Content-Type'] = 'multipart/form-data';
+      }
+
       headers = {...defaultHeaders, ...?headers};
 
       // Configure Dio request options
@@ -72,7 +78,7 @@ class ApiService {
     return _request('GET', endpoint, headers: headers, queryParameters: queryParameters);
   }
 
-  Future<dynamic> post(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
+  Future<dynamic> post(String endpoint, dynamic body, {Map<String, String>? headers}) async {
     return _request('POST', endpoint, body: body, headers: headers);
   }
 

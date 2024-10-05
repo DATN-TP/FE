@@ -89,6 +89,10 @@
     "txt_email": "Email",
     "txt_changePasswordSuccess": "Đổi mật khẩu thành công",
     "txt_changePasswordFail": "Đổi mật khẩu thất bại",
-    "txt_changePasswordFailMessage": "Mật khẩu hiện tại không chính xác"
+    "txt_changePasswordFailMessage": "Mật khẩu hiện tại không chính xác",
+    "txt_selectImageError": "Bạn chỉ có thể chọn tối đa 2 ảnh",
+    "txt_max_image": "Chọn tối đa 2 ảnh",
+    "txt_feedback": "Góp ý",
+    "txt_complaint": "Khiếu nại"
     
 }

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VehiclePage extends StatefulWidget {
-  const VehiclePage({super.key});
+  final String id;
+  const VehiclePage({super.key, required this.id});
 
   @override
   State<VehiclePage> createState() => _VehiclePageState();
@@ -50,32 +51,31 @@ class _VehiclePageState extends State<VehiclePage> {
   }
   
   _buildListVehicle() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          //listview
-          ListView.builder(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return const VehicleItem();
-            },
-          ),
-        ],
+    return ChangeNotifierProvider(
+      create: (context) => VehicleViewModel()..getListVehicleByApartment(widget.id),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child:  Consumer<VehicleViewModel>(
+          builder: (BuildContext context, VehicleViewModel viewModel, Widget? child) {
+            return Column(
+              children: [
+                //listview
+                ListView.builder(
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: viewModel.listVehicle.length,
+                  itemBuilder: (context, index) {
+                    return VehicleItem(vehicle: viewModel.listVehicle[index],);
+                  },
+                ),
+              ],
+            );
+          }
+        ),
       ),
     );
   }

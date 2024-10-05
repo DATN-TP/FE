@@ -8,11 +8,12 @@ class AuthService {
 
   AuthService(this.apiService);
 
-  Future<User> login(String username, String password) async {
+  Future<User> login(String username, String password, String FCMToken) async {
     final response = await apiService.post('/auth/login', {
       'username': username,
       'password': password,
       'role': 'resident',
+      'FCMToken': FCMToken,
     });
 
 

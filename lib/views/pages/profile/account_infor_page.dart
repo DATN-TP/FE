@@ -64,9 +64,9 @@ class _AccountInforPageState extends State<AccountInforPage> {
         child: Column(
           children: [
             //hiển thị thông tin cá nhân như ngày sinh, địa chỉ, email, giới tính
-            _buildInfoItem("txt_birthday".tr(), formatDate(user.dob)),
-            _buildInfoItem("txt_address".tr(), user.address),
-            _buildInfoItem("txt_email".tr(), user.email),
+            _buildInfoItem("txt_birthday".tr(), formatDate(user.dob??DateTime.now())),
+            _buildInfoItem("txt_address".tr(), user.address??""),
+            _buildInfoItem("txt_email".tr(), user.email??""),
           ],
         ),
       ),
@@ -120,7 +120,7 @@ class _AccountInforPageState extends State<AccountInforPage> {
         child: Row(children: [
           CircleAvatar(
             radius: 30,
-            backgroundImage: Image.network(user.avatar).image,
+            backgroundImage: Image.network(user.avatar??"").image,
           ),
           const SizedBox(
             width: 10,
@@ -129,7 +129,7 @@ class _AccountInforPageState extends State<AccountInforPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.username,
+                user.username??"",
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),

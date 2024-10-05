@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/data/list_services.dart';
 
@@ -24,8 +25,8 @@ class _MenuState extends State<Menu> {
   margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
   width: MediaQuery.of(context).size.width * 0.95,
   height: 220,
-  decoration: const BoxDecoration(
-    boxShadow: [
+  decoration: BoxDecoration(
+    boxShadow: const [
       BoxShadow(
         color: Colors.grey,
         blurRadius: 10,
@@ -37,12 +38,11 @@ class _MenuState extends State<Menu> {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        Color(0xff712BBC),
-        Color(0xff715BBC),
-        Color(0xffc9c9c9),
+        ColorApp().cl1,
+        const Color(0xffc9c9c9),
       ],
     ),
-    borderRadius: BorderRadius.all(
+    borderRadius: const BorderRadius.all(
       Radius.circular(20),
     ),
   ),

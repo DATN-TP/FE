@@ -90,5 +90,9 @@
     "txt_birthday": "Birthday",
     "txt_address": "Address",
     "txt_phone": "Phone",
-    "txt_email": "Email"
+    "txt_email": "Email",
+    "txt_selectImageError": "You can only select up to 2 images",
+    "txt_max_image": "Select up to 2 images",
+    "txt_feedback": "Feedback",
+    "txt_complaint": "Complaint"
 }

@@ -8,15 +8,15 @@ part 'vehicle_model.g.dart';
 class Vehicle {
   final User? owner;
   final Apartment? apartment;
-  final String name;
-  final String type;
-  final String color;
-  final String brand;
-  final String licensePlate;
+  final String? name;
+  final String? type;
+  final String? color;
+  final String? brand;
+  final String? licensePlate;
   final String? parking;
   final List<String>? image;
-  final DateTime createAt;
-  final DateTime updateAt;
+  final DateTime? createAt;
+  final DateTime? updateAt;
   final DateTime? deleteAt;
 
   Vehicle({

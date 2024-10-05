@@ -167,9 +167,9 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     context
                   ).push(
                     MaterialPageRoute(
-                      builder: (context) => const VehiclePage(),
-                      settings:
-                      RouteSettings(arguments: apartment?.id),
+                      builder: (context) =>  VehiclePage(
+                        id: apartment?.id??'',
+                      ),
                     ),
                   ),
               }),
@@ -199,7 +199,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              "${'txt_apartmentPrice'.tr()} ${formatMoneyVND(apartment?.price.toInt() ?? 0)}/${'txt_month'.tr()}",
+              "${'txt_apartmentPrice'.tr()} ${formatMoneyVND(apartment?.price?.toInt() ?? 0)}/${'txt_month'.tr()}",
               style: const TextStyle(
                   fontSize: 17,
                   color: Colors.orange,

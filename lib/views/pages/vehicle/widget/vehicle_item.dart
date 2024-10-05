@@ -1,8 +1,10 @@
+import 'package:ResiEasy/models/vehicle_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class VehicleItem extends StatelessWidget {
-  const VehicleItem({super.key});
+  final Vehicle vehicle;
+  const VehicleItem({super.key, required this.vehicle});
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +28,26 @@ class VehicleItem extends StatelessWidget {
         children: [
           Image(
             image: Image.network(
-                    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1725797995/honda-sh-160i-2024-2-004451_yyn8uz.jpg')
+                    vehicle.image != null && vehicle.image!.isNotEmpty ? vehicle.image![0] : "https://res.cloudinary.com/ds3qf4ip3/image/upload/v1728108015/yblclbsgcqtwgtqld4uu.jpg",)
                 .image,
             width: 100,
             height: 100,
             fit: BoxFit.cover,
           ),
           const SizedBox(width: 10),
-           const Expanded(
+           Expanded(
             child:  Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    'Honda SH 160i',
+                    vehicle.name!,
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     softWrap: true,
                     overflow: TextOverflow.visible,
                   ),
                   Text(
-                    '63P1-99999',
+                    vehicle.licensePlate!,
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     softWrap: true,
@@ -53,7 +55,14 @@ class VehicleItem extends StatelessWidget {
                   ),
 
                   Text(
-                    "Huỳnh Hữu Phước",
+                    vehicle.brand!,
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                        softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                  Text(
+                    vehicle.owner?.username??"",
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                         softWrap: true,

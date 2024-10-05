@@ -81,8 +81,9 @@ class LoginPageModel extends ChangeNotifier {
 
     const username = "huuphuoc.2632@gmail.com";
     const password = "12345";
+    final FCMToken = HiveProvider().getFCMToken();
     
-    await _authService.login(username, password);
+    await _authService.login(username, password, FCMToken);
     setLoading(false);
     Navigator.pushNamed(context, Routes.home);
   }

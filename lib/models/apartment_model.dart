@@ -5,19 +5,19 @@ part 'apartment_model.g.dart';
 
 @JsonSerializable()
 class Apartment {
-  final String id;
-  final String name;
+  final String? id;
+  final String? name;
   final String? floor;
   final String? block;
-  final int totalResidents;
-  final int totalVehicle;
-  final double price;
-  final double area;
-  final int rooms;
-  final String status;
-  final bool paid;
+  final int? totalResidents;
+  final int? totalVehicle;
+  final double? price;
+  final double ?area;
+  final int? rooms;
+  final String? status;
+  final bool? paid;
   final String? note;
-  final DateTime createAt;
+  final DateTime? createAt;
   final DateTime? startAt;
   final DateTime? updateAt;
   final DateTime? deleteAt;
