@@ -21,7 +21,7 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
   List<XFile>? _images = [];
   
   // Biến lưu trữ giá trị type đã chọn
-  String _selectedType = 'phanAnh';
+  String _selectedType = 'feedback';
   
   // Danh sách loại yêu cầu
   final List<DropdownMenuItem<String>> _dropdownItems = [

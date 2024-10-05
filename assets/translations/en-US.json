@@ -94,5 +94,6 @@
     "txt_selectImageError": "You can only select up to 2 images",
     "txt_max_image": "Select up to 2 images",
     "txt_feedback": "Feedback",
-    "txt_complaint": "Complaint"
+    "txt_complaint": "Complaint",
+    "txt_type": "Type"
 }

@@ -93,6 +93,7 @@
     "txt_selectImageError": "Bạn chỉ có thể chọn tối đa 2 ảnh",
     "txt_max_image": "Chọn tối đa 2 ảnh",
     "txt_feedback": "Góp ý",
-    "txt_complaint": "Khiếu nại"
+    "txt_complaint": "Khiếu nại",
+    "txt_type": "Loại"
     
 }
