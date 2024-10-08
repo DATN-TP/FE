@@ -9,7 +9,9 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 
 class CreateNewRequest extends StatefulWidget {
-  const CreateNewRequest({super.key});
+  final String apartmentId;
+  final String userId;
+  const CreateNewRequest({super.key, required this.apartmentId, required this.userId});
 
   @override
   State<CreateNewRequest> createState() => _CreateNewRequestState();
@@ -34,8 +36,8 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
       child: Text('txt_feedback'.tr()), // Góp ý
     ),
     DropdownMenuItem(
-      value: 'camplaint',
-      child: Text('txt_feedback'.tr()), // Khiếu nại
+      value: 'complaint',
+      child: Text('txt_complaint'.tr()), // Khiếu nại
     ),
   ];
 
@@ -48,7 +50,6 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
         _images!.addAll(pickedImages.take(2 - _images!.length)); // Chỉ thêm đủ số hình tối đa 2
       });
     } else {
-      // Hiển thị thông báo nếu quá 2 hình
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('txt_selectImageError'.tr())),
       );
@@ -61,13 +62,29 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
     });
   }
 
-  void _submitRequest(RequestViewModel viewModel) {
+  void _submitRequest(RequestViewModel viewModel) async{
     final String title = _titleController.text;
     final String description = _descriptionController.text;
     final List<File> images = _images!.map((image) => File(image.path)).toList();
-
+    List<String> urls = [];
     if (images.isNotEmpty) {
-      viewModel.uploadMultipleImage(images);
+      urls =await viewModel.uploadMultipleImage(images);
+    }
+bool success = await viewModel.createRequest(
+      _selectedType,
+      title,
+      description,
+      widget.apartmentId,
+      widget.userId,
+      urls
+    );
+    
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('txt_createRequestSuccess'.tr())),
+      );
+      Navigator.of(context).pop();
+
     }
   }
 
@@ -89,7 +106,17 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
         create: (context) => RequestViewModel(),
         child: Consumer<RequestViewModel>(
           builder: (BuildContext context, RequestViewModel viewModel, Widget? child) {
-            return Padding(
+            return 
+            viewModel.isLoading ? Center(child: 
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(),
+                Text('txt_loading'.tr()),
+              ],
+            )
+            ) :
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
                 child: Column(
@@ -193,7 +220,7 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
                         ),
                         child: Center(
                           child: Text(
-                            'txt_submit'.tr(),
+                            viewModel.isLoading ? 'txt_loading'.tr() : 'txt_submit'.tr(),
                             style: const TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),

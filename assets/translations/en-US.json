@@ -95,5 +95,8 @@
     "txt_max_image": "Select up to 2 images",
     "txt_feedback": "Feedback",
     "txt_complaint": "Complaint",
-    "txt_type": "Type"
+    "txt_type": "Type",
+    "txt_loading": "Loading...",
+    "txt_createRequestSuccess": "Create request successfully",
+     "txt_noData": "No data"
 }

@@ -1,3 +1,4 @@
+import 'package:ResiEasy/models/request_model.dart';
 import 'package:ResiEasy/services/api_service.dart';
 
 class RequestService {
@@ -5,7 +6,7 @@ class RequestService {
 
   RequestService(this.apiService);
 
-  Future<void> createRequest(String type,String title, String description, String apartmentId, String userId, List<String> images) async {
+  Future<bool> createRequest(String type,String title, String description, String apartmentId, String userId, List<String> images) async {
     final response = await apiService.post('/request/add-request', {
       'title': title,
       'description': description,
@@ -16,9 +17,19 @@ class RequestService {
     });
 
     if (response != null) {
-      return response;
+      return true;
     } else {
-      throw Exception('Failed to create request');
+      return false;      
+    }
+    
+  }
+  //get request by apartment
+  Future<List<Request>> getListRequestByApartment(String id) async {
+    final response = await apiService.get('/request/get-request-by-apartment/$id');
+    if (response != null) {
+      return response.map<Request>((json) => Request.fromJson(json)).toList();
+    } else {
+      throw Exception('Unexpected response format');
     }
   }
 

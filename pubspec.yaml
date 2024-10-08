@@ -96,6 +96,8 @@ flutter:
     - assets/images/city.png
     - assets/images/background.png
     - assets/images/logo_text_none_background.png
+    - assets/images/no_result.png
+    
 
     - assets/icon/Logo.png
     - assets/icon/england.png

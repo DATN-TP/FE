@@ -70,7 +70,6 @@ Future<void> main() async {
        InitializationSettings(
     android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS, 
-
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);

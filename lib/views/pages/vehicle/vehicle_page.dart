@@ -53,30 +53,28 @@ class _VehiclePageState extends State<VehiclePage> {
   _buildListVehicle() {
     return ChangeNotifierProvider(
       create: (context) => VehicleViewModel()..getListVehicleByApartment(widget.id),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(10),
-        ),
         child:  Consumer<VehicleViewModel>(
           builder: (BuildContext context, VehicleViewModel viewModel, Widget? child) {
-            return Column(
-              children: [
-                //listview
-                ListView.builder(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: viewModel.listVehicle.length,
-                  itemBuilder: (context, index) {
-                    return VehicleItem(vehicle: viewModel.listVehicle[index],);
-                  },
+            return Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //listview
+                    ListView.builder(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: viewModel.listVehicle.length,
+                      itemBuilder: (context, index) {
+                        return VehicleItem(vehicle: viewModel.listVehicle[index],);
+                      },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             );
           }
         ),
-      ),
+      
     );
   }
   }

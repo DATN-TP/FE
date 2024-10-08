@@ -26,12 +26,19 @@ String formatMoneyVND(int amount) {
 }
 
 class _ApartmentPageState extends State<ApartmentPage> {
+  final user = HomePageModel().hiveProvider.getUser();
+  String? apartmentId;
+
+  @override
+  void initState() {
+    super.initState();
+    apartmentId = user?.apartments?.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Get the user and apartment ID
-    final user = HomePageModel().hiveProvider.getUser();
-    final apartmentId =
-        user?.apartments?.first; // assuming there is at least one apartment
+    // assuming there is at least one apartment
 
     return ChangeNotifierProvider(
       create: (context) => ApartmentViewModel()..fetchApartment(apartmentId!),
@@ -51,7 +58,9 @@ class _ApartmentPageState extends State<ApartmentPage> {
           final apartment = viewModel.apartment;
           return Scaffold(
             appBar: AppBar(
-              title: Text('txt_apartment'.tr(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              title: Text('txt_apartment'.tr(),
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
               automaticallyImplyLeading: false,
               backgroundColor: ColorApp().cl1,
               centerTitle: true,
@@ -109,70 +118,69 @@ class _ApartmentPageState extends State<ApartmentPage> {
             ),
           ),
           CommonActionCard(
-              icon:  Icon(Icons.assignment, color: ColorApp().cl1),
-              title:  Text('txt_feedbackAction'.tr(),
+              icon: Icon(Icons.assignment, color: ColorApp().cl1),
+              title: Text('txt_feedbackAction'.tr(),
                   style: const TextStyle(
-                      fontSize: 17,
-                      )),
+                    fontSize: 17,
+                  )),
+              onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => RequestPage(
+                          apartmentId: apartment!.id ?? "",
+                          userId: user?.id ?? '',
+                        ),
+                      ),
+                    )
+                  }),
+          CommonActionCard(
+              icon: Icon(Icons.payment, color: ColorApp().cl1),
+              title: Text('txt_listBill'.tr(),
+                  style: const TextStyle(
+                    fontSize: 17,
+                  )),
               onPressed: () => {
                     Navigator.pushNamed(
                       context,
-                     "/requestPage",
+                      "/billPage",
                     )
-              }),
+                  }),
           CommonActionCard(
-              icon:  Icon(Icons.payment, color: ColorApp().cl1),
-              title:  Text('txt_listBill'.tr(),
+              icon: Icon(Icons.cleaning_services, color: ColorApp().cl1),
+              title: Text('txt_listService'.tr(),
                   style: const TextStyle(
-                      fontSize: 17,
-                       )),
-              onPressed: () => {
-                Navigator.pushNamed(
-                      context,
-                     "/billPage",
-                    )
-              }),
-              CommonActionCard(
-              icon:  Icon(Icons.cleaning_services, color: ColorApp().cl1),
-              title:  Text('txt_listService'.tr(),
-                  style: const TextStyle(
-                      fontSize: 17,
-                       )),
+                    fontSize: 17,
+                  )),
               onPressed: () => {}),
           CommonActionCard(
-              icon:  Icon(Icons.group_outlined, color: ColorApp().cl1),
-              title:  Text('txt_listMember'.tr(),
+              icon: Icon(Icons.group_outlined, color: ColorApp().cl1),
+              title: Text('txt_listMember'.tr(),
                   style: const TextStyle(
-                      fontSize: 17,
-                       )),
+                    fontSize: 17,
+                  )),
               onPressed: () => {
-                Navigator.of(
-                    context
-                  ).push(
-                    MaterialPageRoute(
-                      builder: (context) => const MemberPage(),
-                      settings:
-                      RouteSettings(arguments: apartment?.id),
-                    ),
-                  ),
-              }),
-          CommonActionCard(
-              icon:  Icon(Icons.directions_car_filled, color:ColorApp().cl1),
-              title:  Text('txt_listVehicle'.tr(),
-                  style: const TextStyle(
-                      fontSize: 17,
-                       )),
-              onPressed: () => {
-                Navigator.of(
-                    context
-                  ).push(
-                    MaterialPageRoute(
-                      builder: (context) =>  VehiclePage(
-                        id: apartment?.id??'',
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MemberPage(),
+                        settings: RouteSettings(arguments: apartment?.id),
                       ),
                     ),
-                  ),
-              }),
+                  }),
+          CommonActionCard(
+              icon: Icon(Icons.directions_car_filled, color: ColorApp().cl1),
+              title: Text('txt_listVehicle'.tr(),
+                  style: const TextStyle(
+                    fontSize: 17,
+                  )),
+              onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => VehiclePage(
+                          id: apartment?.id ?? '',
+                        ),
+                      ),
+                    ),
+                  }),
         ],
       ),
     );
@@ -207,7 +215,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
             ),
           ),
         ),
-         SizedBox(
+        SizedBox(
             height: 30,
             child: Align(
               alignment: Alignment.topLeft,
@@ -218,9 +226,9 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 children: [
                   const Icon(Icons.key, color: Colors.red),
                   const SizedBox(width: 10),
-                   Text(
+                  Text(
                     "${'txt_householdHead'.tr()} Huỳnh Hữu Phước",
-                    style:const  TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),

@@ -94,6 +94,9 @@
     "txt_max_image": "Chọn tối đa 2 ảnh",
     "txt_feedback": "Góp ý",
     "txt_complaint": "Khiếu nại",
-    "txt_type": "Loại"
+    "txt_type": "Loại",
+    "txt_loading": "Đang xử lý...",
+    "txt_createRequestSuccess": "Tạo yêu cầu thành công",
+    "txt_noData": "Không có dữ liệu"
     
 }
