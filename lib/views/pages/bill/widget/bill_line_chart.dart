@@ -14,8 +14,10 @@ class BillLineChart extends StatelessWidget {
     if (bills.isEmpty) {
       return const Center(child: Text('No data available'));
     }
-
-
+    //chỉ lấy 6 tháng gần nhất
+    bills.sort((a, b) => a.createAt!.compareTo(b.createAt!));
+    List<Bill> data = bills.sublist(bills.length - 6);
+    
     return SizedBox(
       child: LineChart(
         LineChartData(
@@ -44,13 +46,13 @@ class BillLineChart extends StatelessWidget {
           gridData: const FlGridData(show: true),
           lineBarsData: [
             LineChartBarData(
-              spots: bills.map((bill) {
+              spots: data.map((bill) {
                 // Ensure that createAt and amount are valid
-                if (bill.amount == null) {
+                if (bill.total == null) {
                   return const FlSpot(0, 0);
                 }
-                double x = bill.createAt.month.toDouble();
-                double y = bill.amount.toDouble();
+                double x = bill.createAt!.month.toDouble();
+                double y = bill.total!;
 
                 if (x.isNaN || x.isInfinite || y.isNaN || y.isInfinite) {
                   return const FlSpot(0, 0);

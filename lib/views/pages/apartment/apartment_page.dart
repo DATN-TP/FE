@@ -2,6 +2,7 @@ import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
+import 'package:ResiEasy/views/pages/bill/bill_page.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/member/member_page.dart';
 import 'package:ResiEasy/views/pages/request/request_page.dart';
@@ -140,9 +141,13 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     fontSize: 17,
                   )),
               onPressed: () => {
-                    Navigator.pushNamed(
-                      context,
-                      "/billPage",
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BillPage(
+                          apartmentId: apartment!.id ?? "",
+                          userId: user?.id ?? '',
+                        ),
+                      ),
                     )
                   }),
           CommonActionCard(

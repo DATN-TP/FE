@@ -7,39 +7,50 @@ part of 'bill_model.dart';
 // **************************************************************************
 
 Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
+      id: json['_id'] as String?,
       apartment: json['apartment'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+      electric: (json['electric'] as num?)?.toDouble(),
+      water: (json['water'] as num?)?.toDouble(),
       service: (json['service'] as List<dynamic>?)
-          ?.map((e) => Service.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DetailService.fromJson(e as Map<String, dynamic>))
           .toList(),
-      amount: (json['amount'] as num).toDouble(),
-      status: json['status'] as String,
-      date: DateTime.parse(json['date'] as String),
-      paymentMethod: json['paymentMethod'] as String,
+      status: json['status'] as String?,
+      date:
+          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      paymentMethod: json['paymentMethod'] as String?,
       paymentDate: json['paymentDate'] == null
           ? null
           : DateTime.parse(json['paymentDate'] as String),
       paymentBy: json['paymentBy'] as String?,
+      total: (json['total'] as num?)?.toDouble(),
       note: json['note'] as String?,
-      createAt: DateTime.parse(json['createAt'] as String),
-      updateAt: DateTime.parse(json['updateAt'] as String),
+      createAt: json['createAt'] == null
+          ? null
+          : DateTime.parse(json['createAt'] as String),
+      updateAt: json['updateAt'] == null
+          ? null
+          : DateTime.parse(json['updateAt'] as String),
       deleteAt: json['deleteAt'] == null
           ? null
           : DateTime.parse(json['deleteAt'] as String),
-      paid: json['paid'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$BillToJson(Bill instance) => <String, dynamic>{
+      '_id': instance.id,
       'apartment': instance.apartment,
+      'price': instance.price,
+      'electric': instance.electric,
+      'water': instance.water,
       'service': instance.service,
-      'amount': instance.amount,
       'status': instance.status,
-      'date': instance.date.toIso8601String(),
+      'date': instance.date?.toIso8601String(),
       'paymentMethod': instance.paymentMethod,
       'paymentDate': instance.paymentDate?.toIso8601String(),
       'paymentBy': instance.paymentBy,
+      'total': instance.total,
       'note': instance.note,
-      'createAt': instance.createAt.toIso8601String(),
-      'updateAt': instance.updateAt.toIso8601String(),
+      'createAt': instance.createAt?.toIso8601String(),
+      'updateAt': instance.updateAt?.toIso8601String(),
       'deleteAt': instance.deleteAt?.toIso8601String(),
-      'paid': instance.paid,
     };

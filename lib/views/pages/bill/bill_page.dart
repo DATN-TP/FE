@@ -1,5 +1,6 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_bills.dart';
+import 'package:ResiEasy/models/bill_model.dart';
 import 'package:ResiEasy/views/pages/bill/bill_view_model.dart';
 import 'package:ResiEasy/views/pages/bill/detail/bill_detail_page.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_line_chart.dart';
@@ -9,17 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BillPage extends StatefulWidget {
-  const BillPage({super.key});
+  final String apartmentId;
+  final String userId;
+  const BillPage({super.key, required this.apartmentId, required this.userId});
 
   @override
   State<BillPage> createState() => _BillPageState();
 }
 
 class _BillPageState extends State<BillPage> {
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => BillViewModel(),
+      create: (_) => BillViewModel()..getBill( widget.apartmentId, 1, 20, ""),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -35,30 +39,35 @@ class _BillPageState extends State<BillPage> {
           backgroundColor: ColorApp().cl1,
           titleSpacing: 0,
         ),
-        body: SafeArea(
-          child: Container(
-            color: Colors.grey.shade300,
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                _buildChart(),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'txt_listBill'.tr(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+        body: 
+       Consumer<BillViewModel>(
+      builder: (context, billViewModel, child) {
+          return SafeArea(
+            child: Container(
+              color: Colors.grey.shade300,
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  _buildChart(billViewModel),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'txt_listBill'.tr(),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _buildListBill(),
-              ],
+                  _buildListBill(),
+                ],
+              ),
             ),
-          ),
+          );
+      }
         ),
       ),
     );
@@ -70,12 +79,13 @@ class _BillPageState extends State<BillPage> {
         // if (billViewModel.isLoading) {
         //   return Center(child: CircularProgressIndicator());
         // }
+        billViewModel.ListBills.sort((a, b) => b.createAt!.compareTo(a.createAt!));
         return Expanded(
           child: ListView.builder(
-            itemCount: ListBills.bills.length,
+            itemCount: billViewModel.ListBills.length,
             itemBuilder: (context, index) {
               return BillItem(
-                bill: ListBills.bills[index],
+                bill: billViewModel.ListBills[index],
                 onTap: () => {
                   
                   Navigator.of(
@@ -84,7 +94,7 @@ class _BillPageState extends State<BillPage> {
                     MaterialPageRoute(
                       builder: (context) => const BillDetailPage(),
                       settings:
-                      RouteSettings(arguments: ListBills.bills[index]),
+                      RouteSettings(arguments: billViewModel.ListBills[index]),
                     ),
                   ),
                 },
@@ -96,7 +106,7 @@ class _BillPageState extends State<BillPage> {
     );
   }
 
-  Widget _buildChart() {
+  Widget _buildChart(BillViewModel billViewModel) {
     try {
       return Container(
         margin: const EdgeInsets.all(10),
@@ -119,7 +129,7 @@ class _BillPageState extends State<BillPage> {
           child: Column(
             children: [
               Expanded(
-                child: BillLineChart(bills: ListBills.bills),
+                child: BillLineChart(bills: billViewModel.ListBills),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

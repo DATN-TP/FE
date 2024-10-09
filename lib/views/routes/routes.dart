@@ -30,8 +30,6 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const Home());
       case getotp:
         return MaterialPageRoute(builder: (_) => const Getotp());
-      case billPage:
-        return MaterialPageRoute(builder: (_) => const BillPage());
       case requestDetail:
         return MaterialPageRoute(builder: (_) => const RequestDetailPage());
       default:

@@ -17,15 +17,15 @@ class _BillDetailPageState extends State<BillDetailPage> {
   Widget build(BuildContext context) {
     final bill = ModalRoute.of(context)?.settings.arguments as Bill?;
 
-    String monthYear = DateFormat('MM/yyyy').format(bill!.createAt);
+    String monthYear = DateFormat('MM/yyyy').format(bill!.createAt??DateTime.now());
     String amount =
-        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(bill.amount);
+        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(bill.total);
 
     Color colorStatus;
     Color colorBackgroundStatus;
     Text status;
 
-    if (bill.paid) {
+    if (bill.status == 'paid') {
       status = const Text("Đã thanh toán",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold));
       colorStatus = Colors.green;
@@ -99,11 +99,11 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                   ),
                                 ],
                               ),
-                              bill.paid
+                              bill.status == 'paid'
                                   ? const SizedBox(height: 10)
                                   : InkWell(
                                       onTap: () =>
-                                          {billViewModel.createPayment(bill.amount.toInt())},
+                                          {billViewModel.createPayment((bill.total ?? 0).toInt())},
                                       child: Container(
                                         width: double.infinity,
                                         padding: const EdgeInsets.symmetric(
@@ -150,26 +150,26 @@ class _BillDetailPageState extends State<BillDetailPage> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'txt_apartment'.tr(),
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${bill.apartment}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Text(
+                              //       'txt_apartment'.tr(),
+                              //       style: const TextStyle(
+                              //         fontSize: 16,
+                              //         fontWeight: FontWeight.bold,
+                              //       ),
+                              //     ),
+                              //     Text(
+                              //       '${bill.apartment}',
+                              //       style: const TextStyle(
+                              //         fontSize: 16,
+                              //         fontStyle: FontStyle.italic,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -185,7 +185,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat('dd/MM/yyyy').format(bill.createAt),
+                                    DateFormat('dd/MM/yyyy').format(bill.createAt ?? DateTime.now()),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -232,7 +232,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    bill.paymentMethod,
+                                    bill.paymentMethod??"",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -307,10 +307,10 @@ class _BillDetailPageState extends State<BillDetailPage> {
                         itemCount: bill.service?.length,
                         itemBuilder: (context, index) {
                           final service = bill.service![index];
-                          final serviceName = service.name;
-                          final servicePrice = service.price;
-                          const serviceQuantity = 1;
-                          const serviceTotal = 1000000;
+                          final serviceName = service.service?.name;
+                          final servicePrice = service.service?.price;
+                          final serviceQuantity = service.quantity;
+                          final serviceTotal = (serviceQuantity??0) * (servicePrice??0);
 
                           return Container(
                             margin: const EdgeInsets.all(10),
@@ -335,7 +335,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                         ),
                                       ),
                                       Text(
-                                        serviceName,
+                                        serviceName??"",
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontStyle: FontStyle.italic,
@@ -380,7 +380,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      Text(
+                                       Text(
                                         '$serviceQuantity',
                                         style: const TextStyle(
                                           fontSize: 16,

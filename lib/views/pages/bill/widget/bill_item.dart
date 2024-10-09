@@ -9,14 +9,14 @@ class BillItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String monthYear = DateFormat('MM/yyyy').format(bill.createAt);
-    String amount = NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(bill.amount);
+    String monthYear = DateFormat('MM/yyyy').format(bill.createAt??DateTime.now());
+    String amount = NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(bill.total);
 
     Color colorStatus;
     Color colorBackgroundStatus;
     Text status;
-
-    if (bill.paid) {
+    print("bill status: ${bill.status=="paid"}");
+    if (bill.status == 'paid') {
       status = const Text("Đã thanh toán", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold));
       colorStatus = Colors.green;
       colorBackgroundStatus = Colors.green.shade100;
