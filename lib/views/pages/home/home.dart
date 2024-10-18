@@ -5,6 +5,7 @@ import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/home/widget/menu.dart';
 import 'package:ResiEasy/views/pages/home/widget/news.dart';
 import 'package:ResiEasy/views/pages/home/widget/summary.dart';
+import 'package:ResiEasy/views/pages/news/news_page.dart';
 import 'package:ResiEasy/views/pages/notifications/notification_page.dart';
 import 'package:ResiEasy/views/pages/profile/profile_page.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_page.dart';
@@ -35,8 +36,10 @@ class _HomeState extends State<Home> {
       case 0:
         return const ApartmentPage(); 
       case 1:
-        return const NotificationPage();
+        return const NewsPage(); 
       case 2:
+        return const NotificationPage();
+      case 3:
         return const Profile(); 
       default:
         return const ApartmentPage();  // Fallback to HomePage
@@ -62,6 +65,11 @@ class _HomeState extends State<Home> {
             icon: const Icon(Icons.apartment, color: Colors.grey,),
             activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
             label: 'txt_apartment'.tr(),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.newspaper, color: Colors.grey,),
+            activeIcon:  Icon(Icons.newspaper, color: ColorApp().cl1),
+            label: 'txt_news'.tr(),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.notifications, color: Colors.grey,),

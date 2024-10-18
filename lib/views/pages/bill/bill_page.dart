@@ -92,10 +92,10 @@ class _BillPageState extends State<BillPage> {
                     context
                   ).push(
                     MaterialPageRoute(
-                      builder: (context) => const BillDetailPage(),
-                      settings:
-                      RouteSettings(arguments: billViewModel.ListBills[index]),
-                    ),
+                        builder: (context) => BillDetailPage(
+                          bill: billViewModel.ListBills[index],
+                        ),
+                      ),
                   ),
                 },
               );  

@@ -15,7 +15,6 @@ class BillItem extends StatelessWidget {
     Color colorStatus;
     Color colorBackgroundStatus;
     Text status;
-    print("bill status: ${bill.status=="paid"}");
     if (bill.status == 'paid') {
       status = const Text("Đã thanh toán", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold));
       colorStatus = Colors.green;

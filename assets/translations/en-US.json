@@ -98,5 +98,15 @@
     "txt_type": "Type",
     "txt_loading": "Loading...",
     "txt_createRequestSuccess": "Create request successfully",
-     "txt_noData": "No data"
+     "txt_noData": "No data",
+     "txt_second": "second",
+     "txt_minute": "minute",
+     "txt_hour": "hour",
+     "txt_day": "day",
+     "txt_year": "year",
+    "txt_agree": "Agree",
+     "txt_changeApartment": "Change Apartment",
+    "txt_selectApartment": "Select Apartment",
+    "txt_news": "News"
+
 }

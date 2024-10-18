@@ -97,6 +97,15 @@
     "txt_type": "Loại",
     "txt_loading": "Đang xử lý...",
     "txt_createRequestSuccess": "Tạo yêu cầu thành công",
-    "txt_noData": "Không có dữ liệu"
+    "txt_noData": "Không có dữ liệu",
+    "txt_second": "giây",
+    "txt_minute": "phút",
+    "txt_hour": "giờ",
+    "txt_day": "ngày",
+    "txt_year": "năm",
+    "txt_agree": "Đồng ý",
+    "txt_changeApartment": "Đổi căn hộ",
+    "txt_selectApartment": "Chọn căn hộ",
+    "txt_news": "Tin tức"
     
 }

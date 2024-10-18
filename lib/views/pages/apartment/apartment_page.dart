@@ -1,5 +1,7 @@
 import 'package:ResiEasy/data/config/colors.dart';
+import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
+import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
 import 'package:ResiEasy/views/pages/bill/bill_page.dart';
@@ -27,22 +29,26 @@ String formatMoneyVND(int amount) {
 }
 
 class _ApartmentPageState extends State<ApartmentPage> {
-  final user = HomePageModel().hiveProvider.getUser();
-  String? apartmentId;
+  late final User user ;
+
+  late String apartmentId;
+  String? selectedApartment;
 
   @override
   void initState() {
     super.initState();
-    apartmentId = user?.apartments?.first;
+    user = HomePageModel().hiveProvider.getUser()!;
+    apartmentId = HomePageModel().hiveProvider.getApartmentId();
+    if(apartmentId.isEmpty){
+      apartmentId = user.apartments!.first;
+    }
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get the user and apartment ID
-    // assuming there is at least one apartment
-
     return ChangeNotifierProvider(
-      create: (context) => ApartmentViewModel()..fetchApartment(apartmentId!),
+      create: (context) => ApartmentViewModel()..fetchApartment(apartmentId, user.id ?? ''),
       child: Consumer<ApartmentViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.isLoading) {
@@ -87,7 +93,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                           ),
                         ],
                       ),
-                      child: _buildSummary(apartment),
+                      child: _buildSummary(apartment, viewModel),
                     ),
                     const SizedBox(height: 20),
                     _buildActionCard(apartment)
@@ -129,7 +135,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                       MaterialPageRoute(
                         builder: (context) => RequestPage(
                           apartmentId: apartment!.id ?? "",
-                          userId: user?.id ?? '',
+                          userId: user.id ?? '',
                         ),
                       ),
                     )
@@ -145,7 +151,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                       MaterialPageRoute(
                         builder: (context) => BillPage(
                           apartmentId: apartment!.id ?? "",
-                          userId: user?.id ?? '',
+                          userId: user.id ?? '',
                         ),
                       ),
                     )
@@ -191,35 +197,47 @@ class _ApartmentPageState extends State<ApartmentPage> {
     );
   }
 
-  Column _buildSummary(Apartment? apartment) {
+  Column _buildSummary(Apartment? apartment, ApartmentViewModel viewModel) {
+    final apartmentNames = viewModel.listApartment.map((e) => e.name).whereType<String>().toList();
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              "${'txt_apartment'.tr()}: ${apartment?.name ?? 'N/A'}",
-              style: const TextStyle(
-                  fontSize: 25,
-                  color: Color(0xff8554E8),
-                  fontWeight: FontWeight.bold),
+        InkWell(
+          onTap: () {
+          _showApartmentDialog(apartmentNames, viewModel);
+          },
+          child: Container(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${'txt_apartment'.tr()}: ${apartment?.name ?? 'N/A'}",
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  if(user.apartments!.length > 1)
+                    const Icon(Icons.arrow_drop_down, color: Colors.black)
+                ],
+              ),
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              "${'txt_apartmentPrice'.tr()} ${formatMoneyVND(apartment?.price?.toInt() ?? 0)}/${'txt_month'.tr()}",
-              style: const TextStyle(
-                  fontSize: 17,
-                  color: Colors.orange,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
+        // Container(
+        //   alignment: Alignment.center,
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(left: 10),
+        //     child: Text(
+        //       "${'txt_apartmentPrice'.tr()} ${formatMoneyVND(apartment?.price?.toInt() ?? 0)}/${'txt_month'.tr()}",
+        //       style: const TextStyle(
+        //           fontSize: 17,
+        //           color: Colors.orange,
+        //           fontWeight: FontWeight.bold),
+        //     ),
+        //   ),
+        // ),
         SizedBox(
             height: 30,
             child: Align(
@@ -232,7 +250,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                   const Icon(Icons.key, color: Colors.red),
                   const SizedBox(width: 10),
                   Text(
-                    "${'txt_householdHead'.tr()} Huỳnh Hữu Phước",
+                    "${'txt_householdHead'.tr()} ${viewModel.ownerName}",
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -328,4 +346,42 @@ class _ApartmentPageState extends State<ApartmentPage> {
       ],
     );
   }
+  void _showApartmentDialog(List<String> apartmentNames, ApartmentViewModel viewModel) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: ColorApp().white,
+        title: Center(child: Text('txt_changeApartment'.tr())),
+        content: Center(
+          heightFactor: 0.3,
+          child: DropdownButton<String>(
+            dropdownColor: ColorApp().white,
+            value: selectedApartment,
+            hint: Text('txt_selectApartment'.tr()),
+            items: apartmentNames.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Center(
+                  child: Text(value),
+                ),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              viewModel.fetchApartment(viewModel.listApartment.firstWhere((element) => element.name == newValue).id!, user.id ?? '');
+              setState(() {
+                apartmentId = viewModel.listApartment.firstWhere((element) => element.name == newValue).id!;
+                HiveProvider().saveApartmentId(apartmentId);
+                selectedApartment = newValue;
+              });
+              Navigator.of(context).pop(); // Đóng dialog sau khi chọn
+            },
+          ),
+        ),
+      );
+    },
+  );
 }
+}
+
+

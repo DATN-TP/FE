@@ -1,31 +1,72 @@
 import 'package:ResiEasy/data/config/colors.dart';
+import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/models/bill_model.dart';
 import 'package:ResiEasy/views/pages/bill/bill_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 
 class BillDetailPage extends StatefulWidget {
-  const BillDetailPage({super.key});
+  Bill? bill;
+  BillDetailPage({super.key, this.bill});
 
   @override
   State<BillDetailPage> createState() => _BillDetailPageState();
 }
 
 class _BillDetailPageState extends State<BillDetailPage> {
+    late IO.Socket socket;
+    
+
+  @override
+  void initState() {
+    super.initState();
+    _connectSocket();
+  }
+
+  void _connectSocket() {
+    socket = IO.io(dotenv.env['SOCKET_URL'], <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+
+    socket.connect();
+
+    socket.on('connect', (_) {
+    });
+
+    socket.on('disconnect', (_) {
+    });
+
+    socket.emit('joinBill', widget.bill?.id);
+
+    socket.on('paymentInfo', (data) {
+      widget.bill = Bill.fromJson(data);
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    socket.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    final bill = ModalRoute.of(context)?.settings.arguments as Bill?;
+   widget.bill;
 
-    String monthYear = DateFormat('MM/yyyy').format(bill!.createAt??DateTime.now());
+    String monthYear = DateFormat('MM/yyyy').format(widget.bill!.createAt??DateTime.now());
     String amount =
-        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(bill.total);
+        NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.total);
 
     Color colorStatus;
     Color colorBackgroundStatus;
     Text status;
 
-    if (bill.status == 'paid') {
+    if (widget.bill?.status == 'paid') {
       status = const Text("Đã thanh toán",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold));
       colorStatus = Colors.green;
@@ -36,6 +77,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
       colorStatus = Colors.orange;
       colorBackgroundStatus = Colors.orange.shade100;
     }
+    final user = HiveProvider().getUser();
 
     return ChangeNotifierProvider(
       create: (_) => BillViewModel(),
@@ -99,11 +141,11 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                   ),
                                 ],
                               ),
-                              bill.status == 'paid'
+                              widget.bill?.status == 'paid'
                                   ? const SizedBox(height: 10)
                                   : InkWell(
                                       onTap: () =>
-                                          {billViewModel.createPayment((bill.total ?? 0).toInt())},
+                                          {billViewModel.createPayment((widget.bill?.total?.toInt() ?? 0), user!.id!, widget.bill!.apartment!)},
                                       child: Container(
                                         width: double.infinity,
                                         padding: const EdgeInsets.symmetric(
@@ -185,7 +227,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat('dd/MM/yyyy').format(bill.createAt ?? DateTime.now()),
+                                    DateFormat('dd/MM/yyyy').format(widget.bill?.createAt ?? DateTime.now()),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -208,7 +250,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat('dd/MM/yyyy').format(bill.paymentDate ?? DateTime.now()),
+                                    DateFormat('dd/MM/yyyy').format(widget.bill?.paymentDate ?? DateTime.now()),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -232,7 +274,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    bill.paymentMethod??"",
+                                    widget.bill?.paymentMethod??"",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -256,7 +298,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${bill.paymentBy}',
+                                    '${widget.bill?.paymentBy}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -280,7 +322,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    '${bill.note}',
+                                    '${widget.bill?.note}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontStyle: FontStyle.italic,
@@ -304,12 +346,12 @@ class _BillDetailPageState extends State<BillDetailPage> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: bill.service?.length,
+                        itemCount: widget.bill?.service?.length,
                         itemBuilder: (context, index) {
-                          final service = bill.service![index];
-                          final serviceName = service.service?.name;
-                          final servicePrice = service.service?.price;
-                          final serviceQuantity = service.quantity;
+                          final service = widget.bill?.service![index];
+                          final serviceName = service?.service?.name;
+                          final servicePrice = service?.service?.price;
+                          final serviceQuantity = service?.quantity;
                           final serviceTotal = (serviceQuantity??0) * (servicePrice??0);
 
                           return Container(

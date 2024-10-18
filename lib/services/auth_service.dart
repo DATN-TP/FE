@@ -21,6 +21,7 @@ class AuthService {
       final user = User.fromJson(response['user']);
       print(user);
       HiveProvider().saveUser(user);
+      HiveProvider().saveApartmentId(user.apartments!.first);
       return user;
     } else {
       throw Exception('Failed to login');
