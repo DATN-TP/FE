@@ -95,7 +95,7 @@ class NotificationItem extends StatelessWidget {
     }
     createdAt = createdAt.add(const Duration(hours: 7));
     final now = DateTime.now();
-    final diff = now.difference(createdAt.toLocal());
+    final diff = now.difference(createdAt);
     if (diff.inDays > 0) {
       if (diff.inDays > 365) {
         return '${diff.inDays ~/ 365} ${'txt_year'.tr()}';

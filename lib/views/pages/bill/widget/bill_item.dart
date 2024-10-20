@@ -1,4 +1,6 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/bill_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,11 +18,11 @@ class BillItem extends StatelessWidget {
     Color colorBackgroundStatus;
     Text status;
     if (bill.status == 'paid') {
-      status = const Text("Đã thanh toán", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold));
+      status =  Text('txt_paid'.tr(), style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 12));
       colorStatus = Colors.green;
       colorBackgroundStatus = Colors.green.shade100;
     } else {
-      status = const Text("Chờ thanh toán", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold));
+      status =  Text('txt_waitPayment'.tr(), style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 12));
       colorStatus = Colors.orange;
       colorBackgroundStatus = Colors.orange.shade100;
     }
@@ -60,7 +62,7 @@ class BillItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hóa đơn tháng $monthYear',
+                        "${'txt_billMonth'.tr()} $monthYear",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -70,17 +72,17 @@ class BillItem extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "Tổng: $amount",
-                        style: const TextStyle(
+                        "${'txt_total'.tr()} $amount",
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey,
+                          color: ColorApp().black,
                         ),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                         decoration: BoxDecoration(
                           color: colorBackgroundStatus,
                           borderRadius: const BorderRadius.all(

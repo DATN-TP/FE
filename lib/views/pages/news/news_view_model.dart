@@ -17,6 +17,7 @@ class NewsViewModel extends ChangeNotifier{
 
   List<NewsModel> listNews = [];
 
+  int currentPage = 1;
   int totalPage = 0;
 
   //load data from api
@@ -29,7 +30,15 @@ class NewsViewModel extends ChangeNotifier{
         'limit': limit,
       });
       BaseResponse response = BaseResponse.fromJson(res);
-      listNews = response.data?.data.map<NewsModel>((e) => NewsModel.fromJson(e)).toList();
+      if(page == 1){
+          listNews = response.data?.data.map<NewsModel>((e) => NewsModel.fromJson(e)).toList();
+          currentPage = 2;
+      }
+      else {
+        listNews.addAll(response.data?.data.map<NewsModel>((e) => NewsModel.fromJson(e)).toList());
+        currentPage++;
+
+      }
       totalPage = response.data?.pagination?.totalPages ?? 0;
    
     } catch (e) {

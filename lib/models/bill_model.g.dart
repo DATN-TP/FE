@@ -22,7 +22,9 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       paymentDate: json['paymentDate'] == null
           ? null
           : DateTime.parse(json['paymentDate'] as String),
-      paymentBy: json['paymentBy'] as String?,
+      paymentBy: json['paymentBy'] == null
+          ? null
+          : User.fromJson(json['paymentBy'] as Map<String, dynamic>),
       total: (json['total'] as num?)?.toDouble(),
       note: json['note'] as String?,
       createAt: json['createAt'] == null

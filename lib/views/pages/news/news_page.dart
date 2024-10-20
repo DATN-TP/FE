@@ -15,8 +15,8 @@ class NewsPage extends StatefulWidget {
   State<NewsPage> createState() => _NewsPageState();
 }
 
-
 class _NewsPageState extends State<NewsPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,41 +31,41 @@ class _NewsPageState extends State<NewsPage> {
         titleSpacing: 0,
         centerTitle: true,
       ),
-      body: 
-      ChangeNotifierProvider(
+      body: ChangeNotifierProvider(
         create: (context) => NewsViewModel()..fetchNews(1, 10),
         child: Consumer<NewsViewModel>(
-          builder: (BuildContext context, NewsViewModel viewModel, Widget? child) {
-      return Container(
-        color: Colors.white,
-        child: LoadMoreListView.builder(
-            hasMoreItem: _hasMoreItem(),
-            onLoadMore: () async {
-              await loadMore();
-            },
-            onRefresh: () async {
-              await refresh();
-            },
-            loadMoreWidget: Container(
-              margin: const EdgeInsets.all(20.0),
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(ColorApp().cl1),
-              ),
-            ),
-            refreshColor: ColorApp().cl1,
-            refreshBackgroundColor: ColorApp().white,
-            itemCount: viewModel.listNews.length,
-            itemBuilder: (context, index) {
-              return _buildNewsItem(
-                viewModel.listNews[index],
-              );
-            }),
-              );
-            },
-          ),
+          builder:
+              (BuildContext context, NewsViewModel viewModel, Widget? child) {
+            return Container(
+              color: Colors.white,
+              child: LoadMoreListView.builder(
+                  hasMoreItem: _hasMoreItem(viewModel),
+                  onLoadMore: () async {
+                    await loadMore(viewModel);
+                  },
+                  onRefresh: () async {
+                    await refresh(viewModel);
+                  },
+                  loadMoreWidget: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(ColorApp().cl1),
+                    ),
+                  ),
+                  refreshColor: ColorApp().cl1,
+                  refreshBackgroundColor: ColorApp().white,
+                  itemCount: viewModel.listNews.length,
+                  itemBuilder: (context, index) {
+                    return _buildNewsItem(
+                      viewModel.listNews[index],
+                    );
+                  }),
+            );
+          },
         ),
-      );
+      ),
+    );
   }
 
   Widget _buildNewsItem(NewsModel news) {
@@ -84,24 +84,28 @@ class _NewsPageState extends State<NewsPage> {
         ],
       ),
       child: AnyLinkPreview(
-                link: news.link ?? "",
-                displayDirection: UIDirection.uiDirectionHorizontal,
-                cache: const Duration(hours: 1),
-                backgroundColor: ColorApp().white,
-                errorWidget: Container(
-                  color: Colors.grey[300],
-                  child: const Text('Oops!'),
-                ),
-                removeElevation: false,
-              ),
+        link: news.link ?? "",
+        displayDirection: UIDirection.uiDirectionHorizontal,
+        cache: const Duration(hours: 1),
+        backgroundColor: ColorApp().white,
+        errorWidget: Container(
+          color: Colors.grey[300],
+          child: const Text('Oops!'),
+        ),
+        removeElevation: false,
+      ),
     );
   }
 }
 
-refresh() {}
+refresh(NewsViewModel viewModel) async {
+ await viewModel.fetchNews(1, 10);
+}
 
-loadMore() {}
+loadMore(NewsViewModel viewModel) async {
+  await viewModel.fetchNews(viewModel.currentPage, 10);
+}
 
-_hasMoreItem() {
-  return true;
+_hasMoreItem(NewsViewModel viewModel) {
+  return (viewModel.currentPage <= viewModel.totalPage);
 }

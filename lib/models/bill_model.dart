@@ -1,5 +1,6 @@
 
 import 'package:ResiEasy/models/detail_service.dart';
+import 'package:ResiEasy/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'bill_model.g.dart';
@@ -32,7 +33,7 @@ class Bill {
   DateTime? date;
   String? paymentMethod;
   DateTime? paymentDate;
-  String? paymentBy;
+  User? paymentBy;
   double? total;
   String? note;
   DateTime? createAt;

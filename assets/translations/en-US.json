@@ -107,6 +107,15 @@
     "txt_agree": "Agree",
      "txt_changeApartment": "Change Apartment",
     "txt_selectApartment": "Select Apartment",
-    "txt_news": "News"
+    "txt_news": "News",
+     "txt_transfer": "Transfer",
+    "txt_cash": "Cash",
+    "txt_unitPrice": "Unit Price",
+    "txt_chartBill": "Bill Value Chart (6 months)",
+    "txt_waitPayment": "Wait Payment",
+    "txt_paid": "Paid",
+    "txt_billMonth": "Bill month"
+
+
 
 }

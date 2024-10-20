@@ -15,6 +15,7 @@ class NotificationViewModel extends ChangeNotifier{
   bool get isSuccess => _isSuccess;
   String? get error => _error;
 
+  int currentPage = 1;
   int totalPage = 0;
 
   List<NotificationModel> listNotification =[];
@@ -57,8 +58,14 @@ class NotificationViewModel extends ChangeNotifier{
     setLoading(true);
     try {
       final response = await notificationsService.getListNotificationByUser(apartmentId, id, page, limit);
-      dev.log('Response: $response');
-      listNotification = response.data?.data.map<NotificationModel>((json) => NotificationModel.fromJson(json)).toList();
+
+      if (page == 1) {
+        listNotification = response.data?.data.map<NotificationModel>((json) => NotificationModel.fromJson(json)).toList();
+        currentPage = 2;
+      } else {
+        listNotification.addAll(response.data?.data.map<NotificationModel>((json) => NotificationModel.fromJson(json)).toList());
+        currentPage++;
+      }
       totalPage = response.data?.pagination?.totalPages ?? 0;
       clearError();
       setSuccess(true);

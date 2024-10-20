@@ -1,12 +1,14 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_bills.dart';
 import 'package:ResiEasy/models/bill_model.dart';
+import 'package:ResiEasy/views/common/no_result_widget.dart';
 import 'package:ResiEasy/views/pages/bill/bill_view_model.dart';
 import 'package:ResiEasy/views/pages/bill/detail/bill_detail_page.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_line_chart.dart';
 import 'package:ResiEasy/views/pages/bill/widget/bill_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:loadmore_listview/loadmore_listview.dart';
 import 'package:provider/provider.dart';
 
 class BillPage extends StatefulWidget {
@@ -18,12 +20,32 @@ class BillPage extends StatefulWidget {
   State<BillPage> createState() => _BillPageState();
 }
 
-class _BillPageState extends State<BillPage> {
+class _BillPageState extends State<BillPage> with WidgetsBindingObserver {
+  BillViewModel billViewModel = BillViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      billViewModel.getBill(widget.apartmentId, 1, 6, "");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => BillViewModel()..getBill( widget.apartmentId, 1, 20, ""),
+      create: (_) => billViewModel..getBill(widget.apartmentId, 1, 6, ""),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -34,14 +56,13 @@ class _BillPageState extends State<BillPage> {
           ),
           title: Text(
             'txt_listBill'.tr(),
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: ColorApp().cl1,
           titleSpacing: 0,
         ),
-        body: 
-       Consumer<BillViewModel>(
-      builder: (context, billViewModel, child) {
+        body: Consumer<BillViewModel>(builder: (context, billViewModel, child) {
           return SafeArea(
             child: Container(
               color: Colors.grey.shade300,
@@ -67,8 +88,7 @@ class _BillPageState extends State<BillPage> {
               ),
             ),
           );
-      }
-        ),
+        }),
       ),
     );
   }
@@ -76,31 +96,55 @@ class _BillPageState extends State<BillPage> {
   Widget _buildListBill() {
     return Consumer<BillViewModel>(
       builder: (context, billViewModel, child) {
-        // if (billViewModel.isLoading) {
-        //   return Center(child: CircularProgressIndicator());
-        // }
-        billViewModel.ListBills.sort((a, b) => b.createAt!.compareTo(a.createAt!));
+        if (billViewModel.isLoading) {
+          return Expanded(
+              child: Center(
+                  child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(ColorApp().cl1),
+          )));
+        }
+        billViewModel.ListBills.sort(
+            (a, b) => b.createAt!.compareTo(a.createAt!));
         return Expanded(
-          child: ListView.builder(
-            itemCount: billViewModel.ListBills.length,
-            itemBuilder: (context, index) {
-              return BillItem(
-                bill: billViewModel.ListBills[index],
-                onTap: () => {
-                  
-                  Navigator.of(
-                    context
-                  ).push(
-                    MaterialPageRoute(
-                        builder: (context) => BillDetailPage(
-                          bill: billViewModel.ListBills[index],
-                        ),
-                      ),
+          child: billViewModel.ListBills.isNotEmpty
+              ? LoadMoreListView.builder(
+                  hasMoreItem: _hasMoreItem(billViewModel),
+                  onLoadMore: () async {
+                    await loadMore(billViewModel, widget.apartmentId);
+                  },
+                  onRefresh: () async {
+                    await refresh(billViewModel, widget.apartmentId);
+                  },
+                  loadMoreWidget: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(ColorApp().cl1),
+                    ),
                   ),
-                },
-              );  
-            },
-          ),
+                  refreshColor: ColorApp().cl1,
+                  refreshBackgroundColor: ColorApp().white,
+                  itemCount: billViewModel.ListBills.length,
+                  itemBuilder: (context, index) {
+                    return BillItem(
+                      bill: billViewModel.ListBills[index],
+                      onTap: () async {
+                        final result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BillDetailPage(
+                              bill: billViewModel.ListBills[index],
+                            ),
+                          ),
+                        );
+                        if (result != null) {
+                          billViewModel.getBill(widget.apartmentId, 1, 6, "");
+                        }
+                      },
+                    );
+                  })
+              : const Center(
+                  child: NoResultWidget(),
+                ),
         );
       },
     );
@@ -132,18 +176,19 @@ class _BillPageState extends State<BillPage> {
                 child: BillLineChart(bills: billViewModel.ListBills),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade100,
+                  color: ColorApp().cl1.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.green),
+                  border: Border.all(color: ColorApp().cl1),
                 ),
-                child: const Text(
-                  'Biểu đồ giá trị hóa đơn (6 tháng)',
+                child: Text(
+                  'txt_chartBill'.tr(),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green,
+                    color: ColorApp().cl1,
                   ),
                 ),
               ),
@@ -156,5 +201,17 @@ class _BillPageState extends State<BillPage> {
         child: Text('Error loading chart: $e'),
       );
     }
+  }
+
+  refresh(BillViewModel viewModel, String apartmentId) async {
+    await viewModel.getBill(apartmentId, 1, 6, "");
+  }
+
+  loadMore(BillViewModel viewModel, String apartmentId) async {
+    await viewModel.getBill(apartmentId, viewModel.currentPage, 6, "");
+  }
+
+  _hasMoreItem(BillViewModel viewModel) {
+    return (viewModel.currentPage <= viewModel.totalPage);
   }
 }

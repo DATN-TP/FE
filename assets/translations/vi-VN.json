@@ -106,6 +106,13 @@
     "txt_agree": "Đồng ý",
     "txt_changeApartment": "Đổi căn hộ",
     "txt_selectApartment": "Chọn căn hộ",
-    "txt_news": "Tin tức"
+    "txt_news": "Tin tức",
+    "txt_transfer": "Chuyển khoản",
+    "txt_cash": "Tiền mặt",
+    "txt_unitPrice": "Đơn giá",
+    "txt_chartBill": "Biểu đồ giá trị hóa đơn (6 tháng)",
+    "txt_waitPayment": "Chờ thanh toán",
+    "txt_paid": "Đã thanh toán",
+    "txt_billMonth": "Hóa đơn tháng"
     
 }
