@@ -62,9 +62,11 @@ class NotificationViewModel extends ChangeNotifier{
       if (page == 1) {
         listNotification = response.data?.data.map<NotificationModel>((json) => NotificationModel.fromJson(json)).toList();
         currentPage = 2;
+        notifyListeners();
       } else {
         listNotification.addAll(response.data?.data.map<NotificationModel>((json) => NotificationModel.fromJson(json)).toList());
         currentPage++;
+        notifyListeners();
       }
       totalPage = response.data?.pagination?.totalPages ?? 0;
       clearError();
@@ -73,6 +75,7 @@ class NotificationViewModel extends ChangeNotifier{
       setError('Failed to get list notification');
     }
     setLoading(false);
+    notifyListeners();
   }
 
   //đọc thông báo

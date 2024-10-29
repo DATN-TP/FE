@@ -2,13 +2,15 @@ import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/notification_model.dart';
 import 'package:ResiEasy/views/pages/bill/bill_page.dart';
 import 'package:ResiEasy/views/pages/home/home.dart';
+import 'package:ResiEasy/views/pages/member/member_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class NotificationItem extends StatelessWidget {
   final NotificationModel notification;
   final VoidCallback onTap;
-  const NotificationItem({super.key, required this.notification, required this.onTap});
+  const NotificationItem(
+      {super.key, required this.notification, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,9 @@ class NotificationItem extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-          color: notification.isRead == true ? ColorApp().white: ColorApp().grey300,
+          color: notification.isRead == true
+              ? ColorApp().white
+              : ColorApp().grey300,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -40,9 +44,13 @@ class NotificationItem extends StatelessWidget {
             Row(
               children: [
                 const SizedBox(width: 10),
-                 Icon(
-                  notification.isRead == true ? Icons.notifications : Icons.notifications_active,
-                  color: notification.isRead == true ? Colors.grey : ColorApp().black,
+                Icon(
+                  notification.isRead == true
+                      ? Icons.notifications
+                      : Icons.notifications_active,
+                  color: notification.isRead == true
+                      ? Colors.grey
+                      : ColorApp().black,
                 ),
                 const SizedBox(width: 10),
                 Column(
@@ -54,16 +62,21 @@ class NotificationItem extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: notification.isRead == true ? Colors.black54 : Colors.black,
+                        color: notification.isRead == true
+                            ? Colors.black54
+                            : Colors.black,
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width - 120, // Adjust the width as needed
+                      width: MediaQuery.of(context).size.width -
+                          120, // Adjust the width as needed
                       child: Text(
                         notification.content ?? "",
-                        style:  TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: notification.isRead == true ? Colors.grey : Colors.black,
+                          color: notification.isRead == true
+                              ? Colors.grey
+                              : Colors.black,
                         ),
                         softWrap: true,
                         maxLines: 2,
@@ -72,16 +85,18 @@ class NotificationItem extends StatelessWidget {
                     ),
                   ],
                 ),
-              Text(
-                _calTimeOfNotification(notification.createdAt),
-                style:  TextStyle(
-                  fontSize: 12,
-                  color: notification.isRead == true ? Colors.grey : Colors.black,
-                ),
-                softWrap: true,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )
+                Text(
+                  _calTimeOfNotification(notification.createdAt),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: notification.isRead == true
+                        ? Colors.grey
+                        : Colors.black,
+                  ),
+                  softWrap: true,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
               ],
             )
           ],
@@ -89,6 +104,7 @@ class NotificationItem extends StatelessWidget {
       ),
     );
   }
+
   String _calTimeOfNotification(DateTime? createdAt) {
     if (createdAt == null) {
       return '';
@@ -126,8 +142,16 @@ void _goToDetail(NotificationModel notification, BuildContext context) {
         ),
       );
       break;
+    case 'MEMBER':
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const MemberPage(),
+          settings: RouteSettings(arguments: notification.apartment ?? ""),
+        ),
+      );
+      break;
     default:
-    _showDialog(context, notification);
+      _showDialog(context, notification);
       break;
   }
 }
@@ -138,8 +162,8 @@ void _showDialog(BuildContext context, NotificationModel notification) {
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: ColorApp().white,
-        title: Center(child: Text(notification.title??"")),
-        content: Text(notification.content??""),
+        title: Center(child: Text(notification.title ?? "")),
+        content: Text(notification.content ?? ""),
         actions: [
           TextButton(
             onPressed: () {
@@ -152,4 +176,3 @@ void _showDialog(BuildContext context, NotificationModel notification) {
     },
   );
 }
-
