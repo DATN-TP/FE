@@ -93,7 +93,6 @@ class NotificationItem extends StatelessWidget {
     if (createdAt == null) {
       return '';
     }
-    createdAt = createdAt.add(const Duration(hours: 7));
     final now = DateTime.now();
     final diff = now.difference(createdAt);
     if (diff.inDays > 0) {

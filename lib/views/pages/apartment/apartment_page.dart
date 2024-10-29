@@ -1,5 +1,6 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/hive/hive_provider.dart';
+import 'package:ResiEasy/extension.dart';
 import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
@@ -264,7 +265,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     style: TextStyle(
                         fontSize: 15,
                         color: ColorApp().white,
-                        ),
+                        ).bold,
                   ),
                 ],
               ),
@@ -285,7 +286,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal),
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -306,7 +307,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal),
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -327,7 +328,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal),
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -348,7 +349,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal),
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

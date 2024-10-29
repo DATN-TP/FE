@@ -65,7 +65,7 @@ final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
                   Text(user!.username!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text(user!.relationship??"", style: const TextStyle(fontSize: 16)),
+                  // Text(user!.relationship??"", style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ],
@@ -83,7 +83,7 @@ final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: () => _sendEmail(user!.email??""),
+            onTap: () => emailRegex.hasMatch(user!.email ?? '') ?_sendEmail(user!.email??""): null,
             child: Row(
               children: [
                 const Icon(Icons.email, color: Colors.blue,),
