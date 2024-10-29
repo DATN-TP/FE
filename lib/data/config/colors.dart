@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorApp {
-  Color cl1 = Colors.blue;
+  Color cl1 = const Color(0xFF2196F3);
   Color cl2 = const Color.fromARGB(255, 179, 159, 176);
 
   Color white = Colors.white;

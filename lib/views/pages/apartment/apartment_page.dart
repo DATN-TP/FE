@@ -29,7 +29,7 @@ String formatMoneyVND(int amount) {
 }
 
 class _ApartmentPageState extends State<ApartmentPage> {
-  late final User user ;
+  late final User user;
 
   late String apartmentId;
   String? selectedApartment;
@@ -39,16 +39,16 @@ class _ApartmentPageState extends State<ApartmentPage> {
     super.initState();
     user = HomePageModel().hiveProvider.getUser()!;
     apartmentId = HomePageModel().hiveProvider.getApartmentId();
-    if(apartmentId.isEmpty){
+    if (apartmentId.isEmpty) {
       apartmentId = user.apartments!.first;
     }
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ApartmentViewModel()..fetchApartment(apartmentId, user.id ?? ''),
+      create: (context) =>
+          ApartmentViewModel()..fetchApartment(apartmentId, user.id ?? ''),
       child: Consumer<ApartmentViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.isLoading) {
@@ -82,7 +82,16 @@ class _ApartmentPageState extends State<ApartmentPage> {
                       padding: const EdgeInsets.all(5),
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        gradient: LinearGradient(
+                          colors: [
+                            ColorApp().cl1,
+                            ColorApp().lightBlueAccent,
+                            ColorApp().cl1,
+                            ColorApp().lightBlueAccent,
+                          ], // Define your gradient colors here
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -198,12 +207,13 @@ class _ApartmentPageState extends State<ApartmentPage> {
   }
 
   Column _buildSummary(Apartment? apartment, ApartmentViewModel viewModel) {
-    final apartmentNames = viewModel.listApartment.map((e) => e.name).whereType<String>().toList();
+    final apartmentNames =
+        viewModel.listApartment.map((e) => e.name).whereType<String>().toList();
     return Column(
       children: [
         InkWell(
           onTap: () {
-          _showApartmentDialog(apartmentNames, viewModel);
+            _showApartmentDialog(apartmentNames, viewModel);
           },
           child: Container(
             alignment: Alignment.center,
@@ -214,12 +224,12 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 children: [
                   Text(
                     "${'txt_apartment'.tr()}: ${apartment?.name ?? 'N/A'}",
-                    style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
+                    style:  TextStyle(
+                      color: ColorApp().white,
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
-                  if(user.apartments!.length > 1)
-                    const Icon(Icons.arrow_drop_down, color: Colors.black)
+                  if (user.apartments!.length > 1)
+                    const Icon(Icons.arrow_drop_down, color: Colors.white)
                 ],
               ),
             ),
@@ -247,14 +257,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.key, color: Colors.red),
+                  const Icon(Icons.key, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    "${'txt_householdHead'.tr()} ${viewModel.ownerName}",
-                    style: const TextStyle(
+                    "${'txt_householdHead'.tr()}: ${viewModel.ownerName?.toUpperCase()}",
+                    style: TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        color: ColorApp().white,
+                        ),
                   ),
                 ],
               ),
@@ -268,14 +278,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.home, color: Colors.blue[200]),
+                  Icon(Icons.home, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentArea'.tr()} ${apartment?.area ?? 0} m2',
+                    '${'txt_apartmentArea'.tr()}: ${apartment?.area ?? 0} m2',
                     style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -289,14 +299,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.bed, color: Colors.green[200]),
+                  Icon(Icons.bed, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentBedroom'.tr()} ${apartment?.rooms ?? 0}',
+                    '${'txt_apartmentBedroom'.tr()}: ${apartment?.rooms ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -310,14 +320,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.directions_car, color: Colors.orange),
+                  const Icon(Icons.directions_car, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentTotalVehicle'.tr()} ${apartment?.totalVehicle ?? 0}',
+                    '${'txt_apartmentTotalVehicle'.tr()}: ${apartment?.totalVehicle ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -331,14 +341,14 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.people, color: Colors.pink),
+                  const Icon(Icons.people, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentTotalPeople'.tr()} ${apartment?.totalResidents ?? 0}',
+                    '${'txt_apartmentTotalPeople'.tr()}: ${apartment?.totalResidents ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
@@ -346,42 +356,48 @@ class _ApartmentPageState extends State<ApartmentPage> {
       ],
     );
   }
-  void _showApartmentDialog(List<String> apartmentNames, ApartmentViewModel viewModel) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: ColorApp().white,
-        title: Center(child: Text('txt_changeApartment'.tr())),
-        content: Center(
-          heightFactor: 0.3,
-          child: DropdownButton<String>(
-            dropdownColor: ColorApp().white,
-            value: selectedApartment,
-            hint: Text('txt_selectApartment'.tr()),
-            items: apartmentNames.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Center(
-                  child: Text(value),
-                ),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              viewModel.fetchApartment(viewModel.listApartment.firstWhere((element) => element.name == newValue).id!, user.id ?? '');
-              setState(() {
-                apartmentId = viewModel.listApartment.firstWhere((element) => element.name == newValue).id!;
-                HiveProvider().saveApartmentId(apartmentId);
-                selectedApartment = newValue;
-              });
-              Navigator.of(context).pop(); // Đóng dialog sau khi chọn
-            },
+
+  void _showApartmentDialog(
+      List<String> apartmentNames, ApartmentViewModel viewModel) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorApp().white,
+          title: Center(child: Text('txt_changeApartment'.tr())),
+          content: Center(
+            heightFactor: 0.3,
+            child: DropdownButton<String>(
+              dropdownColor: ColorApp().white,
+              value: selectedApartment,
+              hint: Text('txt_selectApartment'.tr()),
+              items: apartmentNames.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Center(
+                    child: Text(value),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                viewModel.fetchApartment(
+                    viewModel.listApartment
+                        .firstWhere((element) => element.name == newValue)
+                        .id!,
+                    user.id ?? '');
+                setState(() {
+                  apartmentId = viewModel.listApartment
+                      .firstWhere((element) => element.name == newValue)
+                      .id!;
+                  HiveProvider().saveApartmentId(apartmentId);
+                  selectedApartment = newValue;
+                });
+                Navigator.of(context).pop(); // Đóng dialog sau khi chọn
+              },
+            ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
-}
-
-

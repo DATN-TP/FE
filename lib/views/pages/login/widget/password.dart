@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:ResiEasy/views/pages/login/login_page_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -5,12 +7,13 @@ import 'package:flutter/material.dart';
 
 class Password extends StatelessWidget {
   final TextEditingController controller;
-  const Password({super.key, required this.controller});
+  final bool isBiometric;
+  const Password({super.key, required this.controller, required this.isBiometric});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isBiometricEnabled = LoginPageModel().checkBiometricEnable;
+    final isBiometricEnabled = isBiometric;
     return SlideTopToBottom(
       durationMs: 1500,
       child: Container(
@@ -48,10 +51,17 @@ class Password extends StatelessWidget {
                     onTap: () {
                       LoginPageModel().biometricLogin(context);
                     },
-                    child: const Icon(
+                    child: 
+                    Platform.isAndroid ?
+                    const Icon(
                       Icons.fingerprint,
                       color: Color.fromARGB(255, 255, 255, 255),
                       size: 50,
+                    )
+                    : Image.asset(
+                      'assets/icon/face_id.png',
+                      width: 50,
+                      height: 50,
                     ),
                   ),
                 ],

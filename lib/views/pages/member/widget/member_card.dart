@@ -6,7 +6,7 @@ class MemberCard extends StatelessWidget {
 
   final User? user;
 
-  const MemberCard({super.key, required this.user});
+  MemberCard({super.key, required this.user});
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -36,6 +36,7 @@ class MemberCard extends StatelessWidget {
     }
   }
 
+final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,7 +88,10 @@ class MemberCard extends StatelessWidget {
               children: [
                 const Icon(Icons.email, color: Colors.blue,),
                 const SizedBox(width: 10),
-                 Text(user!.email??""),
+                //regexp email
+                 Text(
+                  emailRegex.hasMatch(user!.email ?? '') ? user!.email! : 'Chưa cập nhật',
+                ),
               ],
             ),
           ),

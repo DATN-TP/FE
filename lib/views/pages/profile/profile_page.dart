@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
@@ -111,7 +113,17 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.fingerprint, color: ColorApp().cl1),
+                  Platform.isAndroid ?
+                     Icon(
+                      Icons.fingerprint,
+                      color: ColorApp().cl1,
+                      size: 24,
+                    )
+                    : Image.asset(
+                      'assets/icon/blue_face_id.png',
+                      width: 24,
+                      height: 24,
+                    ),
                   const SizedBox(width: 10),
                   Text("txt_biometricLogin".tr()),
                 ],
