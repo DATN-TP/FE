@@ -22,6 +22,7 @@ class AuthService {
     print(user);
     HiveProvider().saveUser(user);
     HiveProvider().saveApartmentId(user.apartments!.first);
+    HiveProvider().saveToken(response['accessToken']);
     return user;
   } else {
     Fluttertoast.showToast(msg: "Tài khoản hoặc mật khẩu không chính xác");
@@ -40,9 +41,10 @@ class AuthService {
   });
   if (response['status'] == 'success') {
     final user = User.fromJson(response['user']);
-    print(user);
     HiveProvider().saveUser(user);
     HiveProvider().saveApartmentId(user.apartments!.first);
+    HiveProvider().saveToken(response['accessToken']);
+
     return user;
   } else {
     Fluttertoast.showToast(msg: "Thông tin sinh trắc học không chính xác");
@@ -63,5 +65,19 @@ class AuthService {
     return apiService.post('/auth/refresh', {
       'refreshToken': token,
     });
+  }
+
+  //đổi mật khẩu
+  Future<bool> changePassword(String oldPassword, String newPassword) async {
+    final response = await apiService.post('/auth/change-password', {
+      'username': HiveProvider().getUser()?.email,
+      'oldPassword': oldPassword,
+      'newPassword': newPassword,
+    });
+    if (response['message'] == 'Password changed') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

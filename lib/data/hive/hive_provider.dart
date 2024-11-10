@@ -63,4 +63,13 @@ class HiveProvider {
     userBox?.put('fcm_token', token);
   }
 
+  //save token
+  void saveToken(String token) {
+    userBox?.put('token', token);
+  }
+
+  String getToken() {
+    return userBox?.get('token') ?? '';
+  }
+
 }

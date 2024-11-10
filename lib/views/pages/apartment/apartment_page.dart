@@ -6,8 +6,10 @@ import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/common/common_action_card.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_view_model.dart';
 import 'package:ResiEasy/views/pages/bill/bill_page.dart';
+import 'package:ResiEasy/views/pages/home/home.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/member/member_page.dart';
+import 'package:ResiEasy/views/pages/profile/profile_page.dart';
 import 'package:ResiEasy/views/pages/request/request_page.dart';
 import 'package:ResiEasy/views/pages/vehicle/vehicle_page.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -36,14 +38,66 @@ class _ApartmentPageState extends State<ApartmentPage> {
   String? selectedApartment;
 
   @override
-  void initState() {
-    super.initState();
-    user = HomePageModel().hiveProvider.getUser()!;
-    apartmentId = HomePageModel().hiveProvider.getApartmentId();
-    if (apartmentId.isEmpty) {
-      apartmentId = user.apartments!.first;
-    }
+void initState() {
+  super.initState();
+  user = HomePageModel().hiveProvider.getUser()!;
+  apartmentId = HomePageModel().hiveProvider.getApartmentId();
+  if (apartmentId.isEmpty) {
+    apartmentId = user.apartments!.first;
   }
+
+  // Use postFrameCallback to show the dialog after the widget is built
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (user.isFirstTime == true) {
+      // Show dialog yêu cầu đổi mật khẩu
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: ColorApp().white,
+            title: Center(child: Text('txt_notifications'.tr()).bold),
+            content: const Center(
+              heightFactor: 1,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Tài khoản của bạn đang sử dụng mật khẩu sinh ngẫu nhiên từ hệ thống", style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic
+                  ),
+                  textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10),
+                  Text("Hãy thay đổi mật khẩu của bạn tại mục tài khoản để bảo mật thông tin cá nhân"),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('Để sau'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                 Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(
+                        ),
+                      ),
+                    );
+                },
+                child: const Text('Đổi mật khẩu'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +333,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.home, color: Colors.white),
+                  const Icon(Icons.home, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
                     '${'txt_apartmentArea'.tr()}: ${apartment?.area ?? 0} m2',
@@ -300,7 +354,7 @@ class _ApartmentPageState extends State<ApartmentPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.bed, color: Colors.white),
+                  const Icon(Icons.bed, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
                     '${'txt_apartmentBedroom'.tr()}: ${apartment?.rooms ?? 0}',

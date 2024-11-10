@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -19,9 +20,12 @@ class ApiService {
     try {
       Response response;
 
+      var token = HiveProvider().getToken();
+
       // Combine default headers with provided headers
       final defaultHeaders = <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       };
 
       // If body is FormData, set Content-Type to multipart/form-data

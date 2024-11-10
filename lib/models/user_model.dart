@@ -20,6 +20,7 @@ class User {
   final DateTime? createAt;
   final DateTime? updateAt;
   final DateTime? deleteAt;
+  bool? isFirstTime;
 
   User({
     required this.id,
@@ -38,6 +39,7 @@ class User {
     required this.createAt,
     required this.updateAt,
     this.deleteAt,
+    this.isFirstTime = false,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

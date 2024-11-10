@@ -3,16 +3,21 @@ import 'dart:io';
 
 import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:ResiEasy/services/api_service.dart';
+import 'package:ResiEasy/services/auth_service.dart';
 import 'package:ResiEasy/services/biometric_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfilePageModel extends ChangeNotifier {
   bool _isBiometricEnabled = false;
   final BiometricService _biometricService = BiometricService(ApiService());
   final hiveProvider = HiveProvider();
   bool get isBiometricEnabled => _isBiometricEnabled;
+
+  final AuthService _authService = AuthService(ApiService());
+
   ProfilePageModel() {
     checkBiometricEnable();
   }
@@ -65,4 +70,18 @@ class ProfilePageModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+  //đổi mật khẩu
+
+  Future<void> changePassword(String oldPassword, String newPassword, BuildContext context) async {
+    final response = await _authService.changePassword(oldPassword, newPassword);
+    if (response) {
+      Fluttertoast.showToast(msg: "Đổi mật khẩu thành công");
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      return;
+    } else {
+      Fluttertoast.showToast(msg: "Đổi mật khẩu thất bại, vui lòng thử lại");
+      return;
+    }
+  }
+
 }

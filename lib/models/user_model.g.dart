@@ -31,6 +31,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       deleteAt: json['deleteAt'] == null
           ? null
           : DateTime.parse(json['deleteAt'] as String),
+      isFirstTime: json['isFirstTime'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -50,4 +51,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'createAt': instance.createAt?.toIso8601String(),
       'updateAt': instance.updateAt?.toIso8601String(),
       'deleteAt': instance.deleteAt?.toIso8601String(),
+      'isFirstTime': instance.isFirstTime,
     };

@@ -19,6 +19,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  ProfilePageModel profilePageModel = ProfilePageModel();
   @override
   Widget build(BuildContext context) {
     final user = HomePageModel().hiveProvider.getUser();
@@ -316,7 +317,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-}
 
 void _showChangePasswordDialog(BuildContext context) {
   final TextEditingController currentPasswordController =
@@ -390,7 +390,7 @@ void _showChangePasswordDialog(BuildContext context) {
 
               if (newPasswordController.text ==
                   confirmPasswordController.text) {
-                Navigator.of(context).pop();
+                profilePageModel.changePassword(currentPasswordController.text, newPasswordController.text, context);
               } else {
               }
             },
@@ -401,3 +401,7 @@ void _showChangePasswordDialog(BuildContext context) {
     },
   );
 }
+
+}
+
+
