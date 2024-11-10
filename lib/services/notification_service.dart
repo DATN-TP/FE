@@ -20,7 +20,7 @@ class PushNotification {
 
   static Future localNotiInit() async {
       const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-      final DarwinInitializationSettings initializationSettingsDarwin = DarwinInitializationSettings();
+      final DarwinInitializationSettings initializationSettingsDarwin = const DarwinInitializationSettings();
       final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsDarwin);
       await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
 

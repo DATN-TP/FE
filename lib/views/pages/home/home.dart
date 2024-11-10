@@ -1,11 +1,11 @@
-
+import 'dart:async';
 import 'package:ResiEasy/data/config/colors.dart';
-import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/views/pages/home/home_page_model.dart';
 import 'package:ResiEasy/views/pages/home/widget/menu.dart';
 import 'package:ResiEasy/views/pages/home/widget/news.dart';
 import 'package:ResiEasy/views/pages/home/widget/summary.dart';
+import 'package:ResiEasy/views/pages/news/news_page.dart';
 import 'package:ResiEasy/views/pages/notifications/notification_page.dart';
 import 'package:ResiEasy/views/pages/profile/profile_page.dart';
 import 'package:ResiEasy/views/pages/apartment/apartment_page.dart';
@@ -31,16 +31,18 @@ class _HomeState extends State<Home> {
 
   Widget _getPage(int index) {
     switch (index) {
+      // case 0:
+      //   return const HomePage(); 
       case 0:
-        return const HomePage(); 
-      case 1:
         return const ApartmentPage(); 
+      case 1:
+        return const NewsPage(); 
       case 2:
         return const NotificationPage();
       case 3:
         return const Profile(); 
       default:
-        return const HomePage(); // Fallback to HomePage
+        return const ApartmentPage();  // Fallback to HomePage
     }
   }
 
@@ -54,16 +56,20 @@ class _HomeState extends State<Home> {
         selectedItemColor:  ColorApp().cl1, // Color for selected label
         unselectedItemColor: Colors.black,
         items:  <BottomNavigationBarItem>[
+          // BottomNavigationBarItem(
+          //   icon: const Icon(Icons.home, color: Colors.grey,),
+          //   activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
+          //   label: 'txt_home'.tr(),
+          // ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home, color: Colors.grey,),
-            activeIcon:  Icon(Icons.home, color: ColorApp().cl1),
-            label: 'txt_home'.tr(),
-          ),
-          BottomNavigationBarItem(
-
             icon: const Icon(Icons.apartment, color: Colors.grey,),
             activeIcon:  Icon(Icons.apartment, color: ColorApp().cl1),
             label: 'txt_apartment'.tr(),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.newspaper, color: Colors.grey,),
+            activeIcon:  Icon(Icons.newspaper, color: ColorApp().cl1),
+            label: 'txt_news'.tr(),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.notifications, color: Colors.grey,),
@@ -91,14 +97,13 @@ class HomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => HomePageModel(),
       child: Scaffold(
-          extendBody: true,
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Consumer<HomePageModel>(
-              builder: (context, loginPageModel, child) {
-
+        extendBody: true,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Consumer<HomePageModel>(
+            builder: (context, loginPageModel, child) {
               return Container(
-                color: Colors.grey.shade100,
+                color: ColorApp().grey200,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -108,28 +113,102 @@ class HomePage extends StatelessWidget {
                         const Summary(),
                       ],
                     ),
-
                     const SizedBox(height: 15),
-                    // const Menu(),
+                    const Menu(),
+                    // _buildSlide(),
                     const News(),
                   ],
                 ),
               );
-              },
-            ),
-          )),
+            },
+          ),
+        ),
+      ),
     );
   }
 
   Widget _renderImageBackGround(BuildContext context) {
     return SizedBox(
-        height: 300,
-        width: MediaQuery.of(context).size.width,
-        child: Image.asset(
-          'assets/images/background.png',
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.topCenter,
-        ));
+      height: 320,
+      width: MediaQuery.of(context).size.width,
+      child: Image.asset(
+        'assets/images/background.png',
+        fit: BoxFit.fitWidth,
+        alignment: Alignment.topCenter,
+      ),
+    );
+  }
+
+  Widget _buildSlide() {
+    return const ImageSlider();
+  }
+}
+
+class ImageSlider extends StatefulWidget {
+  const ImageSlider({super.key});
+
+  @override
+  _ImageSliderState createState() => _ImageSliderState();
+}
+
+class _ImageSliderState extends State<ImageSlider> {
+  final PageController _pageController = PageController(initialPage: 0);
+  final List<String> _images = [
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+    'https://res.cloudinary.com/ds3qf4ip3/image/upload/v1724309107/apartment3_tuwsjx.jpg',
+  ];
+  int _currentPage = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentPage < _images.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: SizedBox(
+        height: 200, // Chiều cao của slider
+        child: PageView.builder(
+          controller: _pageController,
+          itemCount: _images.length,
+          itemBuilder: (context, index) {
+            return Image.network(
+              _images[index],
+              fit: BoxFit.cover,
+              width: double.infinity,
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 

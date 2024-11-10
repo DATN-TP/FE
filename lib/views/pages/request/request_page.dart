@@ -1,13 +1,18 @@
 import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/data/data/list_request.dart';
+import 'package:ResiEasy/views/common/no_result_widget.dart';
 import 'package:ResiEasy/views/pages/request/create/create_new_request.dart';
 import 'package:ResiEasy/views/pages/request/detail/request_detail_page.dart';
+import 'package:ResiEasy/views/pages/request/request_view_model.dart';
 import 'package:ResiEasy/views/pages/request/widget/request_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RequestPage extends StatefulWidget {
-  const RequestPage({super.key});
+  final String apartmentId;
+  final String userId;
+  const RequestPage({super.key, required this.apartmentId, required this.userId});
 
   @override
   State<RequestPage> createState() => _RequestPageState();
@@ -26,45 +31,55 @@ class _RequestPageState extends State<RequestPage> {
         ),
         title: Text(
           'txt_feedbackAction'.tr(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: ColorApp().cl1,
         titleSpacing: 0,
       ),
-      body: SafeArea(
-        child: Container(
-          color: Colors.grey.shade300,
-          child: Column(
-            children: [
-              _buildButtonNewRequest(),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Text(
-                    'txt_listRequest'.tr(),
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+      body: ChangeNotifierProvider(
+        create: (context) => RequestViewModel()..getListRequestByApartment(widget.apartmentId),
+        child: Consumer<RequestViewModel>(
+          builder: (BuildContext context, RequestViewModel viewModel, Widget? child) {
+        return SafeArea(
+          child: Container(
+            color: Colors.grey.shade300,
+            child: Column(
+              children: [
+                _buildButtonNewRequest(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
+                      'txt_listRequest'.tr(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              _buildListRequest(),
-            ],
+                _buildListRequest(viewModel),
+              ],
+            ),
           ),
-        ),
+        );
+          }
+      ),
       ),
     );
-  }
+}
 
   _buildButtonNewRequest() {
     return InkWell(
         onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => CreateNewRequest(),
+                  builder: (context) => CreateNewRequest(
+                    apartmentId: widget.apartmentId,
+                    userId: widget.userId,
+                  ),
                 ),
               )
             },
@@ -75,7 +90,7 @@ class _RequestPageState extends State<RequestPage> {
           color: Colors.green,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: [
               Align(
@@ -96,19 +111,21 @@ class _RequestPageState extends State<RequestPage> {
     );
   }
 
-  Widget _buildListRequest() {
+  Widget _buildListRequest(RequestViewModel viewModel) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: ListRequest.request.length,
+      child: 
+      viewModel.listRequest.isEmpty ?const Center(child: NoResultWidget()) :
+      ListView.builder(
+        itemCount: viewModel.listRequest.length,
         itemBuilder: (context, index) {
           return RequestItem(
-            request: ListRequest.request[index],
+            request: viewModel.listRequest[index],
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => RequestDetailPage(),
+                  builder: (context) => const RequestDetailPage(),
                   settings:
-                      RouteSettings(arguments: ListRequest.request[index]),
+                      RouteSettings(arguments: viewModel.listRequest[index]),
                 ),
               )
             },

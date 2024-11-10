@@ -6,16 +6,18 @@ import 'package:intl/intl.dart';  // Để định dạng ngày tháng
 class BillLineChart extends StatelessWidget {
   final List<Bill> bills;
 
-  BillLineChart({required this.bills});
+  const BillLineChart({super.key, required this.bills});
 
   @override
   Widget build(BuildContext context) {
     // Check if the bills list is null or empty
-    if (bills == null || bills.isEmpty) {
-      return Center(child: Text('No data available'));
+    if (bills.isEmpty) {
+      return const Center(child: Text('No data available'));
     }
-
-
+    //chỉ lấy 6 tháng gần nhất
+    bills.sort((a, b) => a.createAt!.compareTo(b.createAt!));
+    List<Bill> data = bills.sublist(bills.length - 6);
+    
     return SizedBox(
       child: LineChart(
         LineChartData(
@@ -41,16 +43,16 @@ class BillLineChart extends StatelessWidget {
               sideTitles: SideTitles(showTitles: false),
             ),
           ),
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           lineBarsData: [
             LineChartBarData(
-              spots: bills.map((bill) {
+              spots: data.map((bill) {
                 // Ensure that createAt and amount are valid
-                if (bill.createAt == null || bill.amount == null) {
+                if (bill.total == null) {
                   return const FlSpot(0, 0);
                 }
-                double x = bill.createAt.month.toDouble();
-                double y = bill.amount.toDouble();
+                double x = bill.createAt!.month.toDouble();
+                double y = bill.total!;
 
                 if (x.isNaN || x.isInfinite || y.isNaN || y.isInfinite) {
                   return const FlSpot(0, 0);

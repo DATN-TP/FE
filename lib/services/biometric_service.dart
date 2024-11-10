@@ -1,8 +1,14 @@
+import 'package:ResiEasy/services/api_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:local_auth/local_auth.dart';
 
 class BiometricService {
   final LocalAuthentication _auth = LocalAuthentication();
+
+  final ApiService apiService;
+  BiometricService(this.apiService);
+
+
 
   Future<bool> authenticate() async {
     try {
@@ -31,5 +37,23 @@ class BiometricService {
       print('Error during biometric authentication: $e');
       return false;
     }
+  }
+
+  //gọi API đăng ký sinh trắc học
+  Future<bool> registerBiometric(String data) async {
+    final isAuthenticated = await authenticate();
+    if (isAuthenticated) {
+      final response = await apiService.post('/auth/register-biometric', {
+        'data': data,
+      });
+      if (response['status'] == "success") {
+        Fluttertoast.showToast(msg: 'Đăng ký thành công');
+        return true;
+      } else {
+        Fluttertoast.showToast(msg: 'Lỗi');
+        return false;
+      }
+    }
+    return false;
   }
 }

@@ -1,6 +1,5 @@
 
-import 'package:ResiEasy/models/apartment_model.dart';
-import 'package:ResiEasy/models/service_model.dart';
+import 'package:ResiEasy/models/detail_service.dart';
 import 'package:ResiEasy/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,35 +7,58 @@ part 'bill_model.g.dart';
 
 @JsonSerializable()
 class Bill {
-  final String? apartment;
-  final List<Service>? service;
-  final double amount;
-  final String status;
-  final DateTime date;
-  final String paymentMethod;
-  final DateTime? paymentDate;
-  final String? paymentBy;
-  final String? note;
-  final DateTime createAt;
-  final DateTime updateAt;
-  final DateTime? deleteAt;
-  final bool paid;
+  // apartment: { type: Schema.Types.ObjectId, ref: 'Apartment' },
+  //   price: { type: Number },
+  //   electric: { type: Number },
+  //   water: { type: Number },
+  //   service: [{ type: Schema.Types.ObjectId, ref: 'DetailService' }],
+  //   status: { type: String, enum: ['pending', 'paid'], default: 'pending' },
+  //   date: { type: Date, default: Date.now },
+  //   paymentMethod: { type: String, enum: ['cash', 'transfer'] },
+  //   paymentDate: { type: Date },
+  //   paymentBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  //   total: { type: Number },
+  //   note: { type: String },
+  //   createAt: { type: Date, default: Date.now },
+  //   updateAt: { type: Date, default: Date.now },
+  //   deleteAt: { type: Date },
+
+  String? id;
+  String? apartment;
+  double? price;
+  double? electric;
+  double? water;
+  List<DetailService>? service;
+  String? status;
+  DateTime? date;
+  String? paymentMethod;
+  DateTime? paymentDate;
+  User? paymentBy;
+  double? total;
+  String? note;
+  DateTime? createAt;
+  DateTime? updateAt;
+  DateTime? deleteAt;
 
   Bill({
-      this.apartment,
-      this.service,
-      required this.amount,
-      required this.status,
-      required this.date,
-      required this.paymentMethod,
-      this.paymentDate,
-      this.paymentBy,
-      this.note,
-      required this.createAt,
-      required this.updateAt,
-      this.deleteAt,
-      this.paid = false,
+    this.id,
+    this.apartment,
+    this.price,
+    this.electric,
+    this.water,
+    this.service,
+    this.status,
+    this.date,
+    this.paymentMethod,
+    this.paymentDate,
+    this.paymentBy,
+    this.total,
+    this.note,
+    this.createAt,
+    this.updateAt,
+    this.deleteAt,
   });
+
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
   Map<String, dynamic> toJson() => _$BillToJson(this);

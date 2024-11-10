@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/hive/hive_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -12,17 +13,26 @@ class ApiService {
   Future<dynamic> _request(
     String method,
     String endpoint, {
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
       Response response;
 
+      var token = HiveProvider().getToken();
+
       // Combine default headers with provided headers
       final defaultHeaders = <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       };
+
+      // If body is FormData, set Content-Type to multipart/form-data
+      if (body is FormData) {
+        defaultHeaders['Content-Type'] = 'multipart/form-data';
+      }
+
       headers = {...defaultHeaders, ...?headers};
 
       // Configure Dio request options
@@ -72,7 +82,7 @@ class ApiService {
     return _request('GET', endpoint, headers: headers, queryParameters: queryParameters);
   }
 
-  Future<dynamic> post(String endpoint, Map<String, dynamic> body, {Map<String, String>? headers}) async {
+  Future<dynamic> post(String endpoint, dynamic body, {Map<String, String>? headers}) async {
     return _request('POST', endpoint, body: body, headers: headers);
   }
 

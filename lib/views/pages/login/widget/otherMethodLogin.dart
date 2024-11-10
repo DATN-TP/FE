@@ -14,7 +14,7 @@ class Othermethodlogin extends StatelessWidget {
       durationMs: 1500,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ButtonOtherMethodLogin(icon: FontAwesomeIcons.facebook),

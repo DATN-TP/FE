@@ -6,11 +6,15 @@ class Vnpayservice {
 
   Vnpayservice(this.apiService);
 
-  Future<void> createPaymentUrl(int amount) async {
+  Future<void> createPaymentUrl(int amount, String billId,String paymentBy, String apartmentId) async {
     final response = await apiService.post('/vnpay/create_payment_url', {
       "amount": amount,
       "bankCode": "",
-      "language": "vn"
+      "language": "vn",
+      "billId": billId,
+      "paymentBy": paymentBy,
+      "apartmentId": apartmentId,
+
     });
 
     if (response != null) {

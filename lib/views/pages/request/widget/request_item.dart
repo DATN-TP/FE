@@ -57,11 +57,11 @@ class RequestItem extends StatelessWidget {
                       const SizedBox(height: 5),
                       Row(
                         children: [
-                          Icon(Icons.calendar_today, size: 15, color: Colors.grey,),
-                          SizedBox(width: 5),
+                          const Icon(Icons.calendar_today, size: 15, color: Colors.grey,),
+                          const SizedBox(width: 5),
                           Text(
                             _formatDate(request.createAt.toString()),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Colors.grey,
                             ),

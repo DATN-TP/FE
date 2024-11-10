@@ -1,11 +1,17 @@
 import 'package:ResiEasy/data/config/colors.dart';
+import 'package:ResiEasy/views/pages/request/request_view_model.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:provider/provider.dart';
+
 class CreateNewRequest extends StatefulWidget {
-  const CreateNewRequest({super.key});
+  final String apartmentId;
+  final String userId;
+  const CreateNewRequest({super.key, required this.apartmentId, required this.userId});
 
   @override
   State<CreateNewRequest> createState() => _CreateNewRequestState();
@@ -14,26 +20,71 @@ class CreateNewRequest extends StatefulWidget {
 class _CreateNewRequestState extends State<CreateNewRequest> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<XFile>? _images;
+  List<XFile>? _images = [];
+  
+  // Biến lưu trữ giá trị type đã chọn
+  String _selectedType = 'feedback';
+  
+  // Danh sách loại yêu cầu
+  final List<DropdownMenuItem<String>> _dropdownItems = [
+    DropdownMenuItem(
+      value: 'request',
+      child: Text('txt_request'.tr()), // Phản ánh
+    ),
+    DropdownMenuItem(
+      value: 'feedback',
+      child: Text('txt_feedback'.tr()), // Góp ý
+    ),
+    DropdownMenuItem(
+      value: 'complaint',
+      child: Text('txt_complaint'.tr()), // Khiếu nại
+    ),
+  ];
 
   Future<void> _pickImages() async {
     final ImagePicker picker = ImagePicker();
     final List<XFile>? pickedImages = await picker.pickMultiImage();
+    
+    if (pickedImages != null && (_images!.length + pickedImages.length <= 2)) {
+      setState(() {
+        _images!.addAll(pickedImages.take(2 - _images!.length)); // Chỉ thêm đủ số hình tối đa 2
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('txt_selectImageError'.tr())),
+      );
+    }
+  }
+
+  void _removeImage(int index) {
     setState(() {
-      _images = pickedImages;
+      _images!.removeAt(index);
     });
   }
 
-  void _submitRequest() {
+  void _submitRequest(RequestViewModel viewModel) async{
     final String title = _titleController.text;
     final String description = _descriptionController.text;
-    // Handle the submission logic here
-    print('Title: $title');
-    print('Description: $description');
-    if (_images != null) {
-      for (var image in _images!) {
-        print('Image path: ${image.path}');
-      }
+    final List<File> images = _images!.map((image) => File(image.path)).toList();
+    List<String> urls = [];
+    if (images.isNotEmpty) {
+      urls =await viewModel.uploadMultipleImage(images);
+    }
+bool success = await viewModel.createRequest(
+      _selectedType,
+      title,
+      description,
+      widget.apartmentId,
+      widget.userId,
+      urls
+    );
+    
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('txt_createRequestSuccess'.tr())),
+      );
+      Navigator.of(context).pop();
+
     }
   }
 
@@ -42,7 +93,7 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
     return Scaffold(
       appBar: AppBar(
         title: Text('txt_createNewRequest'.tr(),
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: ColorApp().cl1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -51,83 +102,138 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('txt_title'.tr(),
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'txt_title'.tr(),
-                  border: const OutlineInputBorder(),
-                  labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: ColorApp().cl1),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text('txt_description'.tr(),
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'txt_description'.tr(),
-                  border: const OutlineInputBorder(),
-                  labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: ColorApp().cl1),
-                  ),
-                ),
-                maxLines: 4,
-              ),
-              const SizedBox(height: 16),
-              _images == null || _images!.isEmpty
-                  ? TextButton.icon(
-                      onPressed: _pickImages,
-                      icon: Icon(Icons.image, color: ColorApp().cl1,),
-                      label: Text('txt_selectImage'.tr(), style: const TextStyle(fontSize: 16, color: Colors.blue)),
+      body: ChangeNotifierProvider(
+        create: (context) => RequestViewModel(),
+        child: Consumer<RequestViewModel>(
+          builder: (BuildContext context, RequestViewModel viewModel, Widget? child) {
+            return 
+            viewModel.isLoading ? Center(child: 
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(),
+                Text('txt_loading'.tr()),
+              ],
+            )
+            ) :
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('txt_type'.tr(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
+                    DropdownButtonFormField<String>(
+                      value: _selectedType,
+                      items: _dropdownItems,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedType = value!;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorApp().cl1),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text('txt_title'.tr(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
+                    TextField(
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        labelText: 'txt_title'.tr(),
+                        border: const OutlineInputBorder(),
+                        labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorApp().cl1),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text('txt_description'.tr(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
+                    TextField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        labelText: 'txt_description'.tr(),
+                        border: const OutlineInputBorder(),
+                        labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorApp().cl1),
+                        ),
+                      ),
+                      maxLines: 4,
+                    ),
+                    const SizedBox(height: 16),
+                    _images == null || _images!.isEmpty
+                        ? TextButton.icon(
+                            onPressed: _pickImages,
+                            icon: Icon(Icons.image, color: ColorApp().cl1,),
+                            label: Text('txt_selectImage'.tr(), style: const TextStyle(fontSize: 16, color: Colors.blue)),
+                          )
+                        : Wrap(
+                            spacing: 8.0,
+                            runSpacing: 8.0,
+                            children: _images!.asMap().entries.map((entry) {
+                              int index = entry.key;
+                              XFile image = entry.value;
+                              return Stack(
+                                children: [
+                                  Image.file(
+                                    File(image.path),
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () => _removeImage(index),
+                                      child: Container(
+                                        color: Colors.black54,
+                                        child: Icon(Icons.close, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () => _submitRequest(viewModel),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          color: ColorApp().cl1,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            viewModel.isLoading ? 'txt_loading'.tr() : 'txt_submit'.tr(),
+                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                      ),
                     )
-                  : Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: _images!.map((image) {
-                        return Image.file(
-                          File(image.path),
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        );
-                      }).toList(),
-                    ),
-              const SizedBox(height: 16),
-              InkWell(
-                onTap: _submitRequest,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: ColorApp().cl1,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'txt_submit'.tr(),
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            );
+          }
         ),
       ),
     );
   }
 }
+

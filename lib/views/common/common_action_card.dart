@@ -42,7 +42,7 @@ class CommonActionCard extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: Icon(Icons.arrow_forward_ios, color: Colors.grey[300],),
             ),
           ],

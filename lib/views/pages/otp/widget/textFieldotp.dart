@@ -5,7 +5,7 @@ class Textfieldotp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: TextField(
         style: const TextStyle(

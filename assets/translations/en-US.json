@@ -80,10 +80,42 @@
     "txt_totalQuantity": "Total Quantity",
     "txt_totalPriceService": "Total Price Service",
     "txt_totalPriceBill": "Total Price Bill",
-    "txt_payNow": "Pay Now"
+    "txt_payNow": "Pay Now",
+    "txt_currentPassword": "Current Password",
+    "txt_newPassword": "New Password",
+    "txt_confirmNewPassword": "Confirm New Password",
+    "txt_changePasswordSuccess": "Change password successfully",
+    "txt_changePasswordFail": "Change password fail",
+    "txt_changePasswordFailMessage": "Current password is incorrect",
+    "txt_birthday": "Birthday",
+    "txt_address": "Address",
+    "txt_phone": "Phone",
+    "txt_email": "Email",
+    "txt_selectImageError": "You can only select up to 2 images",
+    "txt_max_image": "Select up to 2 images",
+    "txt_feedback": "Feedback",
+    "txt_complaint": "Complaint",
+    "txt_type": "Type",
+    "txt_loading": "Loading...",
+    "txt_createRequestSuccess": "Create request successfully",
+     "txt_noData": "No data",
+     "txt_second": "second",
+     "txt_minute": "minute",
+     "txt_hour": "hour",
+     "txt_day": "day",
+     "txt_year": "year",
+    "txt_agree": "Agree",
+     "txt_changeApartment": "Change Apartment",
+    "txt_selectApartment": "Select Apartment",
+    "txt_news": "News",
+     "txt_transfer": "Transfer",
+    "txt_cash": "Cash",
+    "txt_unitPrice": "Unit Price",
+    "txt_chartBill": "Bill Value Chart (6 months)",
+    "txt_waitPayment": "Wait Payment",
+    "txt_paid": "Paid",
+    "txt_billMonth": "Bill month"
 
-    
 
-    
 
 }

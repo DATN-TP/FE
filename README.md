@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+<!-- --gen .g file -->
+flutter pub run build_runner build --delete-conflicting-outputs
+
+<!-- build apk -->
+fvm  flutter build  apk --no-tree-shake-icons
+

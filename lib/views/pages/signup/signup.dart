@@ -29,7 +29,7 @@ class _SignupState extends State<Signup> {
             SlideTopToBottom(
               durationMs: 1000,
               child: BackgroundSignup(
-                color: Color(0xFF5f1dfb),
+                color: const Color(0xFF5f1dfb),
                 position: Alignment.bottomRight,
                 opacity: 0.1,
               ),

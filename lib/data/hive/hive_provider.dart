@@ -47,4 +47,29 @@ class HiveProvider {
     return User.fromJson(json.decode(str));
   }
 
+  void saveApartmentId(String id) {
+    userBox?.put('apartment_id', id);
+  }
+
+  String getApartmentId() {
+    return userBox?.get('apartment_id') ?? '';
+  }
+
+  String getFCMToken() {
+    return userBox?.get('fcm_token') ?? '';
+  } 
+
+  void saveFCMToken(String token) {
+    userBox?.put('fcm_token', token);
+  }
+
+  //save token
+  void saveToken(String token) {
+    userBox?.put('token', token);
+  }
+
+  String getToken() {
+    return userBox?.get('token') ?? '';
+  }
+
 }

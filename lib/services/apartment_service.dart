@@ -1,7 +1,6 @@
 import 'package:ResiEasy/models/apartment_model.dart';
+import 'package:ResiEasy/models/user_model.dart';
 import 'package:ResiEasy/services/api_service.dart';
-import 'package:flutter/material.dart';
-import 'dart:developer' as dev;
 
 class ApartmentService {
   final ApiService apiService;
@@ -15,6 +14,16 @@ class ApartmentService {
       return Apartment.fromJson(response);
     } else {
       throw Exception('Failed to get detail apartment');
+    }
+  }
+
+  //lấy tên chủ hộ
+  Future<String> getOwnerName(String id) async {
+    final response = await apiService.get('/apartment/get-owner/$id');
+    if (response != null) {
+      return response;
+    } else {
+      throw Exception('Failed to get owner name');
     }
   }
 }

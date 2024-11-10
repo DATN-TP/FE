@@ -57,6 +57,15 @@ dependencies:
   flutter_local_notifications: ^17.2.2
   url_launcher: ^6.3.0
   image_picker: ^1.1.2
+  flutter_image_compress: ^2.3.0
+  socket_io_client: ^3.0.0
+  flutter_link_previewer: ^3.2.2
+  loadmore_listview: ^1.0.7
+  any_link_preview: ^3.0.2
+  device_info_plus: ^11.1.0
+  flutter_udid: ^3.0.0
+  encrypt: ^5.0.3
+  pointycastle: ^3.9.1
 
 
 dev_dependencies:
@@ -95,10 +104,15 @@ flutter:
     - assets/images/city.png
     - assets/images/background.png
     - assets/images/logo_text_none_background.png
-
+    - assets/images/no_result.png
+    
     - assets/icon/Logo.png
     - assets/icon/england.png
     - assets/icon/vietnam.png
+    - assets/icon/face_id.png
+    - assets/icon/blue_face_id.png
+
+    - assets/public_key.pem
 
     
 

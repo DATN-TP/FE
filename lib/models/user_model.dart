@@ -1,26 +1,26 @@
-import 'package:ResiEasy/models/apartment_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
 
 @JsonSerializable()
 class User {
-  final String id;
-  final String username;
-  final String email;
+  final String? id;
+  final String? username;
+  final String? email;
   final String? phone;
-  final DateTime dob;
-  final String role;
-  final String address;
+  final DateTime? dob;
+  final String? role;
+  final String? address;
   final List<String>? apartments;
-  final bool houseHoldHead;
-  final String relationship;
-  final String position;
-  final String avatar;
-  final String refreshToken;
-  final DateTime createAt;
-  final DateTime updateAt;
+  final bool? houseHoldHead;
+  final String? relationship;
+  final String? position;
+  final String? avatar;
+  final String? refreshToken;
+  final DateTime? createAt;
+  final DateTime? updateAt;
   final DateTime? deleteAt;
+  bool? isFirstTime;
 
   User({
     required this.id,
@@ -39,6 +39,7 @@ class User {
     required this.createAt,
     required this.updateAt,
     this.deleteAt,
+    this.isFirstTime = false,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -41,13 +41,19 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('FCM Token: $fcmToken');
+
+
+
 
   await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox<Map<dynamic, dynamic>>(HiveProvider.HIVE_BIOMETRIC_BOX);
   await Hive.openBox<String>(HiveProvider.HIVE_USER_BOX);
   await dotenv.load(fileName: ".env");
+
+  final hiveProvider = HiveProvider();
+  hiveProvider.saveFCMToken(fcmToken!);
+    print('FCM Token: $fcmToken');
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -61,10 +67,9 @@ Future<void> main() async {
   );
 
   final InitializationSettings initializationSettings =
-      InitializationSettings(
+       InitializationSettings(
     android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS, 
-
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);

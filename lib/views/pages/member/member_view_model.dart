@@ -24,15 +24,11 @@ class MemberViewModel extends ChangeNotifier{
   Future<void> getListUserByApartment(String id) async {
        _isLoading = true;
     final response = await userService.getListUserByApartment(id);
-    if (response != null) {
-      _listUser = response;
-      _error = null;
-      _isLoading = false;
-      notifyListeners();
-    } else {
-      throw Exception('Failed to get user by apartment');
+    _listUser = response;
+    _error = null;
+    _isLoading = false;
+    notifyListeners();
     }
-  }
 
 
 

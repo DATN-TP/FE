@@ -39,7 +39,7 @@ class _SignupButtonState extends State<SignupButton>
             Navigator.pushNamed(context, '/getotp');
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF6f24fd),
+            backgroundColor: const Color(0xFF6f24fd),
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
