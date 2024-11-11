@@ -220,13 +220,13 @@ void initState() {
                       ),
                     )
                   }),
-          CommonActionCard(
-              icon: Icon(Icons.cleaning_services, color: ColorApp().cl1),
-              title: Text('txt_listService'.tr(),
-                  style: const TextStyle(
-                    fontSize: 17,
-                  )),
-              onPressed: () => {}),
+          // CommonActionCard(
+          //     icon: Icon(Icons.cleaning_services, color: ColorApp().cl1),
+          //     title: Text('txt_listService'.tr(),
+          //         style: const TextStyle(
+          //           fontSize: 17,
+          //         )),
+          //     onPressed: () => {}),
           CommonActionCard(
               icon: Icon(Icons.group_outlined, color: ColorApp().cl1),
               title: Text('txt_listMember'.tr(),
@@ -278,7 +278,7 @@ void initState() {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${'txt_apartment'.tr()}: ${apartment?.name ?? 'N/A'}",
+                    "${'txt_apartment'.tr()} ${apartment?.name ?? 'N/A'}",
                     style:  TextStyle(
                       color: ColorApp().white,
                         fontSize: 25, fontWeight: FontWeight.bold),
@@ -315,7 +315,7 @@ void initState() {
                   const Icon(Icons.key, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    "${'txt_householdHead'.tr()}: ${viewModel.ownerName?.toUpperCase()}",
+                    "${'txt_householdHead'.tr()} ${viewModel.ownerName?.toUpperCase()}",
                     style: TextStyle(
                         fontSize: 15,
                         color: ColorApp().white,
@@ -336,7 +336,7 @@ void initState() {
                   const Icon(Icons.home, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentArea'.tr()}: ${apartment?.area ?? 0} m2',
+                    '${'txt_apartmentArea'.tr()} ${apartment?.area ?? 0} m2',
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -357,7 +357,7 @@ void initState() {
                   const Icon(Icons.bed, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentBedroom'.tr()}: ${apartment?.rooms ?? 0}',
+                    '${'txt_apartmentBedroom'.tr()} ${apartment?.rooms ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -378,7 +378,7 @@ void initState() {
                   const Icon(Icons.directions_car, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentTotalVehicle'.tr()}: ${apartment?.totalVehicle ?? 0}',
+                    '${'txt_apartmentTotalVehicle'.tr()} ${apartment?.totalVehicle ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -399,7 +399,7 @@ void initState() {
                   const Icon(Icons.people, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
-                    '${'txt_apartmentTotalPeople'.tr()}: ${apartment?.totalResidents ?? 0}',
+                    '${'txt_apartmentTotalPeople'.tr()} ${apartment?.totalResidents ?? 0}',
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.white,
