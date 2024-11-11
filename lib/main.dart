@@ -1,5 +1,7 @@
 
 import 'package:ResiEasy/data/hive/hive_provider.dart';
+import 'package:ResiEasy/models/user_model.dart';
+import 'package:ResiEasy/views/pages/home/home.dart';
 import 'package:ResiEasy/views/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -131,6 +133,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final User? user = HiveProvider().getUser();
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -141,7 +144,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const Login(),
+      home: user?.email == null ? const Login() : const Home(),
     );
   }
 }
