@@ -19,7 +19,7 @@ class ApiService {
   }) async {
     try {
       Response response;
-
+      
       var token = HiveProvider().getToken();
 
       // Combine default headers with provided headers

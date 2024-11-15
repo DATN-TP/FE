@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ResiEasy/models/bill_model.dart';
-import 'package:intl/intl.dart';  // Để định dạng ngày tháng
+import 'package:intl/intl.dart'; // Để định dạng ngày tháng
 
 class BillLineChart extends StatelessWidget {
   final List<Bill> bills;
@@ -14,10 +14,24 @@ class BillLineChart extends StatelessWidget {
     if (bills.isEmpty) {
       return const Center(child: Text('No data available'));
     }
-    //chỉ lấy 6 tháng gần nhất
+// Chỉ lấy 6 tháng gần nhất
     bills.sort((a, b) => a.createAt!.compareTo(b.createAt!));
-    List<Bill> data = bills.sublist(bills.length - 6);
-    
+    List<Bill> data =
+        bills.length > 6 ? bills.sublist(bills.length - 6) : bills;
+
+    List<Bill> dataChart = List.from(data);
+    if (dataChart.length < 6) {
+      int lg = 6 - dataChart.length;
+      for (int i = 0; i < lg; i++) {
+        dataChart.insert(
+            0,
+            Bill(
+                createAt:
+                    DateTime.now().subtract(Duration(days: 30 * (lg - i))),
+                total: 0));
+      }
+    }
+
     return SizedBox(
       child: LineChart(
         LineChartData(
@@ -46,7 +60,7 @@ class BillLineChart extends StatelessWidget {
           gridData: const FlGridData(show: true),
           lineBarsData: [
             LineChartBarData(
-              spots: data.map((bill) {
+              spots: dataChart.map((bill) {
                 // Ensure that createAt and amount are valid
                 if (bill.total == null) {
                   return const FlSpot(0, 0);
@@ -66,7 +80,6 @@ class BillLineChart extends StatelessWidget {
             ),
           ],
         ),
-        
       ),
     );
   }
