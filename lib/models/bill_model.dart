@@ -46,6 +46,10 @@ class Bill {
   double? oldWaterNumber;
   double? newElectricNumber;
   double? newWaterNumber;
+  double? managementFee;
+  double? ePrice;
+  double? wPrice;
+  double?managementPrice;
   String? status;
   DateTime? date;
   String? paymentMethod;
@@ -69,6 +73,10 @@ class Bill {
     this.oldElectricNumber,
     this.oldWaterNumber,
     this.newElectricNumber,
+    this.managementFee,
+    this.ePrice,
+    this.wPrice,
+    this.managementPrice,
     this.newWaterNumber,
     this.status,
     this.date,

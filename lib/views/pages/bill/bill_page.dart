@@ -68,21 +68,21 @@ class _BillPageState extends State<BillPage> with WidgetsBindingObserver {
               color: Colors.grey.shade300,
               child: Column(
                 children: [
-                  const SizedBox(height: 15),
-                  _buildChart(billViewModel),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        'txt_listBill'.tr(),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 15),
+                  // _buildChart(billViewModel),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10),
+                  //     child: Text(
+                  //       'txt_listBill'.tr(),
+                  //       style: const TextStyle(
+                  //         fontSize: 18,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   _buildListBill(),
                 ],
               ),

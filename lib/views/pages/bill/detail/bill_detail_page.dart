@@ -17,7 +17,8 @@ class BillDetailPage extends StatefulWidget {
   State<BillDetailPage> createState() => _BillDetailPageState();
 }
 
-class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObserver{
+class _BillDetailPageState extends State<BillDetailPage>
+    with WidgetsBindingObserver {
   late IO.Socket socket;
   BillViewModel billViewModel = BillViewModel();
   @override
@@ -54,11 +55,10 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
     super.dispose();
   }
 
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-     billViewModel.getBillById(widget.bill!.id ?? "");
+      billViewModel.getBillById(widget.bill!.id ?? "");
     }
   }
 
@@ -68,6 +68,7 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
     return ChangeNotifierProvider(
       create: (context) => billViewModel..getBillById(widget.bill!.id ?? ""),
       child: Scaffold(
+        backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
           title: Text('txt_billDetail'.tr(),
               style: const TextStyle(
@@ -76,59 +77,94 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () {
-                Navigator.pop(context, (billViewModel.bill.status=='paid'));
+              Navigator.pop(context, (billViewModel.bill.status == 'paid'));
             },
           ),
         ),
         body: Consumer<BillViewModel>(
           builder: (context, billViewModel, child) {
-            return 
-            billViewModel.isLoading
-            ? const Center(
-              child: CircularProgressIndicator(),
-            ):
-            Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildSumary(billViewModel),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text("Phí xe:", style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),),
+            return billViewModel.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          margin: const EdgeInsets.all(10),
+                          color: ColorApp().white,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        _buildSumary(billViewModel),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            "Phí xe:",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        _buildListView(),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            "Phí điện:",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        _buildElectric(),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            "Phí nước:",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        _buildWater(),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            "Phí quản lý:",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        _buildManagementFee(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          _buildListView(),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text("Phí điện:", style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),),
-                          ),
-                          _buildElectric(),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text("Phí nước:", style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),),
-                          ),
-                          _buildWater(),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                _buttonPayment(billViewModel, user),
-              ],
-            );
+                      _buttonPayment(billViewModel, user),
+                    ],
+                  );
           },
         ),
       ),
@@ -195,33 +231,7 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
             const SizedBox(
               height: 10,
             ),
-           if(widget.bill!.price!>0)
-            Column(
-              children: [
-                Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Tiền thuê:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  ' $amount',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-              ],
-            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -315,33 +325,33 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
                         height: 10,
                       ),
                       Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'txt_paymentMethod'.tr(),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  billViewModel.bill.paymentMethod == "transfer"
-                      ? 'txt_transfer'.tr()
-                      : 'txt_cash'.tr(),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ), 
-            const SizedBox(
-              height: 10,
-            ),
-              ],
-            ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'txt_paymentMethod'.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            billViewModel.bill.paymentMethod == "transfer"
+                                ? 'txt_transfer'.tr()
+                                : 'txt_cash'.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ],
                   )
                 : const SizedBox(),
-           
+
             // người thanh toán
             billViewModel.bill.status == 'paid'
                 ? Column(
@@ -398,137 +408,133 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
   }
 
   _buildListView() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const ScrollPhysics(),
-          itemCount: widget.bill?.listVehicle?.length,
-          itemBuilder: (context, index) {
-            final vehicle = widget.bill?.listVehicle![index];
-            if(vehicle?.quantity==0){
-              return const SizedBox();
-            }
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Loại",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                         vehicle?.type ?? "",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Phí',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
-                              .format(vehicle?.price),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'txt_quantity'.tr(),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          vehicle?.quantity.toString() ?? "",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'txt_total'.tr(),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
-                              .format(vehicle?.total),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  ],
-                ),
-              ),
-            );
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Table(
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(2),
+            2: FlexColumnWidth(1),
+            3: FlexColumnWidth(2),
           },
+          border: TableBorder.all(color: Colors.grey),
+          children: [
+            TableRow(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+              ),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Loại',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Phí',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'SL',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Tổng',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            ...widget.bill?.listVehicle
+                ?.where((vehicle) => vehicle.quantity != 0)
+                .map((vehicle) {
+                  return TableRow(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          vehicle.type ?? "",
+                          style: const TextStyle(
+                            fontSize: 14, // Giảm kích thước font chữ
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
+                              .format(vehicle.price),
+                          style: const TextStyle(
+                            fontSize: 14, // Giảm kích thước font chữ
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          vehicle.quantity!.round().toString(),
+                          style: const TextStyle(
+                            fontSize: 14, // Giảm kích thước font chữ
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
+                              .format(vehicle.total),
+                          style: const TextStyle(
+                            fontSize: 14, // Giảm kích thước font chữ
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList() ??
+                [],
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   _buttonPayment(BillViewModel billViewModel, User? user) {
     return billViewModel.bill.status == 'paid'
         ? const SizedBox(height: 10)
         : InkWell(
             onTap: () => {
-              billViewModel.createPayment((widget.bill?.total?.toInt() ?? 0), widget.bill!.id!,
-                  user!.id!, widget.bill!.apartment!)
+              billViewModel.createPayment((widget.bill?.total?.toInt() ?? 0),
+                  widget.bill!.id!, user!.id!, widget.bill!.apartment!)
             },
             child: Container(
               width: double.infinity,
@@ -552,233 +558,107 @@ class _BillDetailPageState extends State<BillDetailPage> with WidgetsBindingObse
             ),
           );
   }
-  
+
   _buildElectric() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Số cũ",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    widget.bill?.oldElectricNumber.toString() ?? "",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Số mới',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    widget.bill?.newElectricNumber.toString() ?? "",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Tiêu thụ',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    ((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)).toString(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                  "Thành tiền",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
-                        .format(widget.bill?.electric),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-             
-            ],
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Table(
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(2),
+          },
+          border: TableBorder.all(color: Colors.grey),
+          children: [
+            _buildTableRow("Số cũ", widget.bill?.oldElectricNumber.toString() ?? ""),
+            _buildTableRow("Số mới", widget.bill?.newElectricNumber.toString() ?? ""),
+            _buildTableRow("Tiêu thụ", ((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)).toString()),
+            _buildTableRow("Thành tiền", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.electric)),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+_buildWater() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Table(
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(2),
+          },
+          border: TableBorder.all(color: Colors.grey),
+          children: [
+            _buildTableRow("Số cũ", widget.bill?.oldWaterNumber.toString() ?? ""),
+            _buildTableRow("Số mới", widget.bill?.newWaterNumber.toString() ?? ""),
+            _buildTableRow("Tiêu thụ", ((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)).toString()),
+            _buildTableRow("Thành tiền", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.water)),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+_buildManagementFee() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Table(
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(2),
+          },
+          border: TableBorder.all(color: Colors.grey),
+          children: [
+            _buildTableRow("Đơn giá", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.managementPrice)),
+            _buildTableRow("Diện tích", (widget.bill?.managementPrice != null && widget.bill?.managementFee != null)
+                ? "${widget.bill!.managementFee! / widget.bill!.managementPrice!} m2"
+                : ""),
+            _buildTableRow("Thành tiền", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.managementFee)),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+TableRow _buildTableRow(String label, String value) {
+  return TableRow(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
-    );
-  }
-  
-  _buildWater() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Số cũ",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    widget.bill?.oldWaterNumber.toString() ?? "",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Số mới',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    widget.bill?.newWaterNumber.toString() ?? "",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Tiêu thụ',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    ((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)).toString(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
-              ),
-               const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                  "Thành tiền",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
-                        .format(widget.bill?.water),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic
-                    ),
-                  ),
-                ],
-              ),
-
-            ],
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          value,
+          style: const TextStyle(
+            fontSize: 16,
+            fontStyle: FontStyle.italic,
           ),
         ),
       ),
-    );
-
-  }
+    ],
+  );
+}
 }

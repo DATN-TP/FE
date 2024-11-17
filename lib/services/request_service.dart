@@ -6,14 +6,13 @@ class RequestService {
 
   RequestService(this.apiService);
 
-  Future<bool> createRequest(String type,String title, String description, String apartmentId, String userId, List<String> images) async {
+  Future<bool> createRequest(String title, String description, String apartmentId, String userId, List<String> images) async {
     final response = await apiService.post('/request/add-request', {
       'title': title,
       'description': description,
       'apartment': apartmentId,
       'user': userId,
       'image': images,
-      'type': type,
     });
 
     if (response != null) {

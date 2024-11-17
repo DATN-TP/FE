@@ -53,13 +53,9 @@ class RequestViewModel extends ChangeNotifier {
     setLoading(true);
     try {
       final response = await uploadService.uploadImage(file);
-      if (response != null) {
-        // Handle success
-        print("Response: $response");
-      } else {
-        setError('Failed to upload image');
-      }
-    } catch (e) {
+      // Handle success
+      print("Response: $response");
+        } catch (e) {
       // Log error
       setError('Failed to upload image: $e');
     }
@@ -72,12 +68,8 @@ class RequestViewModel extends ChangeNotifier {
     List<String> urls = [];
     try {
       final response = await uploadService.uploadMultipleImage(files);
-      if (response != null) {
-        urls = response;
-      } else {
-        setError('Failed to upload images');
-      }
-    } catch (e) {
+      urls = response;
+        } catch (e) {
       setError('Failed to upload images: $e');
     }
     clearLoading();
@@ -85,10 +77,10 @@ class RequestViewModel extends ChangeNotifier {
   }
 
   // Create request
-  Future<bool> createRequest(String type, String title, String description, String apartmentId, String userId, List<String> images) async {
+  Future<bool> createRequest( String title, String description, String apartmentId, String userId, List<String> images) async {
     setLoading(true);
     try {
-      final response = await requestService.createRequest(type, title, description, apartmentId, userId, images);
+      final response = await requestService.createRequest( title, description, apartmentId, userId, images);
         setSuccess(true);
         if(response){
           getListRequestByApartment(apartmentId);
@@ -104,26 +96,25 @@ class RequestViewModel extends ChangeNotifier {
   }
 
   //get list request of apartment
-  Future<void> getListRequestByApartment(String id) async {
-    setLoading(true);
-    try {
-      // Call API
-      final response = await requestService.getListRequestByApartment(id);
-      if (response.isNotEmpty) {
-        //sort lại từ mới nhất đến cũ nhất
-        response.sort((a, b) => b.createAt.compareTo(a.createAt));
-        listRequest = response;
-        notifyListeners();
-      } else {
-        setError('Failed to get list request');
-      }
-    } catch (e) {
-      setError('Failed to get list request: $e');
+Future<void> getListRequestByApartment(String id) async {
+  setLoading(true);
+  try {
+    // Gọi API lấy danh sách yêu cầu
+    final response = await requestService.getListRequestByApartment(id);
+    if (response.isNotEmpty) {
+      // Sắp xếp danh sách từ mới đến cũ
+      response.sort((a, b) => b.createAt.compareTo(a.createAt));
+      listRequest = response;
+    } else {
+      setError('Không tìm thấy yêu cầu nào.');
     }
+  } catch (e) {
+    setError('Lỗi khi lấy danh sách yêu cầu: $e');
+  } finally {
     clearLoading();
+    notifyListeners(); // Chỉ gọi notifyListeners() một lần ở đây
   }
-
-  
+}
 
   // Clear loading state
   void clearLoading() {

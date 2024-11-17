@@ -20,10 +20,10 @@ class CreateNewRequest extends StatefulWidget {
 class _CreateNewRequestState extends State<CreateNewRequest> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<XFile>? _images = [];
+  final List<XFile> _images = [];
   
   // Biến lưu trữ giá trị type đã chọn
-  String _selectedType = 'feedback';
+  final String _selectedType = 'feedback';
   
   // Danh sách loại yêu cầu
   final List<DropdownMenuItem<String>> _dropdownItems = [
@@ -43,11 +43,11 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
 
   Future<void> _pickImages() async {
     final ImagePicker picker = ImagePicker();
-    final List<XFile>? pickedImages = await picker.pickMultiImage();
+    final List<XFile> pickedImages = await picker.pickMultiImage();
     
-    if (pickedImages != null && (_images!.length + pickedImages.length <= 2)) {
+    if ((_images.length + pickedImages.length <= 2)) {
       setState(() {
-        _images!.addAll(pickedImages.take(2 - _images!.length)); // Chỉ thêm đủ số hình tối đa 2
+        _images.addAll(pickedImages.take(2 - _images.length)); // Chỉ thêm đủ số hình tối đa 2
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -58,20 +58,19 @@ class _CreateNewRequestState extends State<CreateNewRequest> {
 
   void _removeImage(int index) {
     setState(() {
-      _images!.removeAt(index);
+      _images.removeAt(index);
     });
   }
 
   void _submitRequest(RequestViewModel viewModel) async{
     final String title = _titleController.text;
     final String description = _descriptionController.text;
-    final List<File> images = _images!.map((image) => File(image.path)).toList();
+    final List<File> images = _images.map((image) => File(image.path)).toList();
     List<String> urls = [];
     if (images.isNotEmpty) {
       urls =await viewModel.uploadMultipleImage(images);
     }
 bool success = await viewModel.createRequest(
-      _selectedType,
       title,
       description,
       widget.apartmentId,
@@ -122,26 +121,26 @@ bool success = await viewModel.createRequest(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('txt_type'.tr(),
-                        style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                    DropdownButtonFormField<String>(
-                      value: _selectedType,
-                      items: _dropdownItems,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedType = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: ColorApp().cl1),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+                    // Text('txt_type'.tr(),
+                    //     style: const TextStyle(
+                    //         fontSize: 15, fontWeight: FontWeight.bold)),
+                    // DropdownButtonFormField<String>(
+                    //   value: _selectedType,
+                    //   items: _dropdownItems,
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       _selectedType = value!;
+                    //     });
+                    //   },
+                    //   decoration: InputDecoration(
+                    //     border: const OutlineInputBorder(),
+                    //     labelStyle: const TextStyle(fontStyle: FontStyle.italic, color: Colors.black),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(color: ColorApp().cl1),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 16),
                     Text('txt_title'.tr(),
                         style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold)),
@@ -173,7 +172,7 @@ bool success = await viewModel.createRequest(
                       maxLines: 4,
                     ),
                     const SizedBox(height: 16),
-                    _images == null || _images!.isEmpty
+                    _images.isEmpty
                         ? TextButton.icon(
                             onPressed: _pickImages,
                             icon: Icon(Icons.image, color: ColorApp().cl1,),
@@ -182,7 +181,7 @@ bool success = await viewModel.createRequest(
                         : Wrap(
                             spacing: 8.0,
                             runSpacing: 8.0,
-                            children: _images!.asMap().entries.map((entry) {
+                            children: _images.asMap().entries.map((entry) {
                               int index = entry.key;
                               XFile image = entry.value;
                               return Stack(
@@ -200,7 +199,7 @@ bool success = await viewModel.createRequest(
                                       onTap: () => _removeImage(index),
                                       child: Container(
                                         color: Colors.black54,
-                                        child: Icon(Icons.close, color: Colors.white),
+                                        child: const Icon(Icons.close, color: Colors.white),
                                       ),
                                     ),
                                   ),
