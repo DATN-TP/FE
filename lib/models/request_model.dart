@@ -16,6 +16,7 @@ class Request {
   DateTime? updateAt;
   DateTime? deleteAt;
   final List<String>? image;
+  String reason;
   
   Request({
     required this.owner,
@@ -27,6 +28,7 @@ class Request {
     this.updateAt,
     this.deleteAt,
     this.image,
+    this.reason = '',
   });
 
   factory Request.fromJson(Map<String, dynamic> json) => _$RequestFromJson(json);

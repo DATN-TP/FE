@@ -25,6 +25,7 @@ Request _$RequestFromJson(Map<String, dynamic> json) => Request(
           : DateTime.parse(json['deleteAt'] as String),
       image:
           (json['image'] as List<dynamic>?)?.map((e) => e as String).toList(),
+          reason: json['reason'] as String? ?? '',
     )..type = json['type'] as String?;
 
 Map<String, dynamic> _$RequestToJson(Request instance) => <String, dynamic>{
@@ -38,4 +39,5 @@ Map<String, dynamic> _$RequestToJson(Request instance) => <String, dynamic>{
       'updateAt': instance.updateAt?.toIso8601String(),
       'deleteAt': instance.deleteAt?.toIso8601String(),
       'image': instance.image,
+      'reason': instance.reason,
     };

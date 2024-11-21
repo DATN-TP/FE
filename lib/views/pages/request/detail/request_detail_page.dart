@@ -15,9 +15,11 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
   Widget build(BuildContext context) {
     final request = ModalRoute.of(context)?.settings.arguments as Request?;
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: Text('txt_requestDetail'.tr(),
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: ColorApp().cl1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -26,10 +28,10 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           },
         ),
       ),
-      body: Container(
-        color: Colors.grey.shade200,
-        child: Center(
-          child: Column(
+      body: Card(
+        margin: const EdgeInsets.all(12),
+        color: Colors.white,
+        child:  Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,17 +63,21 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                         fontSize: 15, fontWeight: FontWeight.bold)),
               ),
               _buildContentRequest(request),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('txt_image'.tr(),
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold)),
-              ),
-              _buildImageRequest(request),
+              if (request.image!.isNotEmpty)
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('txt_image'.tr(),
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                    ),
+                    _buildImageRequest(request)
+                  ],
+                )
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -114,23 +120,24 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
         child: isRejected == true
             ? Center(
                 child: Container(
-                  width: double.infinity,
-                  padding:  const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade100,
-                    borderRadius: BorderRadius.circular(10),
-                    border:  Border.all(color: Colors.red),
-                  ),
-                  child: Center(
-                    child: Text('txt_rejected'.tr(),
-                        style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ))
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.red),
+                ),
+                child: Center(
+                  child: Text('txt_rejected'.tr(),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ))
             : Center(
-              child: SingleChildScrollView(
+                child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -158,7 +165,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                     ],
                   ),
                 ),
-            ),
+              ),
       ),
     );
   }
@@ -176,7 +183,7 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
       child: Text(
         request!.title,
         style: const TextStyle(fontSize: 15),
-      ), // Replace 'Your child widget here' with the actual child widget you want to use.
+      ),
     );
   }
 
@@ -229,29 +236,43 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
       child: Text(
         request!.description,
         style: const TextStyle(fontSize: 15),
-      ), 
-    );
-  }
-
-  _buildImageRequest(Request? request) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: request!.image!
-            .map((e) => Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  width: MediaQuery.of(context).size.width / 2,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network(e),
-                ))
-            .toList(),
       ),
     );
   }
+
+_buildImageRequest(Request? request) {
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: request!.image!
+          .map((e) => Container(
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                width: MediaQuery.of(context).size.width / 2.5,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    e,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ))
+          .toList(),
+    ),
+  );
+}
 
   _buildReasonRejectRequest(Request request) {
     return Container(
@@ -263,10 +284,10 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade400),
       ),
-      child: const Text(
-        "chưa có dữ liệu nha ní ơi",
-        style: TextStyle(fontSize: 15),
-      ), 
+      child: Text(
+        request.reason,
+        style: const TextStyle(fontSize: 15),
+      ),
     );
   }
 }
