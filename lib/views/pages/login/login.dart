@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                 children: [
                   Background(
                     point: 0.75,
-                    color: ColorApp().cl1,
+                    color: Colors.green.shade200,
                     timer: 1500,
                   ),
                   Align(
@@ -201,7 +201,7 @@ class _LoginState extends State<Login> {
           controller: _passwordController,
           isBiometric: isBiometricEnable,
         ),
-        const SizedBox(height: 148),
+        const SizedBox(height: 168),
         Loginbutton(
             onPressed: () =>
                 loginPageModel.login(context, email, _passwordController.text)),
@@ -214,10 +214,10 @@ class _LoginState extends State<Login> {
                   isBiometricEnable = !isBiometricEnable;
                 });
               },
-              child: const Text(
+              child:  Text(
                 "Đăng nhập bằng tài khoản khác",
                 style: TextStyle(
-                    color: Colors.blue,
+                    color: ColorApp().cl1,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
               )),

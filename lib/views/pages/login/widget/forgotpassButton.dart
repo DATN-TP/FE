@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,10 @@ class Forgotpassbutton extends StatelessWidget {
         child: TextButton(
           onPressed: () {},
           child: Text('${'txt_ForgotPassword'.tr()}?',
-              style: const TextStyle(
+              style:  TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: ColorApp().cl1,
               )),
         ),
       ),

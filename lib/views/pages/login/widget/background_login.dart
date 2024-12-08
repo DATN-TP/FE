@@ -1,3 +1,4 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:flutter/material.dart';
 import 'package:ResiEasy/views/pages/login/widget/sShapeClipper.dart';
@@ -28,7 +29,8 @@ class Background extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFF5f1dfb),
+                    Colors.green.shade900,
+                    Colors.green.shade700,
                     color,
                   ],
                   begin: Alignment.topCenter,

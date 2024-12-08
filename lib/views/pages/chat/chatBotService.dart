@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatBotService {
-  final String apiKey = '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'; // API Key
-  final String apiUrl = 'https://api-inference.huggingface.co/models/Qwen/Qwen2.5-Coder-32B-Instruct/v1/chat/completions';
+
+  final String apiKey =  dotenv.env['API_KEY']??''; 
+
+  final String apiUrl = 'https://api.openai.com/v1/chat/completions'; // Endpoint của OpenAI
 
   final Dio _dio = Dio();
 
@@ -20,34 +23,37 @@ class ChatBotService {
             'Authorization': 'Bearer $apiKey',
             'Content-Type': 'application/json',
           },
-          responseType: ResponseType.stream, // Đọc dữ liệu theo kiểu stream
+          responseType: ResponseType.stream, // Đọc dữ liệu dạng stream
         ),
         data: json.encode({
+          // "model": "gpt-3.5-turbo", // Chọn mô hình GPT-3.5 Turbo
+          "model": "ft:gpt-4o-2024-08-06:personal::AXrd12XF", // Chọn mô hình GPT-3.5 Turbo
           "messages": [
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt} // Tin nhắn đầu vào
           ],
-          "max_tokens": 500,
-          "stream": true,
+          "max_tokens": 200, // Giới hạn số token phản hồi
+          "stream": true, // Bật chế độ stream
         }),
       );
 
-      // Đọc dữ liệu từ stream và xử lý
+      // Đọc dữ liệu từ stream và xử lý từng dòng
       await response.data!.stream
           .cast<List<int>>() // Chuyển stream thành List<int>
           .transform(utf8.decoder) // Giải mã từ byte sang chuỗi
           .transform(const LineSplitter()) // Chia thành các dòng
           .forEach((line) {
-
         if (line.trim().isEmpty) return; // Bỏ qua dòng rỗng
 
         // Loại bỏ "data: " nếu có
         line = line.replaceFirst('data: ', '');
 
         try {
-          final jsonChunk = jsonDecode(line); // Parse JSON từ mỗi dòng
+          // Parse JSON từ dòng dữ liệu
+          final jsonChunk = jsonDecode(line);
           final delta = jsonChunk['choices']?[0]?['delta'];
+
           if (delta != null && delta['content'] != null) {
-            responseContent += delta['content']; // Ghép chuỗi trả về
+            responseContent += delta['content']; // Ghép nội dung từ `content`
             print('Streaming: $responseContent'); // In ra chuỗi đã ghép
           }
         } catch (e) {

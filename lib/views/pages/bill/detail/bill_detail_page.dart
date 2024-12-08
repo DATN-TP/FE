@@ -64,6 +64,9 @@ class _BillDetailPageState extends State<BillDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final totalVehicleFee = widget.bill?.listVehicle
+        ?.map((vehicle) => vehicle.total ?? 0)
+        .reduce((value, element) => value + element) ?? 0;
     final user = HiveProvider().getUser();
     return ChangeNotifierProvider(
       create: (context) => billViewModel..getBillById(widget.bill!.id ?? ""),
@@ -105,55 +108,55 @@ class _BillDetailPageState extends State<BillDetailPage>
                                           CrossAxisAlignment.start,
                                       children: [
                                         _buildSumary(billViewModel),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                         Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: Text(
-                                            "Phí xe:",
-                                            style: TextStyle(
+                                            "Phí xe: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(totalVehicleFee)}",
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         _buildListView(),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                         Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: Text(
-                                            "Phí điện:",
-                                            style: TextStyle(
+                                            "Phí điện: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.electric)}",
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         _buildElectric(),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                         Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: Text(
-                                            "Phí nước:",
-                                            style: TextStyle(
+                                            "Phí nước: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.water)}",
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         _buildWater(),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: Text(
-                                            "Phí quản lý:",
-                                            style: TextStyle(
+                                            "Phí quản lý: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.managementFee)}",
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         _buildManagementFee(),
-                                      ],
+                                      ]
                                     ),
                                   ),
                                 ),
@@ -342,9 +345,6 @@ class _BillDetailPageState extends State<BillDetailPage>
                               fontSize: 16,
                               fontStyle: FontStyle.italic,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
                           ),
                         ],
                       ),
@@ -566,18 +566,352 @@ class _BillDetailPageState extends State<BillDetailPage>
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Table(
+        child: Column(
+          children: [
+            Table(
+              columnWidths: const {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(2),
+              },
+              border: TableBorder.all(color: Colors.grey),
+              children: [
+                _buildTableRow("Số cũ", widget.bill?.oldElectricNumber.toString() ?? ""),
+                _buildTableRow("Số mới", widget.bill?.newElectricNumber.toString() ?? ""),
+                _buildTableRow("Tiêu thụ", ((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)).toString()),
+                _buildTableRow("Định mức", widget.bill?.eQuota.toString() ?? ""),
+                
+              ],
+            ),
+            const SizedBox(height: 8),
+            Table(
           columnWidths: const {
             0: FlexColumnWidth(1),
-            1: FlexColumnWidth(2),
+            1: FlexColumnWidth(1),
+            2: FlexColumnWidth(2),
+            3: FlexColumnWidth(2),
           },
           border: TableBorder.all(color: Colors.grey),
           children: [
-            _buildTableRow("Số cũ", widget.bill?.oldElectricNumber.toString() ?? ""),
-            _buildTableRow("Số mới", widget.bill?.newElectricNumber.toString() ?? ""),
-            _buildTableRow("Tiêu thụ", ((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)).toString()),
-            _buildTableRow("Thành tiền", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.electric)),
+            TableRow(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+              ),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Định mức',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Tiêu thụ',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Đơn giá',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Thành tiền',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if( widget.bill?.eQuota == 1)
+            TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${(widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)) * (widget.bill?.eQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            else if( widget.bill?.eQuota == 2) ...[
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "50",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(50* (widget.bill?.eQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+               TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                       "${(widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)-50}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota2),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)-50) * (widget.bill?.eQuota2 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ]
+            
+            else if (widget.bill?.eQuota == 3) ...[
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "50",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(50 * (widget.bill?.eQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                       "50",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota2),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(50 * (widget.bill?.eQuota2 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '3',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                       "${(widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)-100}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.eQuota3),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newElectricNumber ?? 0) - (widget.bill?.oldElectricNumber ?? 0)-100) * (widget.bill?.eQuota3 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
           ],
+          ]
+        ),
+            ]
         ),
       ),
     ),
@@ -591,17 +925,350 @@ _buildWater() {
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Table(
+        child: Column(
+          children: [
+            Table(
+              columnWidths: const {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(2),
+              },
+              border: TableBorder.all(color: Colors.grey),
+              children: [
+                _buildTableRow("Số cũ", widget.bill?.oldWaterNumber.toString() ?? ""),
+                _buildTableRow("Số mới", widget.bill?.newWaterNumber.toString() ?? ""),
+                _buildTableRow("Tiêu thụ", ((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)).toString()),
+                _buildTableRow("Định mức", widget.bill?.wQuota.toString() ?? ""),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Table(
           columnWidths: const {
             0: FlexColumnWidth(1),
-            1: FlexColumnWidth(2),
+            1: FlexColumnWidth(1),
+            2: FlexColumnWidth(2),
+            3: FlexColumnWidth(2),
           },
           border: TableBorder.all(color: Colors.grey),
           children: [
-            _buildTableRow("Số cũ", widget.bill?.oldWaterNumber.toString() ?? ""),
-            _buildTableRow("Số mới", widget.bill?.newWaterNumber.toString() ?? ""),
-            _buildTableRow("Tiêu thụ", ((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)).toString()),
-            _buildTableRow("Thành tiền", NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.water)),
+            TableRow(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+              ),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Định mức',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Tiêu thụ',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Đơn giá',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Thành tiền',
+                    style: TextStyle(
+                      fontSize: 14, // Giảm kích thước font chữ
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if( widget.bill?.wQuota == 1)
+            TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${(widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)) * (widget.bill?.wQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            else if( widget.bill?.wQuota == 2) ...[
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "4",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(4* (widget.bill?.wQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+               TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                       "${(widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)-4}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota2),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)-4) * (widget.bill?.wQuota2 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ]
+            
+            else if (widget.bill?.eQuota == 3) ...[
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                   const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "4",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota1),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(4 * (widget.bill?.wQuota1 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                       "6",
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota2),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(6 * (widget.bill?.wQuota2 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '3',
+                      style: TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                    Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                       "${(widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)-10}",
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(widget.bill?.wQuota3),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(((widget.bill?.newWaterNumber ?? 0) - (widget.bill?.oldWaterNumber ?? 0)-10) * (widget.bill?.wQuota3 ?? 0)),
+                      style: const TextStyle(
+                        fontSize: 14, // Giảm kích thước font chữ
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+          ],
+          ]
+        ),
           ],
         ),
       ),

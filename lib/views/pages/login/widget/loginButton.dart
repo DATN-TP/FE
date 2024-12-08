@@ -1,6 +1,8 @@
+import 'package:ResiEasy/data/config/colors.dart';
 import 'package:ResiEasy/views/animations/slideTopToBottom.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
 class Loginbutton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -17,7 +19,7 @@ class Loginbutton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 15),
-            backgroundColor: const Color(0xFF6f24fd),
+            backgroundColor: ColorApp().cl1,
             elevation: 15,
             shadowColor: Colors.white,
             shape: RoundedRectangleBorder(

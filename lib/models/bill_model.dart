@@ -7,33 +7,6 @@ part 'bill_model.g.dart';
 
 @JsonSerializable()
 class Bill {
-  //  apartment: { type: Schema.Types.ObjectId, ref: 'Apartment' },
-  //   resident: { type: String},
-  //   price: { type: Number },
-  //   electric: { type: Number },
-  //   water: { type: Number },
-  //   service: [{ type: Schema.Types.ObjectId, ref: 'DetailService' }],
-  //   listVehicle: [{
-  //       type: { type: String },
-  //       price: { type: Number },
-  //       quantity: { type: Number },
-  //       total: { type: Number },
-  //   }],
-  //   oldElectricNumber: { type: Number, default: 0 },
-  //   oldWaterNumber: { type: Number, default: 0 },
-  //   newElectricNumber: { type: Number, default: 0 },
-  //   newWaterNumber: { type: Number, default: 0 },
-  //   status: { type: String, enum: ['pending', 'paid'], default: 'pending' },
-  //   date: { type: Date, default: Date.now },
-  //   paymentMethod: { type: String, enum: ['cash', 'transfer'] },
-  //   paymentDate: { type: Date },
-  //   paymentBy: { type: Schema.Types.ObjectId, ref: 'User' },
-  //   total: { type: Number },
-  //   note: { type: String },
-  //   createAt: { type: Date, default: Date.now },
-  //   updateAt: { type: Date, default: Date.now },
-  //   deleteAt: { type: Date },
-
   String? id;
   String? apartment;
   String? resident;
@@ -47,9 +20,17 @@ class Bill {
   double? newElectricNumber;
   double? newWaterNumber;
   double? managementFee;
-  double? ePrice;
-  double? wPrice;
-  double?managementPrice;
+  int? ePrice;
+  int? eQuota;
+  int? eQuota1;
+  int? eQuota2;
+  int? eQuota3;
+  int? wQuota;
+  int? wQuota1;
+  int? wQuota2;
+  int? wQuota3;
+  int? wPrice;
+  int?managementPrice;
   String? status;
   DateTime? date;
   String? paymentMethod;
@@ -75,6 +56,14 @@ class Bill {
     this.newElectricNumber,
     this.managementFee,
     this.ePrice,
+    this.eQuota,
+    this.eQuota1,
+    this.eQuota2,
+    this.eQuota3,
+    this.wQuota,
+    this.wQuota1,
+    this.wQuota2,
+    this.wQuota3,
     this.wPrice,
     this.managementPrice,
     this.newWaterNumber,
