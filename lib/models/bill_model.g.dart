@@ -10,19 +10,19 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       id: json['_id'] as String?,
       apartment: json['apartment'] as String?,
       resident: json['resident'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
-      electric: (json['electric'] as num?)?.toDouble(),
-      water: (json['water'] as num?)?.toDouble(),
+      price: (json['price'] as num?)?.toInt(),
+      electric: (json['electric'] as num?)?.toInt(),
+      water: (json['water'] as num?)?.toInt(),
       service: (json['service'] as List<dynamic>?)
           ?.map((e) => DetailService.fromJson(e as Map<String, dynamic>))
           .toList(),
       listVehicle: (json['listVehicle'] as List<dynamic>?)
           ?.map((e) => VehicleBill.fromJson(e as Map<String, dynamic>))
           .toList(),
-      oldElectricNumber: (json['oldElectricNumber'] as num?)?.toDouble(),
-      oldWaterNumber: (json['oldWaterNumber'] as num?)?.toDouble(),
-      newElectricNumber: (json['newElectricNumber'] as num?)?.toDouble(),
-      managementFee: (json['managementFee'] as num?)?.toDouble(),
+      oldElectricNumber: (json['oldElectricNumber'] as num?)?.toInt(),
+      oldWaterNumber: (json['oldWaterNumber'] as num?)?.toInt(),
+      newElectricNumber: (json['newElectricNumber'] as num?)?.toInt(),
+      managementFee: (json['managementFee'] as num?)?.toInt(),
       ePrice: (json['ePrice'] as num?)?.toInt(),
       eQuota: (json['eQuota'] as num?)?.toInt(),
       eQuota1: (json['eQuota1'] as num?)?.toInt(),
@@ -34,7 +34,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       wQuota3: (json['wQuota3'] as num?)?.toInt(),
       wPrice: (json['wPrice'] as num?)?.toInt(),
       managementPrice: (json['managementPrice'] as num?)?.toInt(),
-      newWaterNumber: (json['newWaterNumber'] as num?)?.toDouble(),
+      newWaterNumber: (json['newWaterNumber'] as num?)?.toInt(),
       status: json['status'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
@@ -45,7 +45,7 @@ Bill _$BillFromJson(Map<String, dynamic> json) => Bill(
       paymentBy: json['paymentBy'] == null
           ? null
           : User.fromJson(json['paymentBy'] as Map<String, dynamic>),
-      total: (json['total'] as num?)?.toDouble(),
+      total: (json['total'] as num?)?.toInt(),
       note: json['note'] as String?,
       createAt: json['createAt'] == null
           ? null

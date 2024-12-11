@@ -27,7 +27,7 @@ class ChatBotService {
         ),
         data: json.encode({
           // "model": "gpt-3.5-turbo", // Chọn mô hình GPT-3.5 Turbo
-          "model": "ft:gpt-4o-2024-08-06:personal::AXrd12XF", // Chọn mô hình GPT-3.5 Turbo
+          "model": "ft:gpt-4o-2024-08-06:personal::AcPxHhcr", // Chọn mô hình GPT-3.5 Turbo
           "messages": [
             {"role": "user", "content": prompt} // Tin nhắn đầu vào
           ],

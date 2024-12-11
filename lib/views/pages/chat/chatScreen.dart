@@ -14,18 +14,24 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<Map<String, String>> _messages = [];
   final ChatBotService _chatBotService = ChatBotService();
   final ScrollController _scrollController = ScrollController();
+  
+  // Danh sách các câu hỏi gợi ý
+  final List<Map<String, String>> _suggestedQuestions = [
+    { 'Phí quản lý căn hộ sử dụng thang máy là bao nhiêu?': 'Nếu một căn hộ có sử dụng thang máy thì phí quản lý sẽ là bao nhiêu?', },
+    { 'Phí quản lý căn hộ không sử dụng thang máy là bao nhiêu?': 'Tôi muốn biết mức phí quản lý cho căn hộ không sử dụng thang máy là bao nhiêu?', },
+    { 'Giá nước được tính thế nào?': 'Giá nước được tính thế nào?', },
+  ];
 
   // Hàm gửi tin nhắn
-  void _sendMessage() async {
-    if (_controller.text.isNotEmpty) {
-      String text = _controller.text;
+  void _sendMessage(String text) async {
+    if (text.isNotEmpty) {
       _controller.clear();
 
       // Thêm tin nhắn của người dùng vào danh sách
       setState(() {
         _messages.add({'sender': 'user', 'message': text});
       });
-      
+
       _messages.add({'sender': 'ai', 'message': "Đang trả lời ..."});
       
       // Cuộn xuống cuối danh sách tin nhắn
@@ -91,6 +97,38 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _suggestedQuestions.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorApp().cl1),
+                            borderRadius: BorderRadius.circular(36),
+                    ),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          _sendMessage(_suggestedQuestions[index].values.first);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorApp().white,
+                        ),
+                        child: Text(
+                          _suggestedQuestions[index].keys.first,
+                          style: TextStyle(color: ColorApp().cl1),
+                        ),
+                      ),
+                  );
+                },
+              ),
+            ),
+          ),
+          // Phần hiển thị tin nhắn
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -153,7 +191,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.send, color: ColorApp().cl1),
-                  onPressed: _sendMessage,
+                  onPressed: () {
+                    _sendMessage(_controller.text);
+                  },
                 ),
               ],
             ),

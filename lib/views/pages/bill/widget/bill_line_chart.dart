@@ -66,7 +66,7 @@ class BillLineChart extends StatelessWidget {
                   return const FlSpot(0, 0);
                 }
                 double x = bill.createAt!.month.toDouble();
-                double y = bill.total!;
+                double y = bill.total!.toDouble();
 
                 if (x.isNaN || x.isInfinite || y.isNaN || y.isInfinite) {
                   return const FlSpot(0, 0);

@@ -5,13 +5,15 @@ class CommonMenuCard extends StatelessWidget {
   final Text title;
   final VoidCallback onPressed;
   final int? index;
+  final Color color;
 
   const CommonMenuCard(
       {super.key,
       required this.icon,
       required this.title,
       required this.onPressed,
-      this.index});
+      this.index,
+      this.color = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class CommonMenuCard extends StatelessWidget {
         height: 60,
         // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color,
           borderRadius: borderRadius,
           // boxShadow: const [
           //   BoxShadow(
